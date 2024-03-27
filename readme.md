@@ -1,4 +1,4 @@
-# Next API
+# Open API
 
 ![img.png](docs/overview.png)
 

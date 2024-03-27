@@ -27,7 +27,7 @@ tags_metadata = [
 ]
 
 app = FastAPI(
-    title="Next API",
+    title="Open API",
     description="聚合AGI行业的主流API，提供动态key管理、算法调度、前端监控、可扩展性配置等功能",
     openapi_tags=tags_metadata,
 )
