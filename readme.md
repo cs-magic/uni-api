@@ -1,5 +1,10 @@
 # Next API
 
+## TODO
+
+- [ ] user management on database
+- [ ] callable robuster api
+
 ## Configuration
 
 ```shell
