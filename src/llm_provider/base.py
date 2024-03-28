@@ -1,4 +1,3 @@
-import os
 from typing import Iterable, Union, Literal, Optional, Dict, List
 
 import httpx
@@ -7,6 +6,10 @@ from openai._types import Headers, Query, Body
 from openai._utils import required_args
 from openai.types.chat import ChatCompletionMessageParam, ChatCompletionToolChoiceOptionParam, ChatCompletionToolParam, \
     completion_create_params
+
+from settings import get_settings
+
+settings = get_settings()
 
 
 class LLMProvider:
@@ -20,10 +23,10 @@ class LLMProvider:
         
         if name == "moonshot":
             base_url = "https://api.moonshot.cn/v1"
-            api_key = os.environ["MOONSHOT_API_KEY"]
+            api_key = settings.MOONSHOT_API_KEY
         else:
             base_url = None
-            api_key = None
+            api_key = settings.OPENAI_API_KEY
         
         self.client = Client(api_key=api_key, base_url=base_url)
     
