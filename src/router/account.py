@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from loguru import logger
 
 account_router = APIRouter(prefix='/account', tags=['Account'],)
 
@@ -65,7 +66,7 @@ class UserInDB(User):
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl="token",
+    tokenUrl="/account/token",
     scopes={"me": "Read information about the current user.", "items": "Read items."},
 )
 
@@ -152,8 +153,10 @@ async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
 ) -> Token:
     user = authenticate_user(fake_users_db, form_data.username, form_data.password)
+    logger.info("user: ", user)
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
+    
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"sub": user.username, "scopes": form_data.scopes},
