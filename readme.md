@@ -4,6 +4,7 @@
 
 ## TODO
 
+- [ ] specific scenario-based prompt
 - [ ] user management on database
 - [ ] callable robuster api
 

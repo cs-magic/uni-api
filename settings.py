@@ -3,10 +3,12 @@ from typing import Any
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from src.utls.path import PROJECT_PATH
+
 
 class Settings(BaseSettings):
     app_name: str = "Open API"
-    description: str = "聚合AGI行业的主流API，提供动态key管理、算法调度、前端监控、可扩展性配置等功能"
+    description: str = "聚合AGI行业的主流API，提供动态key管理、算法调度、前端监控、可扩展性配置等功能 （opensource: https://github.com/cs-magic/openapi）"
     admin_email: str = "shawninjuly@gmail.com"
     # ref: https://fastapi.tiangolo.com/tutorial/metadata/#metadata-for-tags
     tags: Any = [
@@ -37,9 +39,12 @@ class Settings(BaseSettings):
     MOONSHOT_API_KEY: str
     OPENAI_API_KEY: str
     
-    model_config = SettingsConfigDict(env_file=".env")
+    model_config = SettingsConfigDict(env_file=PROJECT_PATH.joinpath(".env"))
 
 
 @lru_cache
 def get_settings():
     return Settings()
+
+
+settings = get_settings()
