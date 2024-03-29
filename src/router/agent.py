@@ -38,7 +38,7 @@ async def call_agent(
         "content": content
     })
     
-    logger.info(f">> calling LLM: Model={model_type}, Prompt.name={agent_type}, Messages={messages}")
+    logger.info(f">> calling LLM: Model={model_type}, Agent.type={agent_type}, Messages={messages}")
     res = get_provider(model_type).call(
         model=model_type,
         messages=messages
