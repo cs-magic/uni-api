@@ -44,4 +44,5 @@ async def call_agent(
         messages=messages
     )
     logger.info(f"<< result: {res}")
+    print("\n------\n", res.choices[0].message.content)
     return res
