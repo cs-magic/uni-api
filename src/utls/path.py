@@ -4,4 +4,4 @@ PATH_PATH = pathlib.Path(__file__)
 UTILS_PATH = PATH_PATH.parent
 SRC_PATH = UTILS_PATH.parent
 PROJECT_PATH = SRC_PATH.parent
-PROMPTS_PATH = SRC_PATH.joinpath("prompts")
+AGENTS_PATH = SRC_PATH.joinpath("agents")

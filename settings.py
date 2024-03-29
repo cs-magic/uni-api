@@ -25,6 +25,10 @@ class Settings(BaseSettings):
             },
         },
         {
+            "name": "Agent",
+            "description": "场景相关 API"
+        },
+        {
             "name": "Common",
             "description": "一些通用 API（例如OSS相关的）"
         },

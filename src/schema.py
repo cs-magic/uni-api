@@ -124,7 +124,7 @@ MoonshotModel = Literal[
     "moonshot-v1-128k"
 ]
 
-ModelType = Union[OpenAIModel, MoonshotModel]
+ModelType = Literal[OpenAIModel, MoonshotModel]
 
 
 class MoonshotBody(LLMBodyBase):

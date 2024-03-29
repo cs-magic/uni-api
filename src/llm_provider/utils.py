@@ -3,9 +3,11 @@ from src.llm_provider.openai import OpenAIProvider
 from src.schema import ProviderType
 
 
-def get_provider(name: ProviderType):
-    if name == "openai":
+def get_provider(model: str):
+    if model.startswith("gpt"):
         return OpenAIProvider()
     
-    elif name == "moonshot":
+    elif model.startswith("moonshot"):
         return MoonshotProvider()
+    
+    raise Exception(f"no provider from model(name={model})")
