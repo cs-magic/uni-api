@@ -29,6 +29,15 @@ uvicorn main:app --reload
 
 访问 `http://localhost:8000/docs` 查看各 API。
 
+
+## Deploy
+
+### proxy
+
+```shell
+pm2 start --name "openapi" 'http_proxy=http://localhost:7890 https_proxy=http://localhost:7890 uvicorn main:app --port 40330'
+```
+
 ## Bugfix
 
 ### NotGiven
