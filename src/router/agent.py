@@ -20,7 +20,7 @@ async def call_agent(
     # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
     content: Annotated[str, Form()],
     
-    agent_type: Literal["default", "conclude-article"] = "default",
+    agent_type: Literal["default", "article-summariser"] = "default",
     model_type: ModelType = "gpt-3.5-turbo",
 ):
     messages = []
