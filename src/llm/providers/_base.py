@@ -18,8 +18,6 @@ class LLMProviderBase(Generic[ModelType]):
     
     def __init__(self):
         super().__init__()
-        
-        self.client = Client(api_key=self.api_key, base_url=self.base_url)
     
     @required_args(["messages", "model"], ["messages", "model", "stream"])
     def call(self,
@@ -31,27 +29,42 @@ class LLMProviderBase(Generic[ModelType]):
              functions: Iterable[completion_create_params.Function] | NotGiven = NOT_GIVEN,
              logit_bias: Optional[Dict[str, int]] | NotGiven = NOT_GIVEN,
              logprobs: Optional[bool] | NotGiven = NOT_GIVEN,
-             max_tokens: Optional[int] | NotGiven = NOT_GIVEN,
+             max_tokens: Optional[int] | NotGiven = None,
              n: Optional[int] | NotGiven = NOT_GIVEN,
              presence_penalty: Optional[float] | NotGiven = NOT_GIVEN,
              response_format: completion_create_params.ResponseFormat | NotGiven = NOT_GIVEN,
-             seed: Optional[int] | NotGiven = NOT_GIVEN,
-             stop: Union[Optional[str], List[str]] | NotGiven = NOT_GIVEN,
-             stream: Optional[Literal[False]] | Literal[True] | NotGiven = NOT_GIVEN,
-             temperature: Optional[float] | NotGiven = NOT_GIVEN,
-             tool_choice: ChatCompletionToolChoiceOptionParam | NotGiven = NOT_GIVEN,
-             tools: Iterable[ChatCompletionToolParam] | NotGiven = NOT_GIVEN,
+             seed: Optional[int] | NotGiven = None,
+             stop: Union[Optional[str], List[str]] | NotGiven = None,
+             stream: Optional[Literal[False]] | Literal[True] | NotGiven = None,
+             temperature: Optional[float] | NotGiven = None,
+             tool_choice: ChatCompletionToolChoiceOptionParam | NotGiven = None,
+             tools: Iterable[ChatCompletionToolParam] | NotGiven = None,
              top_logprobs: Optional[int] | NotGiven = NOT_GIVEN,
-             top_p: Optional[float] | NotGiven = NOT_GIVEN,
+             top_p: Optional[float] | NotGiven = None,
              user: str | NotGiven = NOT_GIVEN,
              # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
              # The extra values given here take precedence over values defined on the client or passed to this method.
              extra_headers: Headers | None = None,
              extra_query: Query | None = None,
              extra_body: Body | None = None,
-             timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+             timeout: float | httpx.Timeout | None | NotGiven = None,
              ):
         # logger.info(f">> requesting: model={model}, messages={messages}")
-        return self.client.chat.completions.create(messages=messages, model=model, frequency_penalty=frequency_penalty, function_call=function_call, functions=functions, logit_bias=logit_bias, logprobs=logprobs, max_tokens=max_tokens, n=n, presence_penalty=presence_penalty, response_format=response_format, seed=seed, stop=stop, stream=stream, temperature=temperature, tool_choice=tool_choice, tools=tools, top_logprobs=top_logprobs, top_p=top_p, user=user, extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout)
-
-
+        return self.client.chat.completions.create(
+            ## zhipu not support
+            # frequency_penalty=frequency_penalty,
+            # function_call=function_call,
+            # functions=functions,
+            # logit_bias=logit_bias,
+            # logprobs=logprobs,
+            # n=n,
+            # presence_penalty=presence_penalty,
+            # response_format=response_format,
+            # top_logprobs=top_logprobs,
+            # user=user,
+            # extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body,
+            messages=messages, model=model,
+            top_p=top_p,
+            timeout=timeout,
+            # max_tokens=max_tokens, seed=seed, stop=stop, stream=stream, temperature=temperature, tool_choice=tool_choice, tools=tools,
+        )

@@ -124,7 +124,17 @@ MoonshotModel = Literal[
     "moonshot-v1-128k"
 ]
 
-ModelType = Literal[OpenAIModel, MoonshotModel]
+ZhipuModel = Literal[
+    "glm-4"
+]
+
+MinimaxModel = Literal[
+    "abab6-chat",
+    "abab5.5-chat",
+    "abab5.5s-chat"
+]
+
+ModelType = Literal[OpenAIModel, MoonshotModel, ZhipuModel, MinimaxModel]
 
 
 class MoonshotBody(LLMBodyBase):

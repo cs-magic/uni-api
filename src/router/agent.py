@@ -4,7 +4,7 @@ from fastapi import APIRouter, Form
 from loguru import logger
 from pydantic import BaseModel
 
-from src.llm_provider.utils import get_provider
+from src.llm.utils import get_provider
 from src.schema import ModelType
 from src.utls.path import AGENTS_PATH
 
@@ -38,11 +38,14 @@ async def call_agent(
         "content": content
     })
     
-    logger.info(f">> calling LLM: Model={model_type}, Agent.type={agent_type}, Messages={messages}")
+    logger.debug(f">> calling LLM: Model={model_type}, Agent.type={agent_type}, Messages={messages}")
     res = get_provider(model_type).call(
         model=model_type,
-        messages=messages
+        messages=messages,
+        top_p=0.03,  # ref: https://platform.openai.com/docs/api-reference/chat/create
+        # temperature=0
     )
-    logger.info(f"<< result: {res}")
+    logger.debug(f"<< result: {res}")
     # print("\n------\n", res.choices[0].message.content)
+    print("\n------\n", res["choices"][0]["message"]["content"])
     return res

@@ -15,6 +15,7 @@ passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 openai = ">=1.0"
 loguru = "^0.7.2"
 requests = "^2.31.0"
+zhipuai = "^2.0.1"
 
 
 [build-system]

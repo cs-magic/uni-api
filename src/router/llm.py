@@ -3,8 +3,8 @@ from typing import Annotated
 from fastapi import APIRouter, Security
 from pydantic import BaseModel
 
-from src.llm_provider.moonshot import MoonshotProvider
-from src.llm_provider.openai import OpenAIProvider
+from src.llm.providers.moonshot import MoonshotProvider
+from src.llm.providers.openai import OpenAIProvider
 from src.router.account import User, get_current_active_user
 from src.schema import OpenAIBody, MoonshotBody
 from src.utls.error_handler import error_handler

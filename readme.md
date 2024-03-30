@@ -10,6 +10,8 @@
 
 ## Features
 
+- [x] 支持 zhipu / minimax API (2024-03-31)
+- [x] 支持 agent 调用 (2024-03-30)
 - [x] 支持 openai / moonshot API (2024-03-28)
 
 ## Configuration
