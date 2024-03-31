@@ -25,9 +25,15 @@ def compress_content(content: str, target_len=6e3) -> str:
         n = max(len(lines) - 1, 1)
         return [compress_line(line, .4 + abs(i / n - .5)) for (i, line) in enumerate(lines)]
     
-    N = len(content)
+    seq = 0
     while len(content) >= target_len:
-        content = "\n".join(compress_lines(content.splitlines()))
-        n = len(content)
-        logger.debug(f"compressed content: {N} --> {n}, ratio: {n / N * 100:.2f}%")
+        seq += 1
+        if seq > 10:
+            raise Exception("failed to compress...")
+        
+        lines = content.splitlines()
+        charsBefore = len(content)
+        content = "\n".join(compress_lines(lines))
+        charsAfter = len(content)
+        logger.debug(f"compressed content ({len(lines)} lines): {charsBefore} --> {charsAfter}, ratio: {charsAfter / charsBefore * 100:.2f}%")
     return content
