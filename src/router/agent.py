@@ -1,5 +1,6 @@
-from typing import Literal, Annotated
+from typing import Literal, Annotated, Optional
 
+import yaml
 from fastapi import APIRouter, Form
 from loguru import logger
 from pydantic import BaseModel
@@ -11,25 +12,30 @@ from src.utls.path import AGENTS_PATH
 agent_router = APIRouter(prefix='/agent', tags=["Agent"])
 
 
-class RawBody(BaseModel):
-    content: str  # Use bytes if you expect binary data
+class AgentConfig(BaseModel):
+    name: Optional[str] = "untitled"
+    author: Optional[str]
+    version: Optional[str]
+    model: Optional[ModelType] = "gpt-3.5-turbo"
+    system_prompt: Optional[str]
 
 
 @agent_router.post('/call')
 async def call_agent(
     # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
     content: Annotated[str, Form()],
-    
-    agent_type: Literal["default", "article-summariser"] = "default",
-    model_type: ModelType = "gpt-3.5-turbo",
+    agent_type: Annotated[Literal["default", "summariser"], Form()] = "default"
 ):
+    with open(AGENTS_PATH.joinpath(f"{agent_type}.agent.yml")) as f:
+        agent = AgentConfig.parse_obj(yaml.safe_load(f))
+    
+    model = agent.model
+    
     messages = []
-    if agent_type != "default":
-        with open(AGENTS_PATH.joinpath(f"{agent_type}.prompt.md")) as f:
-            prompt = f.read()
+    if agent.system_prompt:
         messages.append({
             "role": "system",
-            "content": prompt,
+            "content": agent.system_prompt,
         })
     
     # ref: https://chat.openai.com/c/f8fa5a99-f1f0-441d-a883-903118efa838
@@ -38,9 +44,9 @@ async def call_agent(
         "content": content
     })
     
-    logger.debug(f">> calling LLM: Model={model_type}, Agent.type={agent_type}, Messages={messages}")
-    res = get_provider(model_type).call(
-        model=model_type,
+    logger.debug(f">> calling LLM: Agent={agent}, Messages={messages}")
+    res = get_provider(model).call(
+        model=model,
         messages=messages,
         top_p=0.03,  # ref: https://platform.openai.com/docs/api-reference/chat/create
         # temperature=0
