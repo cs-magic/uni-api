@@ -2,6 +2,7 @@ name: 总结大师
 author: 南川
 version: 0.5.0
 model: gpt-4
+total_tokens: 8192
 system_prompt: |
   ## 任务
   

@@ -7,7 +7,9 @@ from pydantic import BaseModel
 
 from src.llm.utils import get_provider
 from src.schema import ModelType
-from src.utls.path import AGENTS_PATH
+from src.utils.compress_content import compress_content
+from src.utils.error_handler import error_handler
+from src.utils.path import AGENTS_PATH
 
 agent_router = APIRouter(prefix='/agent', tags=["Agent"])
 
@@ -17,19 +19,22 @@ class AgentConfig(BaseModel):
     author: Optional[str]
     version: Optional[str]
     model: Optional[ModelType] = "gpt-3.5-turbo"
+    total_tokens: int = 8192
     system_prompt: Optional[str]
 
 
 @agent_router.post('/call')
+@error_handler
 async def call_agent(
     # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
     content: Annotated[str, Form()],
-    agent_type: Annotated[Literal["default", "summariser"], Form()] = "default"
+    agent_type: Annotated[Literal["default", "summariser"], Form()] = "default",
+    model_type: Annotated[ModelType, Form(description="覆盖配置中的model")] = None,
 ):
     with open(AGENTS_PATH.joinpath(f"{agent_type}.agent.yml")) as f:
         agent = AgentConfig.parse_obj(yaml.safe_load(f))
     
-    model = agent.model
+    model = model_type if model_type else agent.model
     
     messages = []
     if agent.system_prompt:
@@ -38,7 +43,14 @@ async def call_agent(
             "content": agent.system_prompt,
         })
     
-    # ref: https://chat.openai.com/c/f8fa5a99-f1f0-441d-a883-903118efa838
+    max_content_len = (
+        agent.total_tokens
+        - len(agent.system_prompt)  # 系统prompt的长度
+        - 1e3  # 输出的预留长度
+        - 1e2  # 误差
+    )
+    content = compress_content(content, max_content_len)
+    
     messages.append({
         "role": "user",
         "content": content

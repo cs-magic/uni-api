@@ -4,7 +4,7 @@ from unittest import IsolatedAsyncioTestCase
 from loguru import logger
 
 from src.router.agent import call_agent
-from src.utls.path import AGENTS_PATH
+from src.utils.path import AGENTS_PATH
 
 
 class Test(IsolatedAsyncioTestCase):

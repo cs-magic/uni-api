@@ -2,6 +2,8 @@
 
 ![img.png](docs/overview-0.1.1.png)
 
+![providers](docs/providers.png)
+
 ## TODO
 
 - [ ] specific scenario-based prompt
@@ -10,13 +12,14 @@
 
 ## Features
 
-- [x] 支持 zhipu / minimax API (2024-03-31)
-- [x] 支持 agent 调用 (2024-03-30)
-- [x] 支持 openai / moonshot API (2024-03-28)
+- [x] supported compress-content algo (2024-03-31)
+- [x] supported zhipu / minimax API (2024-03-31)
+- [x] supported agent call (2024-03-30)
+- [x] supported openai / moonshot API (2024-03-28)
 
 ## Configuration
 
-参考`.env.sample`配置对应环境变量到 `.env` 文件内。
+config your `.env` like `.env.sample`
 
 ```shell
 poetry shell

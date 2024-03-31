@@ -12,9 +12,8 @@ from src.llm.providers._base import LLMProviderBase
 from src.schema import OpenAIModel, MinimaxModel
 
 
-class MinimaxProvider(LLMProviderBase[OpenAIModel]):
+class MinimaxProvider(LLMProviderBase[MinimaxModel]):
     name = "minimax"
-    
     base_url = None
     api_key = settings.MINIMAX_API_KEY
     group_id = settings.MINIMAX_GROUP_ID
