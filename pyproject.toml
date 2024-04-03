@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "openapi"
+name = "uni-api"
 version = "0.1.0"
 description = ""
 authors = ["markshawn2020 <shawninjuly@gmail.com>"]
@@ -19,6 +19,7 @@ zhipuai = "^2.0.1"
 pyyaml = "^6.0.1"
 beautifulsoup4 = "^4.12.3"
 markdownify = "^0.12.1"
+whisper = "^1.1.10"
 
 
 [build-system]

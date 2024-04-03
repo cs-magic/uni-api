@@ -7,10 +7,22 @@ from src.utils.path import PROJECT_PATH
 
 
 class Settings(BaseSettings):
-    app_name: str = "Open API"
-    description: str = "聚合AGI行业的主流API，提供动态key管理、算法调度、前端监控、可扩展性配置等功能 （opensource: https://github.com/cs-magic/openapi）"
+    app_name: str = "uni-api"
     version: str = "0.1.3"
     admin_email: str = "shawninjuly@gmail.com"
+    
+    @property
+    def repo(self):
+        return f"https://github.com/cs-magic/{self.app_name}"
+    
+    @property
+    def app_title(self):
+        return " ".join([i.capitalize() for i in self.app_name.split("-")])
+    
+    @property
+    def description(self):
+        return f"聚合AGI行业的主流API，提供动态key管理、算法调度、前端监控、可扩展性配置等功能 （opensource: {self.repo}）"
+    
     # ref: https://fastapi.tiangolo.com/tutorial/metadata/#metadata-for-tags
     tags: Any = [
         {
@@ -38,8 +50,6 @@ class Settings(BaseSettings):
             "description": "待分类/默认 API"
         }
     ]
-    
-    items_per_user: int = 50
     
     MOONSHOT_API_KEY: str
     OPENAI_API_KEY: str

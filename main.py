@@ -6,7 +6,7 @@ from src.router import root_router
 settings = Settings()
 
 app = FastAPI(
-    title=settings.app_name,
+    title=settings.app_title,
     description=settings.description,
     openapi_tags=settings.tags,
     version=settings.version,

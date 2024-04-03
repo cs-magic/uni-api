@@ -64,5 +64,7 @@ async def call_agent(
         # temperature=0
     )
     logger.debug(f"<< result: {res}")
-    print("\n------\n", res.choices[0].message.content)
-    return res
+    return {
+        "model": model,
+        "content": res.choices[0].message.content
+    }
