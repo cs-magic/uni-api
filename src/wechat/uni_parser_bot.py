@@ -10,6 +10,7 @@ from packages.common_spider.crwal_card import crawl_wechat_card
 from packages.common_wechat.bot.base import BaseWechatyBot
 from packages.common_wechat.patches.filebox import FileBox
 from packages.common_wechat.utils import parse_url_from_wechat_message
+from src.utils.path import PROJECT_PATH
 
 
 class UniParserBot(BaseWechatyBot):
@@ -33,17 +34,27 @@ class UniParserBot(BaseWechatyBot):
         logger.debug("<< Message: ", msg.payload)
         logger.debug("<< Sender: ", sender.payload)
         
-        if "南川" in sender_name:
-            if text.startswith("/stop"):
+        granted = "南川" in sender_name
+        if text.startswith("/stop"):
+            if granted:
                 self.enabled = False
-            elif text.startswith("/start"):
+                await conversation.say("stopped")
+            else:
+                await conversation.say("对不起，您暂无权限，请联系南川开通")
+            return
+        
+        if text.startswith("/start"):
+            if granted:
                 self.enabled = True
-            elif text.startswith("/help"):
-                await conversation.say(f"""
-                /start
-                /stop
-                /help
-                """)
+                await conversation.say("started")
+            else:
+                await conversation.say("对不起，您暂无权限，请联系南川开通")
+            return
+        
+        if text.startswith("/help"):
+            with open(PROJECT_PATH.joinpath("help.md")) as f:
+                await conversation.say(f.read())
+            return
         
         if not self.enabled:
             return
