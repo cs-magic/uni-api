@@ -34,6 +34,15 @@ class UniParserBot(BaseWechatyBot):
         logger.debug("<< Message: ", msg.payload)
         logger.debug("<< Sender: ", sender.payload)
         
+        if text == 'ding':
+            await conversation.say('dong')
+            return
+        
+        if text.startswith("/help"):
+            with open(PROJECT_PATH.joinpath("help.md")) as f:
+                await conversation.say(f.read())
+            return
+        
         granted = "南川" in sender_name
         if text.startswith("/stop"):
             if granted:
@@ -49,11 +58,6 @@ class UniParserBot(BaseWechatyBot):
                 await conversation.say("started")
             else:
                 await conversation.say("对不起，您暂无权限，请联系南川开通")
-            return
-        
-        if text.startswith("/help"):
-            with open(PROJECT_PATH.joinpath("help.md")) as f:
-                await conversation.say(f.read())
             return
         
         if not self.enabled:
@@ -79,9 +83,6 @@ class UniParserBot(BaseWechatyBot):
                 
                 if text == "DING":
                     await conversation.say("DONG")
-        
-        if text == 'ding':
-            await conversation.say('dong')
 
 
 if __name__ == '__main__':
