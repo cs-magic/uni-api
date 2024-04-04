@@ -42,6 +42,10 @@ class Settings(BaseSettings):
             "description": "场景相关 API"
         },
         {
+            "name": "WeChat",
+            "description": "微信机器人 / 数据大屏"
+        },
+        {
             "name": "Common",
             "description": "一些通用 API（例如OSS相关的）"
         },

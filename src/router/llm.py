@@ -1,8 +1,6 @@
 from typing import Annotated
 
-import openai
 from fastapi import APIRouter, Security
-from openai import OpenAI
 from pydantic import BaseModel
 
 from src.llm.providers.moonshot import MoonshotProvider

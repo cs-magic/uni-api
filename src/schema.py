@@ -1,11 +1,11 @@
-from typing import Literal, Iterable, Optional, Dict, Union, List, Required
+from typing import Literal, Iterable, Optional, Dict, Union, List
 
 import httpx
 from openai import NotGiven
 from openai.types.chat import completion_create_params, ChatCompletionToolChoiceOptionParam, \
     ChatCompletionToolParam, ChatCompletionSystemMessageParam, ChatCompletionUserMessageParam
 from pydantic import BaseModel, Field
-from typing_extensions import TypedDict
+from typing_extensions import TypedDict, Required
 
 ProviderType = Literal["openai", "moonshot"]
 

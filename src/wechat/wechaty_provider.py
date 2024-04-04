@@ -10,17 +10,19 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
-from wechaty import Wechaty, Message, Room, Contact
+from wechaty import Message, Room, Contact
 from wechaty_grpc.wechaty.puppet import MessageType
 
 from packages.common_datetime.utils import get_current_timestamp
 from packages.common_general.utils import parse_first_url
+from packages.common_wechat.bot.base import BaseWechatyBot
 from packages.common_wechat.patches.filebox import FileBox
 from packages.common_wechat.utils import parse_url_from_wechat_message
 from settings import settings
 
 
-class MyBot(Wechaty):
+class UniParserBot(BaseWechatyBot):
+    
     async def on_message(self, msg: Message):
         
         sender = msg.talker()
@@ -99,4 +101,4 @@ class MyBot(Wechaty):
 
 
 if __name__ == '__main__':
-    asyncio.run(MyBot().start())
+    asyncio.run(UniParserBot().start())
