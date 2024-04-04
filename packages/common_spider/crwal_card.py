@@ -39,12 +39,12 @@ def crawl_wechat_card(target_url: str, user_name: str = None, user_avatar: str =
         driver.find_element(By.ID, "generate-card").click()
         
         logger.debug("-- waiting upload button")
-        WebDriverWait(driver, 30).until(
+        WebDriverWait(driver).until(
             expected_conditions.element_to_be_clickable((By.ID, "upload-card"))
         ).click()
         
         logger.debug("-- waiting uploaded result")
-        uploaded_tip = WebDriverWait(driver, 30).until(
+        uploaded_tip = WebDriverWait(driver).until(
             expected_conditions.visibility_of_element_located((
                 By.CSS_SELECTOR, ".toaster div[data-title]"))
         ).text
