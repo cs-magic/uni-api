@@ -22,11 +22,13 @@ from settings import settings
 
 
 class UniParserBot(BaseWechatyBot):
+    enabled = False
     
     async def on_message(self, msg: Message):
         
         sender = msg.talker()
         sender_avatar = sender.payload.avatar
+        
         sender_name = sender.name
         room = msg.room()
         
@@ -36,9 +38,27 @@ class UniParserBot(BaseWechatyBot):
         text = msg.text()
         type = msg.type()
         
+        logger.debug(f"<< Room(name={room_name}), Sender(id={sender.contact_id}, name={sender_name}), Message(type={type}, text={text}), ")
+        logger.debug("<< Message: ", msg.payload)
+        logger.debug("<< Sender: ", sender.payload)
+        
+        if "南川" in sender_name:
+            if text.startswith("/stop"):
+                self.enabled = False
+            elif text.startswith("/start"):
+                self.enabled = True
+            elif text.startswith("/help"):
+                await conversation.say(f"""
+                /start
+                /stop
+                /help
+                """)
+        
+        if not self.enabled:
+            return
+        
         if room_name:
             if re.search(r'CS魔法社|test', room_name):
-                logger.debug(f"<< Room(name={room_name}), Sender(name={sender_name}), Message(type={type}, text={text}), ")
                 
                 if type == MessageType.MESSAGE_TYPE_URL:
                     url_model = parse_url_from_wechat_message(msg)

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, BackgroundTasks
 
-from src.wechat.wechaty_provider import UniParserBot
+from src.wechat.uni_parser_bot import UniParserBot
 
 wechat_router = APIRouter(prefix="/wechat", tags=["WeChat"])
 
