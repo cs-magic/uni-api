@@ -34,7 +34,6 @@ uvicorn main:app --reload
 
 访问 `http://localhost:8000/docs` 查看各 API。
 
-
 ## Deploy
 
 ### proxy
@@ -47,13 +46,15 @@ pm2 start --name "openapi" 'http_proxy=http://localhost:7890 https_proxy=http://
 
 ### drivers
 
-- https://googlechromelabs.github.io/chrome-for-testing/#stable
+- ubuntu 安装 stable driver（必要）：https://chat.openai.com/c/3b9d2211-7a26-4fc1-afdc-dd46025e80cb
+- 手动选择下载 driver（非必要）： https://googlechromelabs.github.io/chrome-for-testing/#stable
 
 ## Bugfix
 
 ### Wechaty - FileBox
 
-文件发送问题，参考：https://github.com/wechaty/python-wechaty/issues/356#issuecomment-1228024344 ，代码见 `packages/common_wechat/patches/filebox.py`
+文件发送问题，参考：https://github.com/wechaty/python-wechaty/issues/356#issuecomment-1228024344
+，代码见 `packages/common_wechat/patches/filebox.py`
 
 ### NotGiven
 

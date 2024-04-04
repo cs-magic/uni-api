@@ -3,68 +3,13 @@ import re
 from typing import Union
 
 from loguru import logger
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
-from webdriver_manager.chrome import ChromeDriverManager
 from wechaty import Message, Room, Contact
 from wechaty_grpc.wechaty.puppet import MessageType
 
-from packages.common_datetime.utils import get_current_timestamp
-from packages.common_general.utils import parse_first_url
+from packages.common_spider.crwal_card import crawl_wechat_card
 from packages.common_wechat.bot.base import BaseWechatyBot
 from packages.common_wechat.patches.filebox import FileBox
 from packages.common_wechat.utils import parse_url_from_wechat_message
-from settings import settings
-
-
-def crawl_wechat_card(target_url: str, user_name: str = None, user_avatar: str = None):
-    try:
-        logger.debug("-- starting browser")
-        # todo: conditional
-        service = Service(ChromeDriverManager().install())
-        options = Options()
-        options.add_argument("--headless")
-        driver = webdriver.Chrome(service=service, options=options)
-        
-        logger.debug("-- visiting")
-        driver.get(f'{settings.FRONTEND_BASEURL}/card/gen')
-        
-        if user_name:
-            logger.debug("-- filling user name")
-            driver.find_element(By.ID, "card-user-name").send_keys(user_name)
-        
-        if user_avatar:
-            logger.debug("-- filling user avatar")
-            driver.find_element(By.ID, "card-user-avatar").send_keys(user_avatar)
-        
-        logger.debug("-- filling url")
-        driver.find_element(By.ID, "card-input-url").send_keys(target_url)
-        
-        logger.debug("-- clicking generate button")
-        driver.find_element(By.ID, "generate-card").click()
-        
-        logger.debug("-- waiting upload button")
-        WebDriverWait(driver, 30).until(
-            expected_conditions.element_to_be_clickable((By.ID, "upload-card"))
-        ).click()
-        
-        logger.debug("-- waiting uploaded result")
-        uploaded_tip = WebDriverWait(driver, 30).until(
-            expected_conditions.visibility_of_element_located((
-                By.CSS_SELECTOR, ".toaster div[data-title]"))
-        ).text
-        
-        oss_url = parse_first_url(uploaded_tip)
-        logger.info(f"-- oss url: {oss_url}")
-        return {"url": oss_url, "name": f"{get_current_timestamp(kind='s')}.png"}
-    
-    except Exception as e:
-        logger.error(e)
-        return None
 
 
 class UniParserBot(BaseWechatyBot):
