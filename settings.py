@@ -51,11 +51,20 @@ class Settings(BaseSettings):
         }
     ]
     
+    # LLM
     MOONSHOT_API_KEY: str
     OPENAI_API_KEY: str
     ZHIPU_API_KEY: str
     MINIMAX_API_KEY: str
     MINIMAX_GROUP_ID: str
+    
+    # APP
+    FRONTEND_BASEURL: str
+    
+    # Wechaty
+    WECHATY_PUPPET: str
+    WECHATY_PUPPET_SERVICE_ENDPOINT: str
+    WECHATY_PUPPET_SERVICE_TOKEN: str
     
     model_config = SettingsConfigDict(env_file=PROJECT_PATH.joinpath(".env"))
 

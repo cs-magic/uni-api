@@ -1,11 +1,8 @@
 import asyncio
-import os
 import re
-from typing import Union, Literal, Optional
+from typing import Union
 
-import dotenv
 from loguru import logger
-from pydantic import BaseModel
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -13,48 +10,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
+from wechaty import Wechaty, Message, Room, Contact
 from wechaty_grpc.wechaty.puppet import MessageType
 
 from packages.common_datetime.utils import get_current_timestamp
+from packages.common_general.utils import parse_first_url
 from packages.common_wechat.patches.filebox import FileBox
-
-dotenv.load_dotenv()
-
-for k, v in os.environ.items():
-    if "wechaty" in k.lower():
-        print(k, "-->", v)
-
-from wechaty import Wechaty, Message, Room, Contact
-
-
-class WechatMessageUrlModel(BaseModel):
-    type: Literal["wxmp-article", "wxmp-video", "default"] = "default"
-    url: Optional[str] = None
-    raw: Optional[str] = None
-
-
-def parse_first_url(input: str):
-    m = re.search(r"https?://[^\s，。]+|www\.[^\s，。]+", input)
-    output = m[0] if m else None
-    logger.debug(f"-- parsed first url: (Input={input}, Output={output})", )
-    return output
-
-
-def parse_url_from_wechat_message(msg: Message) -> WechatMessageUrlModel:
-    text = msg.text()
-    model = WechatMessageUrlModel(raw=text)
-    
-    type = msg.type()
-    if type == MessageType.MESSAGE_TYPE_URL:
-        m = re.search(r'<url>(.*?)</url>', text)
-        if m:
-            url = m[1]
-            model.url = url
-            if url:
-                if re.search('mp.weixin.qq.com', url):
-                    model.type = "wxmp-article"
-    logger.info(f"parsed msg url model: {model}")
-    return model
+from packages.common_wechat.utils import parse_url_from_wechat_message
+from settings import settings
 
 
 class MyBot(Wechaty):
@@ -93,7 +56,7 @@ class MyBot(Wechaty):
                         driver = webdriver.Chrome(service=service, options=options)
                         
                         logger.debug("-- visiting")
-                        driver.get('http://localhost:3000/card/gen')  # todo: conditional
+                        driver.get(f'{settings.FRONTEND_BASEURL}/card/gen')
                         
                         if sender_name:
                             logger.debug("-- filling user name")
