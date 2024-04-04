@@ -43,7 +43,17 @@ uvicorn main:app --reload
 pm2 start --name "openapi" 'http_proxy=http://localhost:7890 https_proxy=http://localhost:7890 uvicorn main:app --port 40330'
 ```
 
+## Tech
+
+### drivers
+
+- https://googlechromelabs.github.io/chrome-for-testing/#stable
+
 ## Bugfix
+
+### Wechaty - FileBox
+
+文件发送问题，参考：https://github.com/wechaty/python-wechaty/issues/356#issuecomment-1228024344 ，代码见 `packages/common_wechat/patches/filebox.py`
 
 ### NotGiven
 

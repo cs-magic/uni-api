@@ -22,6 +22,8 @@ markdownify = "^0.12.1"
 whisper = "^1.1.10"
 wechaty = "^0.10.7"
 urllib3 = "<2"
+selenium = "^4.19.0"
+webdriver-manager = "^4.0.1"
 
 
 [build-system]
