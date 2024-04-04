@@ -22,7 +22,7 @@ from settings import settings
 
 
 class UniParserBot(BaseWechatyBot):
-    enabled = False
+    enabled = True
     
     async def on_message(self, msg: Message):
         
