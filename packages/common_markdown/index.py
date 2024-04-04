@@ -20,3 +20,7 @@ class MarkdownConverter(RawMarkdownConverter):
             return alt
         
         return '![%s](%s%s)' % (alt, src, title_part)
+
+
+def html2md(html: str):
+    return MarkdownConverter().convert(html)

@@ -3,7 +3,7 @@ from typing import Any
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from src.utils.path import PROJECT_PATH
+from src.path import PROJECT_PATH
 
 
 class Settings(BaseSettings):
@@ -43,7 +43,11 @@ class Settings(BaseSettings):
         },
         {
             "name": "WeChat",
-            "description": "微信机器人 / 数据大屏"
+            "description": "微信机器人 / 数据大屏 相关 API"
+        },
+        {
+            "name": "Spider",
+            "description": "爬虫相关 API"
         },
         {
             "name": "Common",

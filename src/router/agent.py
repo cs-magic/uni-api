@@ -7,9 +7,9 @@ from pydantic import BaseModel
 
 from src.llm.utils import get_provider
 from src.schema import ModelType
-from src.utils.compress_content import compress_content
-from src.utils.error_handler import error_handler
-from src.utils.path import AGENTS_PATH
+from packages.common_algo.string import compress_content
+from packages.common_fastapi.error_handler import error_handler
+from src.path import AGENTS_PATH
 
 agent_router = APIRouter(prefix='/agent', tags=["Agent"])
 
@@ -23,18 +23,15 @@ class AgentConfig(BaseModel):
     system_prompt: Optional[str] = None
 
 
-@agent_router.post('/call')
-@error_handler
-async def call_agent(
-    # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
-    content: Annotated[str, Form()],
-    agent_type: Annotated[Literal["default", "summariser"], Form()] = "default",
-    model_type: Annotated[ModelType, Form(description="覆盖配置中的model")] = None,
-):
+AgentType = Literal["default", "summarize-content"]
+
+
+def call_agent_base(content: str, agent_type: AgentType = None, llm_model_type: ModelType = "gpt-3.5-turbo"):
+    logger.info('-- calling agent...')
     with open(AGENTS_PATH.joinpath(f"{agent_type}.agent.yml")) as f:
         agent = AgentConfig.parse_obj(yaml.safe_load(f))
     
-    model = model_type if model_type else agent.model
+    model = llm_model_type if llm_model_type else agent.model
     
     system_prompt = agent.system_prompt or ""
     messages = []
@@ -57,15 +54,27 @@ async def call_agent(
         "content": content
     })
     
-    logger.debug(f">> calling LLM: Agent={agent}, Messages={messages}")
+    logger.info(f">> calling LLM: Agent={agent}, Messages={messages}")
     res = get_provider(model).call(
         model=model,
         messages=messages,
         top_p=0.03,  # ref: https://platform.openai.com/docs/api-reference/chat/create
         # temperature=0
     )
-    logger.debug(f"<< result: {res}")
+    logger.info(f"<< result: {res}")
     return {
         "model": model,
         "content": res.choices[0].message.content
     }
+
+
+@agent_router.post('/call')
+@error_handler
+async def call_agent(
+    # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
+    input: Annotated[str, Form()],
+    agent_type: Annotated[AgentType, Form()] = "default",
+    llm_model_type: Annotated[ModelType, Form(description="覆盖配置中的model")] = "gpt-3.5-turbo",
+):
+    data = call_agent_base(input, agent_type, llm_model_type)
+    return data

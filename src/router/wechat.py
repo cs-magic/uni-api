@@ -1,6 +1,6 @@
 from fastapi import APIRouter, BackgroundTasks
 
-from src.utils.error_handler import error_handler
+from packages.common_fastapi.error_handler import error_handler
 from src.wechat.uni_parser_bot import bot
 
 wechat_router = APIRouter(prefix="/wechat", tags=["WeChat"])

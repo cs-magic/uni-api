@@ -6,11 +6,11 @@ from loguru import logger
 from wechaty import Message, Room, Contact
 from wechaty_grpc.wechaty.puppet import MessageType
 
-from packages.common_spider.crwal_card import crawl_wechat_card
+from packages.common_spider.simulate_card import simulate_card
 from packages.common_wechat.bot.base import BaseWechatyBot
 from packages.common_wechat.patches.filebox import FileBox
 from packages.common_wechat.utils import parse_url_from_wechat_message
-from src.utils.path import PROJECT_PATH
+from src.path import PROJECT_PATH
 
 
 class UniParserBot(BaseWechatyBot):
@@ -75,7 +75,7 @@ class UniParserBot(BaseWechatyBot):
                     if (
                         url_model.type == "wxmp-article"  # todo: more types
                     ):
-                        data = crawl_wechat_card(url_model.url, sender_name, sender_avatar)
+                        data = simulate_card(url_model.url, sender_name, sender_avatar)
                         if data:
                             logger.info("-- sending")
                             await conversation.say(FileBox.from_url(data["url"], data["name"]))

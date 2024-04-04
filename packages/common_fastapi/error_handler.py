@@ -2,6 +2,7 @@ from functools import wraps
 from typing import Callable
 
 from fastapi import HTTPException
+from loguru import logger
 
 
 def error_handler(func: Callable):
@@ -12,6 +13,7 @@ def error_handler(func: Callable):
             return await func(*args, **kwargs)
         except Exception as e:
             # 如果有异常，转换为HTTPException
+            logger.error(e)
             raise HTTPException(status_code=400, detail=str(e))
     
     return wrapper

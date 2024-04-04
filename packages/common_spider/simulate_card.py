@@ -12,7 +12,7 @@ from packages.common_general.utils import parse_first_url
 from settings import settings
 
 
-def crawl_wechat_card(target_url: str, user_name: str = None, user_avatar: str = None):
+def simulate_card(target_url: str, user_name: str = None, user_avatar: str = None):
     try:
         logger.debug("-- starting browser")
         # todo: conditional
