@@ -5,6 +5,7 @@ from src.wechat.uni_parser_bot import UniParserBot
 wechat_router = APIRouter(prefix="/wechat", tags=["WeChat"])
 
 bot = UniParserBot()
+bot.start()  # default running
 
 
 @wechat_router.post("/start")
