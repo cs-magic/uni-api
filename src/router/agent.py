@@ -15,7 +15,7 @@ agent_router = APIRouter(prefix='/agent', tags=["Agent"])
 
 
 class AgentConfig(BaseModel):
-    name: Optional[str] = "untitled"
+    name: Optional[str] = None
     author: Optional[str] = None
     version: Optional[str] = None
     model: Optional[ModelType] = "gpt-3.5-turbo"
@@ -36,16 +36,17 @@ async def call_agent(
     
     model = model_type if model_type else agent.model
     
+    system_prompt = agent.system_prompt or ""
     messages = []
-    if agent.system_prompt:
+    if system_prompt:
         messages.append({
             "role": "system",
-            "content": agent.system_prompt,
+            "content": system_prompt,
         })
     
     max_content_len = (
         agent.total_tokens
-        - len(agent.system_prompt)  # 系统prompt的长度
+        - len(system_prompt)  # 系统prompt的长度
         - 1e3  # 输出的预留长度
         - 1e2  # 误差
     )
