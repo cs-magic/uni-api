@@ -7,12 +7,14 @@ from pydantic import BaseModel, Field
 
 from src.router.account import User, get_current_active_user
 from src.utils.api import api
+from src.utils.error_handler import error_handler
 from src.utils.markdown import MarkdownConverter
 
 common_router = APIRouter(prefix='/common', tags=['Common'])
 
 
 @common_router.post('/oss/upload')
+@error_handler
 async def oss_upload(
     user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
 ):
@@ -31,6 +33,7 @@ class CrawlModel(BaseModel):
     '/spider/crawl',
     response_model=CrawlModel
 )
+@error_handler
 async def crawl_page(
     # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
     url: str
