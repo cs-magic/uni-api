@@ -16,11 +16,11 @@ agent_router = APIRouter(prefix='/agent', tags=["Agent"])
 
 class AgentConfig(BaseModel):
     name: Optional[str] = "untitled"
-    author: Optional[str]
-    version: Optional[str]
+    author: Optional[str] = None
+    version: Optional[str] = None
     model: Optional[ModelType] = "gpt-3.5-turbo"
-    total_tokens: int = 8192
-    system_prompt: Optional[str]
+    total_tokens: Optional[int] = 8192
+    system_prompt: Optional[str] = None
 
 
 @agent_router.post('/call')
