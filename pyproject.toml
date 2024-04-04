@@ -6,7 +6,7 @@ authors = ["markshawn2020 <shawninjuly@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 fastapi = {extras = ["all"], version = "^0.110.0"}
 uvicorn = "^0.29.0"
 python-multipart = "^0.0.9"
@@ -20,6 +20,8 @@ pyyaml = "^6.0.1"
 beautifulsoup4 = "^4.12.3"
 markdownify = "^0.12.1"
 whisper = "^1.1.10"
+wechaty = "^0.10.7"
+urllib3 = "<2"
 
 
 [build-system]
