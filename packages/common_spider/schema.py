@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import List
 
 from pydantic import BaseModel
 
@@ -21,14 +20,6 @@ class PlatformModel(BaseModel):
     name: str
 
 
-class ArticleSummaryModel(BaseModel):
-    title: str | None
-    description: str | None
-    mindmap: str | None
-    comment: str | None
-    tags: List[str] | None
-
-
 class ArticleModel(BaseModel):
     platform: PlatformModel
     author: UserBasicModel
@@ -37,4 +28,4 @@ class ArticleModel(BaseModel):
     cover: ImageModel
     description: str
     content_md: str
-    content_summary: ArticleSummaryModel | None
+    content_summary: str | None

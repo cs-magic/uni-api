@@ -1,7 +1,16 @@
 import re
 from pprint import pprint
+from typing import List
 
-from packages.common_spider.schema import ArticleSummaryModel
+from pydantic import BaseModel
+
+
+class ArticleSummaryModel(BaseModel):
+    title: str | None
+    description: str | None
+    mindmap: str | None
+    comment: str | None
+    tags: List[str] | None
 
 
 def parse_summary(content: str) -> ArticleSummaryModel:

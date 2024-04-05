@@ -8,9 +8,8 @@ from loguru import logger
 
 from packages.common_api.index import api
 from packages.common_fastapi.error_handler import error_handler
-from packages.common_general.parse_summary import parse_summary
 from packages.common_markdown.html2md import html2md
-from packages.common_spider.schema import ArticleModel, PlatformModel, UserBasicModel, ImageModel, ArticleSummaryModel
+from packages.common_spider.schema import ArticleModel, PlatformModel, UserBasicModel, ImageModel
 from packages.common_wechat.utils import is_wechat_url
 from src.router.llm import call_agent
 
@@ -42,11 +41,10 @@ async def parse_url_route(
     content_html = str(soup.find(id="img-content"))
     content_md = html2md(content_html)
     
-    content_summary: ArticleSummaryModel | None = None
+    content_summary: str | None = None
     if with_summary:
         logger.info("-- summarizing content")
-        summary = await call_agent(content_md, "summarize-content", "gpt-4")
-        content_summary = parse_summary(summary)
+        content_summary = await call_agent(content_md, "summarize-content", "gpt-4")
         logger.info("-- summarized")
     
     return ArticleModel(
