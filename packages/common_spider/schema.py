@@ -4,13 +4,13 @@ from typing import Literal
 from pydantic import BaseModel
 
 
-class UserBasicModel(BaseModel):
+class IUserBasic(BaseModel):
     id: str | None = None
     name: str | None = None
     avatar: str | None = None
 
 
-class ImageModel(BaseModel):
+class IImage(BaseModel):
     url: str
     width: str | None = None
     height: str | None = None
@@ -19,13 +19,18 @@ class ImageModel(BaseModel):
 PlatformType = Literal["wxmpArticle", "xhsNote", "bilibiliVideo", "unknown"]
 
 
-class ArticleModel(BaseModel):
+class ISummary(BaseModel):
+    modelType: str
+    result: str
+
+
+class IArticle(BaseModel):
     platformId: str
     platformType: PlatformType
-    author: UserBasicModel
+    author: IUserBasic
     time: datetime
     title: str
-    cover: ImageModel
+    cover: IImage
     description: str
     contentMd: str
-    contentSummary: str | None
+    contentSummary: ISummary | None

@@ -9,16 +9,17 @@ from loguru import logger
 from packages.common_api.index import api
 from packages.common_fastapi.error_handler import error_handler
 from packages.common_markdown.html2md import html2md
-from packages.common_spider.schema import ArticleModel, UserBasicModel, ImageModel, PlatformType
+from packages.common_spider.schema import IArticle, IUserBasic, IImage, PlatformType, ISummary
 from packages.common_wechat.utils import is_wechat_url
 from src.router.llm import call_agent
+from src.schema import ModelType
 
 spider_router = APIRouter(prefix="/spider", tags=["Spider"])
 
 
 @spider_router.get(
     '/parse-url',
-    response_model=ArticleModel
+    response_model=IArticle
 )
 @error_handler
 async def parse_url_route(
@@ -42,24 +43,26 @@ async def parse_url_route(
     content_html = str(soup.find(id="img-content"))
     content_md = html2md(content_html, md_with_img)
     
-    content_summary: str | None = None
+    content_summary: ISummary | None = None
     logger.info(f'-- summarizing content ({with_summary})')
     if with_summary:
-        content_summary = await call_agent(content_md, "summarize-content", "gpt-4")
+        model: ModelType = "gpt-4"
+        result = await call_agent(content_md, "summarize-content", model)
+        content_summary = ISummary(modelType=model, result=result)
         logger.info("-- summarized")
     
     platform_type: PlatformType = check_platform_type(url)
-    return ArticleModel(
+    return IArticle(
         platformId=re.search(r'sn=(.*?)&', parse_meta("og:url", "property"))[1],
         platformType=platform_type,
-        author=UserBasicModel(
+        author=IUserBasic(
             # id= # todo
             name=re.search(r'var nickname = htmlDecode\("(.*?)"\);', text)[1],
             avatar=re.search(r'var hd_head_img = "(.*?)"', text)[1],
         ),
         time=datetime.utcfromtimestamp(int(re.search(r'var ct = "(.*?)"', text)[1])),
         title=parse_meta("og:title", "property"),
-        cover=ImageModel(
+        cover=IImage(
             url=parse_meta("og:image", "property"),
             width=None,
             height=None
