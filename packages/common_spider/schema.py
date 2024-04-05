@@ -1,9 +1,11 @@
 from datetime import datetime
+from typing import Literal
 
 from pydantic import BaseModel
 
 
 class UserBasicModel(BaseModel):
+    id: str | None = None
     name: str | None = None
     avatar: str | None = None
 
@@ -14,18 +16,16 @@ class ImageModel(BaseModel):
     height: str | None = None
 
 
-class PlatformModel(BaseModel):
-    id: str
-    type: str
-    name: str
+PlatformType = Literal["wxmpArticle", "xhsNote", "bilibiliVideo", "unknown"]
 
 
 class ArticleModel(BaseModel):
-    platform: PlatformModel
+    platformId: str
+    platformType: PlatformType
     author: UserBasicModel
     time: datetime
     title: str
     cover: ImageModel
     description: str
-    content_md: str
-    content_summary: str | None
+    contentMd: str
+    contentSummary: str | None
