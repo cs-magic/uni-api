@@ -9,6 +9,10 @@ from packages.common_wechat.schema import WechatMessageUrlModel
 from settings import settings
 
 
+def is_wechat_url(url: str):
+    return re.search("mp.weixin.qq.com/s/(.*?)(?:\?|$)", url) is not None
+
+
 def parse_url_from_wechat_message(msg: Message) -> WechatMessageUrlModel:
     text = msg.text()
     model = WechatMessageUrlModel(raw=text)

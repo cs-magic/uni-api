@@ -8,7 +8,7 @@ from loguru import logger
 from packages.common_api.index import api
 from packages.common_markdown.index import html2md
 from packages.common_spider.schema import UserBasicModel, ImageModel, PlatformModel, ArticleModel
-from src.router.common import is_wechat_url
+from packages.common_wechat.utils import is_wechat_url
 
 
 def parse_url(url: str):

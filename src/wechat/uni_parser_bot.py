@@ -85,6 +85,7 @@ class UniParserBot(BaseWechatyBot):
                     await conversation.say("DONG")
 
 
+uni_parser_bot = UniParserBot()
+
 if __name__ == '__main__':
     asyncio.run(UniParserBot().start())
-bot = UniParserBot()

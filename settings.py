@@ -27,35 +27,23 @@ class Settings(BaseSettings):
     tags: Any = [
         {
             "name": "Account",
-            "description": "账号相关 API （基于 OAuth2 / HTTP Basic）",
         },
         {
             "name": "LLM",
-            "description": "大语言模型相关 API",
-            "externalDocs": {
-                "description": "外部文档参考",
-                "url": "https://fastapi.tiangolo.com/",
-            },
-        },
-        {
-            "name": "Agent",
-            "description": "场景相关 API"
         },
         {
             "name": "WeChat",
-            "description": "微信机器人 / 数据大屏 相关 API"
+            "description": "todo: multi-accounts"
         },
         {
             "name": "Spider",
-            "description": "爬虫相关 API"
         },
         {
-            "name": "Common",
-            "description": "一些通用 API（例如OSS相关的）"
+            "name": "OSS",
+            "description": "todo"
         },
         {
             "name": "default",
-            "description": "待分类/默认 API"
         }
     ]
     
