@@ -1,3 +1,4 @@
+import json
 import re
 import time
 from io import BytesIO
@@ -82,9 +83,10 @@ class Simulator(Tracker):
     
     def _capture(self) -> str:
         # 等待 action 按钮 ok 才可以开始导出图，否则不完整
-        WebDriverWait(self.driver, 10, .1).until(lambda driver: driver.find_element(By.ID, "download-card").is_enabled())
-        ele_preview = self.driver.find_element(By.ID, "card-preview")
         self.track("capturing")
+        WebDriverWait(self.driver, 10, .1).until(lambda driver: driver.find_element(By.ID, "download-card").is_enabled())
+        self.track("action buttons prepared")
+        ele_preview = self.driver.find_element(By.ID, "card-preview")
         
         if self.capture_type == "direct":
             fn = f"{get_current_timestamp(kind='s')}_{self.dpi}.png"
@@ -119,13 +121,15 @@ class Simulator(Tracker):
         self._wait_exists(fn)
         return fn
     
-    def run(self, content: str) -> str:
+    def run(self, input: str) -> str:
+        content = json.dumps(input)
+        equal = input == content
         try:
-            self.track(f"\n>> running content={content[:20]}...", update=True)
+            self.track(f"\n>> running with card: {content} (equal={equal})" + ("" if equal else f"(input={input})") , update=True)
             self._send("card-content", content)
             return self._capture()
         except Exception as e:
-            logger.error(str(e))
+            logger.error(e)
     
     def _wait_exists(self, fn: str):
         fp = self.download_dir.joinpath(fn)

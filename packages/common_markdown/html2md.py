@@ -30,4 +30,4 @@ class MarkdownConverter(RawMarkdownConverter):
 
 
 def html2md(html: str, md_with_img=False):
-    return MarkdownConverter(md_with_img).convert(html)
+    return MarkdownConverter(md_with_img).convert(html).replace('\n', '\\n')

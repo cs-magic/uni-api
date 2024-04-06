@@ -24,7 +24,7 @@ class ISummary(BaseModel):
     result: str
 
 
-class IArticle(BaseModel):
+class ICard(BaseModel):
     platformId: str
     platformType: PlatformType
     author: IUserBasic
