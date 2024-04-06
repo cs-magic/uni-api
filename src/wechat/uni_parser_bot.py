@@ -17,6 +17,7 @@ from packages.common_wechat.utils import parse_url_from_wechat_message
 from settings import settings
 from src.path import GENERATED_PATH, PROJECT_PATH
 from src.schema.bot import BotStatus, BotSettings
+from src.schema.llm import ModelType
 from src.wechat.simulate_card_2 import Simulator
 
 
@@ -28,17 +29,17 @@ class UniParserBot(BaseWechatyBot):
         self.simulator = Simulator(self.dir)
         self.started_time = time.time()
         self.normal_commands = ['help', 'ding', 'status']
-        self.super_commands = ['shelp', "start", "stop", "enable-llm", "disable-llm", "refresh-driver-page"]
+        self.super_commands = ['shelp', "start", "stop", "enable-llm", "disable-llm", "refresh-driver-page", "set-summary-model"]
         self.version = "0.5.0"
         self.features_enabled = True
-        self.llm_enabled = True
+        self.summary_model: ModelType | None= None
     
     @property
     def status(self):
         return BotStatus(
             version=self.version,
             features_enabled=self.features_enabled,
-            llm_enabled=self.llm_enabled,
+            summary_model=self.summary_model,
             alive_time=format_duration(time.time() - self.started_time),
         )
     
@@ -82,7 +83,7 @@ class UniParserBot(BaseWechatyBot):
             
             async def simulate_card():
                 try:
-                    res = parse_url(url_model.url, self.status.llm_enabled)
+                    res = parse_url(url_model.url, self.status.summary_model)
                     content = res.json()
                     self._validate_content(content)
                     fb = self.simulator.run(content, sender_name, sender_avatar)
@@ -101,9 +102,6 @@ class UniParserBot(BaseWechatyBot):
                     await conversation.say(settings.bot.help)
                 elif command == 'status':
                     await conversation.say(self.settings.status)
-                elif command == "refresh-driver-page":
-                    self.simulator.driver.refresh()
-                    await conversation.say("ok")
                 return
             
             m_super_command = re.match(f'({"|".join(self.super_commands)})(?: |$)', text)
@@ -117,9 +115,14 @@ class UniParserBot(BaseWechatyBot):
                     elif command == "stop":
                         self.features_enabled = False
                     elif command == "enable-llm":
-                        self.llm_enabled = True
+                        self.summary_model = True
                     elif command == "disable-llm":
-                        self.llm_enabled = False
+                        self.summary_model = False
+                    elif command == "refresh-driver-page":
+                        self.simulator.driver.refresh()
+                        await conversation.say("ok")
+                    elif command == "set-summary-model":
+                        await conversation.say("todo set")
                     await conversation.say("ok")
                 return
             

@@ -17,7 +17,7 @@ from src.utils import check_platform_type
 
 def parse_url(
     url: str,
-    with_summary: Optional[bool] = False,
+    summary_model: Optional[ModelType] = None,
     md_with_img: Optional[bool] = False
 ) -> ICard:
     logger.info(f"-- parsing url: {url}")
@@ -40,11 +40,10 @@ def parse_url(
     platform_id = re.search(r'sn=(.*?)&', parse_meta("og:url", "property"))[1]
     
     content_summary: ISummary | None = None
-    logger.info(f'-- summarizing content ({with_summary})')
-    if with_summary:
-        model: ModelType = "gpt-4"
-        result = call_agent(content_md, "summarize-content", model)
-        content_summary = ISummary(modelType=model, result=result)
+    logger.info(f'-- summarizing content (model={summary_model})')
+    if summary_model:
+        result = call_agent(content_md, "summarize-content", summary_model)
+        content_summary = ISummary(modelType=summary_model, result=result)
         
         # mock
         # content_summary = ISummary.parse_obj({"modelType": "gpt-4", "result": "<title>Kimi在3月份实现双端爆发，月活超字节豆包</title>\n<description>月之暗面在3月份实现了爆发式增长，移动端月活超过百万，超越字节豆包，网页端月访问超过千万，实现了3倍的增长。</description>\n<mindmap>\n- Kimi获得新一轮投资\n  - 投资方包括阿里、美团等\n  - 投资金额达10亿美元\n- 3月份Kimi实现双端爆发\n  - 移动端月活超百万\n  - 网页端月访问超千万\n- Kimi月活超越字节豆包\n- 网页端月访问实现3倍增长\n</mindmap>\n<comment>Kimi在新一轮投资的推动下，实现了在移动端和网页端的爆发式增长，表现出强大的市场竞争力。</comment>\n<tags>投资,用户增长,市场竞争力</tags>"})
@@ -81,4 +80,4 @@ def parse_url(
 
 if __name__ == '__main__':
     url = 'http://mp.weixin.qq.com/s?__biz=MzI4NTgxMDk1NA==&amp;mid=2247490896&amp;idx=2&amp;sn=568f4c0a22313f5269f9fada94206ef4&amp;chksm=ebe7d535dc905c2308bdb321218da67ffe8a0fd32b63ef4bf6ecd706c43f86a12824dc329406&amp;mpshare=1&amp;scene=1&amp;srcid=0404tbqm2VUZRS72SUkVwq94&amp;sharer_shareinfo=481652bc83d18c4898309e7f413e6bae&amp;sharer_shareinfo_first=ae44e63fe8de9e05a5b6d5dfef67ce2c#rd'
-    parse_url(url, False)
+    parse_url(url, None)

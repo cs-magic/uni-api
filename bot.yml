@@ -25,5 +25,5 @@ shelp: |
 status: |
   version: {{ version }}
   features_enabled: {{features_enabled}}
-  llm_enabled: {{llm_enabled}}
+  summary_model: {{summary_model}}
   alive_time: {{alive_time}}

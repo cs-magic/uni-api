@@ -5,6 +5,7 @@ from fastapi import APIRouter
 from packages.common_fastapi.error_handler import error_handler
 from packages.common_spider.parse_url import parse_url
 from packages.common_spider.schema import ICard
+from src.schema.llm import ModelType
 
 spider_router = APIRouter(prefix="/spider", tags=["Spider"])
 
@@ -17,7 +18,7 @@ spider_router = APIRouter(prefix="/spider", tags=["Spider"])
 async def parse_url_route(
     # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
     url: str,
-    with_summary: Optional[bool] = False,
+    summary_model: Optional[ModelType] = None,
     md_with_img: Optional[bool] = False
 ):
-    return parse_url(url, with_summary, md_with_img)
+    return parse_url(url, summary_model, md_with_img)
