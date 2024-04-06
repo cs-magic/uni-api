@@ -1,3 +1,7 @@
+import os
+import re
+from io import BytesIO
+from time import sleep
 from typing import Literal
 
 from PIL import Image
@@ -8,111 +12,135 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.support import expected_conditions as EC
+
 
 from packages.common_datetime.utils import get_current_timestamp
 from packages.common_general.tracker import Tracker
 from settings import settings
 from src.path import GENERATED_PATH
 
-InputType = Literal["send_keys", "js"]
-
 
 def simulate_card_2(content: str, user_name: str = None, user_avatar: str = None):
     tracker = Tracker()
     
-    input_type: InputType = 'js'  # 'send_keys'
+    def track(s: str):
+        tracker.track(s)
     
-    def send(id: str, value: str | None):
-        # logger.debug(f'-- filling {id}')
+    def shot(
+        dpi: int,
+        input_type: Literal["send_keys", "js"] = 'js',  # 'send_keys',
+        capture_type: Literal["direct", "crop", "click"] = "direct",  # "crop"
+    ):
+        """
         
-        ele = driver.find_element(By.ID, id)
-        if value:
+        :param input_type:
+        :param capture_type: crop(5.03s), direct(-)
+        :param dpi: 1-4, 4以上的截图质量没区别，但是耗时更长
+        :return:
+        """
+        GENERATED_PATH.joinpath('%E6%8A%A5%E4%BB%B7%E5%A4%AA%E4%BE%BF%E5%AE%9C%EF%BC%8C%E4%B8%AD%E5%9B%BD%E9%AB%98%E9%93%81%E8%A2%AB%E8%B8%A2%E5%87%BA%E4%BF%9D%E5%8A%A0%E5%88%A9%E4%BA%9A%EF%BC%81.png').unlink(missing_ok=True)
+
+        def send(id: str, value: str | None):
+            # logger.debug(f'-- filling {id}')
             
-            if input_type == 'js':
-                driver.execute_script('arguments[0].value=arguments[1];arguments[0].onchange;', ele, value)
-                ele.send_keys(" ")
-            elif input_type == 'send_keys':
-                ele.send_keys(value)
+            ele = driver.find_element(By.ID, id)
+            if value:
+                
+                if input_type == 'js':
+                    driver.execute_script('arguments[0].value=arguments[1];arguments[0].onchange;', ele, value)
+                    ele.send_keys(" ")
+                elif input_type == 'send_keys':
+                    ele.send_keys(value)
+                else:
+                    raise
+                
+                # logger.debug(f'-- target={len(value)}, indeed={len(indeed)}, ok={len(value) == len(indeed)}')
+            else:
+                logger.debug("-- skipped")
+            # sleep(1)
+            indeed = ele.get_attribute("value")  # if ele.tag_name == "input" else ele.text
+            track(f"inputted {id}, target={len(value)}, indeed={len(indeed)}, ok={len(value) == len(indeed)}")
+        
+        def capture():
+            WebDriverWait(driver, 10, .1).until(lambda driver: driver.find_element(By.ID, "download-card").is_enabled())
+            track("wait rendered")
+            
+            ele = driver.find_element(By.ID, "card-preview")
+            fp = GENERATED_PATH.joinpath(f"{get_current_timestamp(kind='s')}_{dpi}.png").__str__()
+            if capture_type == "direct":
+                # 这个不行
+                # driver.execute_script(f"document.querySelector('#card-preview').style.zoom='{dpi}00%'")
+                ele.screenshot(fp)
+            
+            elif capture_type == "click":
+                driver.find_element(By.ID, "download-card").click()
+                css_selector = '.toaster div[data-title]'
+                # 如果不基于toast检测而基于Download text的话，则需要等待 .1 s
+                ele_downloaded = WebDriverWait(driver, 10, .1).until(
+                    EC.visibility_of_element_located((By.CSS_SELECTOR, css_selector))
+                )
+                downloaded_fp = re.search(r"at (.*?)$", ele_downloaded.text)[1]
+                logger.info(f"downloaded at {GENERATED_PATH.joinpath(downloaded_fp)}")
+            
+            # ref: https://chat.openai.com/c/6e606653-0f65-493a-9259-2599c723963e
+            elif capture_type == "crop":
+                
+                location = ele.location
+                size = ele.size
+                
+                # Open the screenshot and crop it to the element
+                x = location['x'] * dpi
+                y = location['y'] * dpi
+                width = x + size['width'] * dpi
+                height = y + size['height'] * dpi
+                # track(f"ele dimension: x={x}, y={y}, w={width}, h={height}")
+                
+                bs = driver.get_screenshot_as_png()
+                # track("got png")
+                
+                fs = Image.open(BytesIO(bs))
+                # track(f"opened buffer dimension: w={fs.width}, h={fs.height}")
+                
+                element_screenshot = fs.crop((int(x), int(y), int(width), int(height)))
+                # track("cropped")
+                
+                element_screenshot.save(fp)
+            
             else:
                 raise
-            
-            # logger.debug(f'-- target={len(value)}, indeed={len(indeed)}, ok={len(value) == len(indeed)}')
-        else:
-            logger.debug("-- skipped")
-        # sleep(1)
-        indeed = ele.get_attribute("value")  # if ele.tag_name == "input" else ele.text
-        tracker.track(f"inputted {id}, target={len(value)}, indeed={len(indeed)}, ok={len(value) == len(indeed)}")
-    
-    capture_type: Literal["direct", "crop"] = "crop"
-    
-    def capture():
-        ele = driver.find_element(By.ID, "card-preview")
-        fp = GENERATED_PATH.joinpath(f"{get_current_timestamp(kind='s')}.png").__str__()
-        if capture_type == "direct":
-            ele.screenshot(fp)
-        elif capture_type == "crop":
-            
-            location = ele.location
-            size = ele.size
-            
-            # Open the screenshot and crop it to the element
-            x = location['x'] * DPI
-            y = location['y'] * DPI
-            width = x + size['width'] * DPI
-            height = y + size['height'] * DPI
-            logger.info(f"-- ele dimension: x={x}, y={y}, w={width}, h={height}")
-            
-            fsp = GENERATED_PATH.joinpath("full_screenshot.png")
-            driver.save_screenshot(fsp)
-            fs = Image.open(fsp)
-            logger.info(f"-- fs dimension: w={fs.width}, h={fs.height}")
-            element_screenshot = fs.crop((int(x), int(y), int(width), int(height)))
-            element_screenshot.save(fp)
-            pass
-        else:
-            raise
-        tracker.track(f"screenshot: {fp}")
-    
-    DPI = 4
-    
-    try:
-        logger.debug("-- starting browser")
+            track(f"screenshot ok")
+        
+        download_dir = str(GENERATED_PATH)
+        track(f"-- opts: dpi={dpi}, capture_type={capture_type}, input_type={input_type}, download_dir={download_dir}")
+        
         service = Service(ChromeDriverManager().install())
         options = Options()
         options.add_argument("--headless")
         options.add_argument("--window-size=1920,1080")
-        
         # ref: Selenium Can Make Hi-DPI, Retina Style Screenshots (Firefox and Chrome) - DEV Community, https://dev.to/simplecto/selenium-can-make-hi-dpi-retina-style-screenshots-firefox-and-chrome-37b9
-        options.add_argument(f"--force-device-scale-factor={DPI}")
-        options.add_argument(f"--high-dpi-support={DPI}")  # This should match the scale factor
-        
-        driver = webdriver.Chrome(options=options, service=service, )
-        logger.info(f'-- window: {driver.get_window_rect()}')
-        tracker.track("started")
+        options.add_argument(f"--force-device-scale-factor={dpi}")
+        options.add_argument(f"--high-dpi-support={dpi}")  # This should match the scale factor
+        prefs = {'download.default_directory': download_dir}
+        options.add_experimental_option("prefs", prefs)
+        driver = webdriver.Chrome(options=options, service=service)
+        track(f"started")
         
         driver.get(f'{settings.FRONTEND_BASEURL}/card/gen')
         # driver.execute_script("document.body.style.zoom='100%'")
-        tracker.track("visited")
+        track("visited")
         
         send("card-user-name", user_name)
         send("card-user-avatar", user_avatar)
         send("card-content", content)
         
-        WebDriverWait(driver, 10, .1).until(
-            lambda driver: driver.find_element(By.ID, "upload-card").is_enabled()
-        )
-        tracker.track("wait rendered")
-        
-        # driver.save_screenshot(GENERATED_PATH.joinpath("full_screenshot.png"))
-        
-        # driver.execute_script("document.body.style.zoom='200%'")
-        
         capture()
-        
-        # input("Press Enter to quit the browser...")
         driver.quit()
-        return
     
+    try:
+        # shot(2, capture_type="crop")
+        shot(1, capture_type="click")
+        # shot(4, capture_type="click")
     except Exception as e:
         logger.error(e)
         return None
