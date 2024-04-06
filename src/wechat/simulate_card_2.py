@@ -19,7 +19,6 @@ from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 
 from packages.common_datetime.utils import get_current_timestamp
-from packages.common_general.css import TOASTER_CSS_SELECTOR
 from packages.common_general.tracker import Tracker
 from packages.common_wechat.patches.filebox import FileBox
 from settings import settings
@@ -33,7 +32,6 @@ class Simulator(Tracker):
         download_dir: Path = GENERATED_PATH,
         capture_type: Literal["direct", "crop", "frontend-download", "frontend-upload"] = "frontend-upload",
         input_type: Literal["send_keys", "js"] = 'js',
-        dpi: int = 1,
         headless=True
     ):
         """
@@ -51,6 +49,8 @@ class Simulator(Tracker):
             2. 当 capture_type 非 frontend 时，需要设置 dpi=4 才能最佳效果
         """
         super().__init__()
+        
+        dpi = 1 if capture_type == 'frontend-download' else 4
         
         self.dpi = dpi
         self.input_type = input_type
@@ -100,7 +100,7 @@ class Simulator(Tracker):
         def wait_toast(type: Literal["upload", "download"]):
             self.driver.find_element(By.ID, f"{type}-card").click()
             # 如果不基于toast检测而基于Download text的话，则需要等待 .1 s
-            toast_ele: WebElement = WebDriverWait(self.driver, 10, .1, ignored_exceptions=ignored_exceptions)\
+            toast_ele: WebElement = WebDriverWait(self.driver, 10, .1, ignored_exceptions=ignored_exceptions) \
                 .until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".toast")))
             url = re.search(rf'{type}ed at (.*?)$', toast_ele.text)[1]
             logger.info(f"matched in toast: {url}")
@@ -181,5 +181,5 @@ if __name__ == '__main__':
     ]
     
     for content in contents:
-        simulator.run(content, "mark")
+        simulator.run(content, "mark", "http://wx.qlogo.cn/mmhead/Q3auHgzwzM4RANEFJicrdF4P3MaPCJNaRc9VrCKWCsyDlsZgzn6MPww/0")
         # time.sleep(2)

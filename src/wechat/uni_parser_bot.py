@@ -80,8 +80,10 @@ class UniParserBot(BaseWechatyBot):
             
             # await conversation.ready()
             
-            async def simulate_card(content: str):
+            async def simulate_card():
                 try:
+                    res = parse_url(url_model.url, self.status.llm_enabled)
+                    content = res.json()
                     self._validate_content(content)
                     fb = self.simulator.run(content, sender_name, sender_avatar)
                     await conversation.say(fb)
@@ -140,8 +142,7 @@ class UniParserBot(BaseWechatyBot):
                         if (
                             url_model.type == "wxmp-article"  # todo: more types
                         ):
-                            res = parse_url(url_model.url, self.status.llm_enabled)
-                            await simulate_card(res.json())
+                            await simulate_card()
         
         except Exception as e:
             logger.error(e)
