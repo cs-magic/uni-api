@@ -28,7 +28,7 @@ def compress_content(content: str, target_len=6e3) -> str:
             n = max(len(lines) - 1, 1)
             return [compress_line(line, .4 + abs(i / n - .5)) for (i, line) in enumerate(lines)]
         
-        logger.debug("horizontal compressing...")
+        # logger.debug("horizontal compressing...")
         for i in range(1, 11):
             if len(content) <= target_len: return
             lines = content.splitlines()
@@ -40,7 +40,7 @@ def compress_content(content: str, target_len=6e3) -> str:
     def vertical_compress():
         nonlocal content
 
-        logger.debug("vertical compressing...")
+        # logger.debug("vertical compressing...")
         i = 0
         while len(content) > target_len:
             lines = content.splitlines()

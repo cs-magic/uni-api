@@ -1,21 +1,29 @@
 import asyncio
 import re
 from typing import Union
+from urllib.request import pathname2url
 
 from loguru import logger
 from wechaty import Message, Room, Contact
 from wechaty_grpc.wechaty.puppet import MessageType
 
-from src.wechat.simulate_card_1 import simulate_card_1
 from packages.common_wechat.bot.base import BaseWechatyBot
 from packages.common_wechat.patches.filebox import FileBox
 from packages.common_wechat.utils import parse_url_from_wechat_message
-from src.path import PROJECT_PATH
+from src.path import PROJECT_PATH, GENERATED_PATH
+from src.router.spider import parse_url
+from src.wechat.simulate_card_2 import Simulator
 
 
 class UniParserBot(BaseWechatyBot):
     enabled = True
     
+    def __init__(self):
+        super().__init__()
+        self.dir = GENERATED_PATH
+        self.simulator = Simulator(self.dir)
+    
+    # how to write here with a @error_handler
     async def on_message(self, msg: Message):
         
         sender = msg.talker()
@@ -30,9 +38,7 @@ class UniParserBot(BaseWechatyBot):
         text = msg.text()
         type = msg.type()
         
-        logger.debug(f"<< Room(name={room_name}), Sender(id={sender.contact_id}, name={sender_name}), Message(type={type}, text={text}), ")
-        logger.debug("<< Message: ", msg.payload)
-        logger.debug("<< Sender: ", sender.payload)
+        # logger.debug(f"<< Room(name={room_name}), Sender(id={sender.contact_id}, name={sender_name}), Message(type={type}, text={text}), ")
         
         if text == 'ding':
             await conversation.say('dong')
@@ -63,9 +69,25 @@ class UniParserBot(BaseWechatyBot):
         if not self.enabled:
             return
         
+        async def send_parsed_card(content: str = None):
+            if not content:
+                logger.info('ignored since no content')
+                return
+            fn = self.simulator.run(content)
+            if fn:
+                logger.info(f"sending fn={fn}")
+                # 本地文件，对文件名有要求，建议不要有 @_-+ 等符号
+                await conversation.say(FileBox.from_file(self.dir.joinpath(fn).as_posix(), fn))
+                logger.info("sent")
+        
         if room_name:
-            if re.search(r'CS魔法社|test', room_name):
-                if type == MessageType.MESSAGE_TYPE_URL:
+            # group_regex = r'CS魔法社|test'
+            group_regex = r'test'
+            if re.search(group_regex, room_name):
+                if text == "DING":
+                    await conversation.say("DONG")
+                
+                elif type == MessageType.MESSAGE_TYPE_URL:
                     url_model = parse_url_from_wechat_message(msg)
                     
                     if not url_model.url:
@@ -75,14 +97,10 @@ class UniParserBot(BaseWechatyBot):
                     if (
                         url_model.type == "wxmp-article"  # todo: more types
                     ):
-                        data = simulate_card_1(url_model.url, sender_name, sender_avatar)
-                        if data:
-                            logger.info("-- sending")
-                            await conversation.say(FileBox.from_url(data["url"], data["name"]))
-                            logger.info("-- sent")
-                
-                if text == "DING":
-                    await conversation.say("DONG")
+                        res = await parse_url(url_model.url, True)
+                        await send_parsed_card(res.json())
+                else:
+                    await send_parsed_card(text)
 
 
 uni_parser_bot = UniParserBot()

@@ -8,7 +8,8 @@ class Tracker:
     def __init__(self):
         self._t = time.time()
     
-    def track(self, name: str = None):
+    def track(self, name: str = None, update=False):
         t = time.time()
         logger.info(f"[{t - self._t:.2f}s] {name}")
-        self._t = t
+        if update:
+            self._t = t

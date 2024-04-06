@@ -17,17 +17,11 @@ from src.utils import check_platform_type
 spider_router = APIRouter(prefix="/spider", tags=["Spider"])
 
 
-@spider_router.get(
-    '/parse-url',
-    response_model=IArticle
-)
-@error_handler
-async def parse_url_route(
-    # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
+async def parse_url(
     url: str,
     with_summary: Optional[bool] = False,
     md_with_img: Optional[bool] = False
-):
+) -> IArticle:
     logger.info(f"-- parsing url: {url}")
     text = api.get(url).text
     # logger.info(f"-- fetched content: {text}")
@@ -72,7 +66,16 @@ async def parse_url_route(
         contentSummary=content_summary,
     )
 
-#
-# def check_platform_type_2(url: str) -> PlatformType:
-#     return "wxmpArticle" if is_wechat_url(url) else "unknown"
-#
+
+@spider_router.get(
+    '/parse-url',
+    response_model=IArticle
+)
+@error_handler
+async def parse_url_route(
+    # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
+    url: str,
+    with_summary: Optional[bool] = False,
+    md_with_img: Optional[bool] = False
+):
+    return parse_url(url, with_summary, md_with_img)
