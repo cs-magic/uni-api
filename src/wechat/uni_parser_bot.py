@@ -4,6 +4,8 @@ import re
 import time
 from typing import Union
 
+import yaml
+from jinja2 import Environment, FileSystemLoader
 from loguru import logger
 from wechaty import Message, Room, Contact
 from wechaty_grpc.wechaty.puppet import MessageType
@@ -13,21 +15,40 @@ from packages.common_spider.parse_url import parse_url
 from packages.common_wechat.bot.base import BaseWechatyBot
 from packages.common_wechat.utils import parse_url_from_wechat_message
 from settings import settings
-from src.path import GENERATED_PATH
+from src.path import GENERATED_PATH, PROJECT_PATH
+from src.schema.bot import BotStatus, BotSettings
 from src.wechat.simulate_card_2 import Simulator
 
 
 class UniParserBot(BaseWechatyBot):
-    features_enabled = True
-    llm_enabled = True
-    normal_commands = ['help', 'ding', 'status']
-    super_commands = ['shelp', "start", "stop", "enable-llm", "disable-llm"]
     
     def __init__(self):
         super().__init__()
         self.dir = GENERATED_PATH
         self.simulator = Simulator(self.dir)
         self.started_time = time.time()
+        self.normal_commands = ['help', 'ding', 'status']
+        self.super_commands = ['shelp', "start", "stop", "enable-llm", "disable-llm", "refresh-driver-page"]
+        self.version = "0.5.0"
+        self.features_enabled = True
+        self.llm_enabled = True
+    
+    @property
+    def status(self):
+        return BotStatus(
+            version=self.version,
+            features_enabled=self.features_enabled,
+            llm_enabled=self.llm_enabled,
+            alive_time=format_duration(time.time() - self.started_time),
+        )
+    
+    @property
+    def settings(self) -> BotSettings:
+        env = Environment(loader=FileSystemLoader(PROJECT_PATH))
+        template = env.get_template('bot.yml')
+        rendered_yaml = yaml.safe_load(template.render(self.status.dict()))
+        # logger.info(f"-- rendered yaml: {rendered_yaml}")
+        return BotSettings.parse_obj(rendered_yaml)
     
     @staticmethod
     def _validate_content(content: str):
@@ -77,12 +98,10 @@ class UniParserBot(BaseWechatyBot):
                 elif command == "help":
                     await conversation.say(settings.bot.help)
                 elif command == 'status':
-                    await conversation.say(f'''
-version: {settings.version}
-features_enabled: {self.features_enabled}
-llm_enabled: {self.llm_enabled}
-alive_time: {format_duration(time.time() - self.started_time)}
-''')
+                    await conversation.say(self.settings.status)
+                elif command == "refresh-driver-page":
+                    self.simulator.driver.refresh()
+                    await conversation.say("ok")
                 return
             
             m_super_command = re.match(f'({"|".join(self.super_commands)})(?: |$)', text)
@@ -102,7 +121,7 @@ alive_time: {format_duration(time.time() - self.started_time)}
                     await conversation.say("ok")
                 return
             
-            if not self.features_enabled:
+            if not self.status.features_enabled:
                 return
             
             if room:
@@ -121,7 +140,7 @@ alive_time: {format_duration(time.time() - self.started_time)}
                         if (
                             url_model.type == "wxmp-article"  # todo: more types
                         ):
-                            res = parse_url(url_model.url, self.llm_enabled)
+                            res = parse_url(url_model.url, self.status.llm_enabled)
                             await simulate_card(res.json())
         
         except Exception as e:

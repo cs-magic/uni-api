@@ -9,7 +9,7 @@ from openai.types.chat import ChatCompletionMessageParam, ChatCompletionToolChoi
 
 from settings import settings
 from src.llm.providers._base import LLMProviderBase
-from src.schema import OpenAIModel, MinimaxModel
+from src.schema.llm import MinimaxModel
 
 
 class MinimaxProvider(LLMProviderBase[MinimaxModel]):

@@ -2,7 +2,7 @@ from src.llm.providers.minimax import MinimaxProvider
 from src.llm.providers.moonshot import MoonshotProvider
 from src.llm.providers.openai import OpenAIProvider
 from src.llm.providers.zhipu import ZhipuProvider
-from src.schema import ModelType
+from src.schema.llm import ModelType
 
 
 def get_provider(model: ModelType):

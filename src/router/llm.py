@@ -8,7 +8,7 @@ from packages.common_llm.call_agent import call_agent
 from src.agent.schema import AgentType
 from src.llm.providers.openai import OpenAIProvider
 from src.router.account import User, get_current_active_user
-from src.schema import ModelType
+from src.schema.llm import ModelType
 
 llm_router = APIRouter(prefix='/llm', tags=['LLM'])
 

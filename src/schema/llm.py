@@ -1,9 +1,10 @@
-from typing import Literal, Iterable, Optional, Dict, Union, List
+from typing import Literal, Optional, Iterable, Union, List, Dict
 
 import httpx
 from openai import NotGiven
-from openai.types.chat import completion_create_params, ChatCompletionToolChoiceOptionParam, \
-    ChatCompletionToolParam, ChatCompletionSystemMessageParam, ChatCompletionUserMessageParam
+
+from openai.types.chat import ChatCompletionSystemMessageParam, ChatCompletionUserMessageParam, \
+    completion_create_params, ChatCompletionToolChoiceOptionParam, ChatCompletionToolParam
 from pydantic import Field
 from typing_extensions import TypedDict, Required
 
@@ -125,17 +126,14 @@ MoonshotModel = Literal[
     "moonshot-v1-32k",
     "moonshot-v1-128k"
 ]
-
 ZhipuModel = Literal[
     "glm-4"
 ]
-
 MinimaxModel = Literal[
     "abab6-chat",
     "abab5.5-chat",
     "abab5.5s-chat"
 ]
-
 ModelType = Literal[OpenAIModel, MoonshotModel, ZhipuModel, MinimaxModel]
 
 

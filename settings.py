@@ -5,13 +5,8 @@ import yaml
 from jinja2 import Environment, FileSystemLoader
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from packages.common_general.pydantic import BaseModel
+from src.schema.bot import BotSettings
 from src.path import PROJECT_PATH
-
-
-class BotSettings(BaseModel):
-    help: str
-    shelp: str
 
 
 class Settings(BaseSettings):
@@ -37,7 +32,7 @@ class Settings(BaseSettings):
         template = env.get_template('bot.yml')
         
         rendered_yaml = template.render({
-            "version": self.version
+            "version": self.version,
         })
         return BotSettings.parse_obj(yaml.safe_load(rendered_yaml))
     

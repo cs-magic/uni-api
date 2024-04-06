@@ -7,10 +7,10 @@ from openai._utils import required_args
 from openai.types.chat import ChatCompletionMessageParam, ChatCompletionToolChoiceOptionParam, ChatCompletionToolParam, \
     completion_create_params
 
-ModelType = TypeVar("ModelType")
+M = TypeVar("M")
 
 
-class LLMProviderBase(Generic[ModelType]):
+class LLMProviderBase(Generic[M]):
     name: str
     api_key: str | None
     base_url: str | None
@@ -23,7 +23,7 @@ class LLMProviderBase(Generic[ModelType]):
     def call(self,
              *,
              messages: Iterable[ChatCompletionMessageParam],
-             model: ModelType,
+             model: M,
              frequency_penalty: Optional[float] | NotGiven = NOT_GIVEN,
              function_call: completion_create_params.FunctionCall | NotGiven = NOT_GIVEN,
              functions: Iterable[completion_create_params.Function] | NotGiven = NOT_GIVEN,

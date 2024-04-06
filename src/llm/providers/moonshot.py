@@ -2,7 +2,7 @@ from openai import Client
 
 from settings import settings
 from src.llm.providers._base import LLMProviderBase
-from src.schema import MoonshotModel
+from src.schema.llm import MoonshotModel
 
 
 class MoonshotProvider(LLMProviderBase[MoonshotModel]):

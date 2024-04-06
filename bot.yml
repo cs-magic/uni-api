@@ -22,3 +22,8 @@ shelp: |
   ----------------
   - ……
   ----------------
+status: |
+  version: {{ version }}
+  features_enabled: {{features_enabled}}
+  llm_enabled: {{llm_enabled}}
+  alive_time: {{alive_time}}

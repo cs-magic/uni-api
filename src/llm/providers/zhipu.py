@@ -2,7 +2,7 @@ from zhipuai import ZhipuAI
 
 from settings import settings
 from src.llm.providers._base import LLMProviderBase
-from src.schema import OpenAIModel, ZhipuModel
+from src.schema.llm import ZhipuModel
 
 
 class ZhipuProvider(LLMProviderBase[ZhipuModel]):

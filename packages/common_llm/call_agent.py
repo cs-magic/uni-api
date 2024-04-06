@@ -5,7 +5,7 @@ from packages.common_algo.string import compress_content
 from src.agent.schema import AgentType, AgentConfig
 from src.llm.utils import get_provider
 from src.path import AGENT_CONFIG_PATH
-from src.schema import ModelType
+from src.schema.llm import ModelType
 
 
 def call_agent(input: str, agent_type: AgentType, llm_model_type: ModelType):
