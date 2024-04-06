@@ -2872,4 +2872,4 @@ pyjwt = ">=2.8.0,<2.9.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "d4ea3be981b96e9418a4a13e0a5e4fe8074e55e49eedf926a76e11a0e81c18a1"
+content-hash = "e6453abe6f2c27829dfeee3ba50522ebd27506da636ab66990ff293c3cd5c072"

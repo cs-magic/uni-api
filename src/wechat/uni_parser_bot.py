@@ -1,26 +1,33 @@
 import asyncio
 import json
 import re
+import time
 from typing import Union
 
 from loguru import logger
 from wechaty import Message, Room, Contact
 from wechaty_grpc.wechaty.puppet import MessageType
 
+from packages.common_general.format_duration import format_duration
 from packages.common_spider.parse_url import parse_url
 from packages.common_wechat.bot.base import BaseWechatyBot
 from packages.common_wechat.utils import parse_url_from_wechat_message
-from src.path import PROJECT_PATH, GENERATED_PATH
+from settings import settings
+from src.path import GENERATED_PATH
 from src.wechat.simulate_card_2 import Simulator
 
 
 class UniParserBot(BaseWechatyBot):
-    enabled = True
+    features_enabled = True
+    llm_enabled = True
+    normal_commands = ['help', 'ding', 'status']
+    super_commands = ['shelp', "start", "stop", "enable-llm", "disable-llm"]
     
     def __init__(self):
         super().__init__()
         self.dir = GENERATED_PATH
         self.simulator = Simulator(self.dir)
+        self.started_time = time.time()
     
     @staticmethod
     def _validate_content(content: str):
@@ -43,7 +50,7 @@ class UniParserBot(BaseWechatyBot):
             
             sender = msg.talker()
             sender_name = sender.name
-            granted = "南川" in sender_name
+            is_granted = "南川" in sender_name
             sender_avatar = sender.payload.avatar
             
             room = msg.room()
@@ -62,35 +69,40 @@ class UniParserBot(BaseWechatyBot):
             
             # logger.debug(f"<< Room(name={room_name}), Sender(id={sender.contact_id}, name={sender_name}), Message(type={type}, text={text}), ")
             
-            if text == 'ding':
-                await conversation.say('dong')
+            m_normal_command = re.match(f'({"|".join(self.normal_commands)})(?: |$)', text)
+            if m_normal_command:
+                command = m_normal_command[1]
+                if command == 'ding':
+                    await conversation.say('dong')
+                elif command == "help":
+                    await conversation.say(settings.bot.help)
+                elif command == 'status':
+                    await conversation.say(f'''
+version: {settings.version}
+features_enabled: {self.features_enabled}
+llm_enabled: {self.llm_enabled}
+alive_time: {format_duration(time.time() - self.started_time)}
+''')
                 return
             
-            if text.startswith("/help"):
-                with open(PROJECT_PATH.joinpath("help.md")) as f:
-                    await conversation.say(f.read())
-                return
-            
-            if text.startswith("/stop"):
-                if granted:
-                    self.enabled = False
-                    await conversation.say("stopped")
+            m_super_command = re.match(f'({"|".join(self.super_commands)})(?: |$)', text)
+            if m_super_command and is_granted:
+                command = m_super_command[1]
+                if command == "shelp":
+                    await conversation.say(settings.bot.shelp)
                 else:
-                    await conversation.say("对不起，您暂无权限，请联系南川开通")
+                    if command == "start":
+                        self.features_enabled = True
+                    elif command == "stop":
+                        self.features_enabled = False
+                    elif command == "enable-llm":
+                        self.llm_enabled = True
+                    elif command == "disable-llm":
+                        self.llm_enabled = False
+                    await conversation.say("ok")
                 return
             
-            if text.startswith("/start"):
-                if granted:
-                    self.enabled = True
-                    await conversation.say("started")
-                else:
-                    await conversation.say("对不起，您暂无权限，请联系南川开通")
-                return
-            
-            if text.startswith("/raw"):
-                await simulate_card(text.split("/raw")[1])
-            
-            if not self.enabled:
+            if not self.features_enabled:
                 return
             
             if room:
@@ -109,9 +121,9 @@ class UniParserBot(BaseWechatyBot):
                         if (
                             url_model.type == "wxmp-article"  # todo: more types
                         ):
-                            res = parse_url(url_model.url, True)
+                            res = parse_url(url_model.url, self.llm_enabled)
                             await simulate_card(res.json())
- 
+        
         except Exception as e:
             logger.error(e)
             await self.self().say(f"error: {e}")

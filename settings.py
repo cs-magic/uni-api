@@ -1,14 +1,22 @@
 from functools import lru_cache
 from typing import Any
 
+import yaml
+from jinja2 import Environment, FileSystemLoader
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from packages.common_general.pydantic import BaseModel
 from src.path import PROJECT_PATH
+
+
+class BotSettings(BaseModel):
+    help: str
+    shelp: str
 
 
 class Settings(BaseSettings):
     app_name: str = "uni-api"
-    version: str = "0.1.3"
+    version: str = "0.5.0"
     admin_email: str = "shawninjuly@gmail.com"
     
     @property
@@ -22,6 +30,16 @@ class Settings(BaseSettings):
     @property
     def description(self):
         return f"聚合AGI行业的主流API，提供动态key管理、算法调度、前端监控、可扩展性配置等功能 （opensource: {self.repo}）"
+    
+    @property
+    def bot(self) -> BotSettings:
+        env = Environment(loader=FileSystemLoader(PROJECT_PATH))
+        template = env.get_template('bot.yml')
+        
+        rendered_yaml = template.render({
+            "version": self.version
+        })
+        return BotSettings.parse_obj(yaml.safe_load(rendered_yaml))
     
     # ref: https://fastapi.tiangolo.com/tutorial/metadata/#metadata-for-tags
     tags: Any = [

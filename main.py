@@ -1,10 +1,8 @@
 from fastapi import FastAPI
 
-from settings import Settings
+from settings import settings
 from src.router import root_router
 from src.wechat.uni_parser_bot import uni_parser_bot
-
-settings = Settings()
 
 app = FastAPI(
     title=settings.app_title,
