@@ -1,6 +1,6 @@
-from time import sleep
 from typing import Literal
 
+from PIL import Image
 from loguru import logger
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -12,6 +12,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from packages.common_datetime.utils import get_current_timestamp
 from packages.common_general.tracker import Tracker
 from settings import settings
+from src.path import GENERATED_PATH
 
 InputType = Literal["send_keys", "js"]
 
@@ -42,16 +43,55 @@ def simulate_card_2(content: str, user_name: str = None, user_avatar: str = None
         indeed = ele.get_attribute("value")  # if ele.tag_name == "input" else ele.text
         tracker.track(f"inputted {id}, target={len(value)}, indeed={len(indeed)}, ok={len(value) == len(indeed)}")
     
+    capture_type: Literal["direct", "crop"] = "crop"
+    
+    def capture():
+        ele = driver.find_element(By.ID, "card-preview")
+        fp = GENERATED_PATH.joinpath(f"{get_current_timestamp(kind='s')}.png").__str__()
+        if capture_type == "direct":
+            ele.screenshot(fp)
+        elif capture_type == "crop":
+            
+            location = ele.location
+            size = ele.size
+            
+            # Open the screenshot and crop it to the element
+            x = location['x'] * DPI
+            y = location['y'] * DPI
+            width = x + size['width'] * DPI
+            height = y + size['height'] * DPI
+            logger.info(f"-- ele dimension: x={x}, y={y}, w={width}, h={height}")
+            
+            fsp = GENERATED_PATH.joinpath("full_screenshot.png")
+            driver.save_screenshot(fsp)
+            fs = Image.open(fsp)
+            logger.info(f"-- fs dimension: w={fs.width}, h={fs.height}")
+            element_screenshot = fs.crop((int(x), int(y), int(width), int(height)))
+            element_screenshot.save(fp)
+            pass
+        else:
+            raise
+        tracker.track(f"screenshot: {fp}")
+    
+    DPI = 4
+    
     try:
         logger.debug("-- starting browser")
         service = Service(ChromeDriverManager().install())
         options = Options()
         options.add_argument("--headless")
-        options.add_argument("--window-size=1200,1080")
-        driver = webdriver.Chrome(service=service, options=options)
+        options.add_argument("--window-size=1920,1080")
+        
+        # ref: Selenium Can Make Hi-DPI, Retina Style Screenshots (Firefox and Chrome) - DEV Community, https://dev.to/simplecto/selenium-can-make-hi-dpi-retina-style-screenshots-firefox-and-chrome-37b9
+        options.add_argument(f"--force-device-scale-factor={DPI}")
+        options.add_argument(f"--high-dpi-support={DPI}")  # This should match the scale factor
+        
+        driver = webdriver.Chrome(options=options, service=service, )
+        logger.info(f'-- window: {driver.get_window_rect()}')
         tracker.track("started")
         
         driver.get(f'{settings.FRONTEND_BASEURL}/card/gen')
+        # driver.execute_script("document.body.style.zoom='100%'")
         tracker.track("visited")
         
         send("card-user-name", user_name)
@@ -63,12 +103,15 @@ def simulate_card_2(content: str, user_name: str = None, user_avatar: str = None
         )
         tracker.track("wait rendered")
         
-        fn = f"{get_current_timestamp(kind='s')}.png"
-        driver.find_element(By.ID, "card-preview").screenshot(fn)
-        tracker.track(f"screenshot: {fn}")
+        # driver.save_screenshot(GENERATED_PATH.joinpath("full_screenshot.png"))
         
-        # driver.quit()
-        return {"name": fn}
+        # driver.execute_script("document.body.style.zoom='200%'")
+        
+        capture()
+        
+        # input("Press Enter to quit the browser...")
+        driver.quit()
+        return
     
     except Exception as e:
         logger.error(e)

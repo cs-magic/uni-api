@@ -24,6 +24,7 @@ wechaty = "^0.10.7"
 urllib3 = "<2"
 selenium = "^4.19.0"
 webdriver-manager = "^4.0.1"
+pillow = "^10.3.0"
 
 
 [build-system]
