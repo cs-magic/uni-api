@@ -4,8 +4,10 @@ import httpx
 from openai import NotGiven
 from openai.types.chat import completion_create_params, ChatCompletionToolChoiceOptionParam, \
     ChatCompletionToolParam, ChatCompletionSystemMessageParam, ChatCompletionUserMessageParam
-from pydantic import BaseModel, Field
+from pydantic import Field
 from typing_extensions import TypedDict, Required
+
+from packages.common_general.pydantic import BaseModel
 
 ProviderType = Literal["openai", "moonshot"]
 

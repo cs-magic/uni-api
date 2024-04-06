@@ -1,6 +1,6 @@
 from typing import Literal, Optional
 
-from pydantic import BaseModel
+from packages.common_general.pydantic import BaseModel
 
 
 class WechatMessageUrlModel(BaseModel):

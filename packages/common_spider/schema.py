@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel
+from packages.common_general.pydantic import BaseModel
 
 
 class IUserBasic(BaseModel):
@@ -27,6 +27,7 @@ class ISummary(BaseModel):
 class ICard(BaseModel):
     platformId: str
     platformType: PlatformType
+    sourceUrl: str
     author: IUserBasic
     time: datetime
     title: str

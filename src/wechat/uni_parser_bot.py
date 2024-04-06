@@ -50,19 +50,19 @@ class UniParserBot(BaseWechatyBot):
             room = msg.room()
             
             conversation: Union[Room, Contact] = sender if room is None else room
-            await conversation.ready()
+            # await conversation.ready()
             
             async def simulate_card(content: str):
                 try:
                     self._validate_content(content)
-                    fn = self.simulator.run(content)
+                    fn = self.simulator.run(content, sender_name, sender_avatar)
                     if fn:
                         logger.info(f"sending fn={fn}")
                         # 本地文件，对文件名有要求，建议不要有 @_-+ 等符号
                         await conversation.say(FileBox.from_file(self.dir.joinpath(fn).as_posix(), fn))
                         logger.info("sent")
                 except Exception as e:
-                    logger.error(e)
+                    await conversation.say(f"failed to generate card, reason: {e}")
             
             # logger.debug(f"<< Room(name={room_name}), Sender(id={sender.contact_id}, name={sender_name}), Message(type={type}, text={text}), ")
             
@@ -99,7 +99,7 @@ class UniParserBot(BaseWechatyBot):
             
             if room:
                 room_name = await room.topic()
-
+                
                 # group_regex = r'CS魔法社|test'
                 group_regex = r'test'
                 if re.search(group_regex, room_name):
@@ -113,7 +113,7 @@ class UniParserBot(BaseWechatyBot):
                         if (
                             url_model.type == "wxmp-article"  # todo: more types
                         ):
-                            res = parse_url(url_model.url, False)
+                            res = parse_url(url_model.url, True)
                             await simulate_card(res.json())
         except Exception as e:
             logger.error(e)

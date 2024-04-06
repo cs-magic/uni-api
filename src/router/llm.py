@@ -1,9 +1,9 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Security, Form
-from pydantic import BaseModel
 
 from packages.common_fastapi.error_handler import error_handler
+from packages.common_general.pydantic import BaseModel
 from packages.common_llm.call_agent import call_agent
 from src.agent.schema import AgentType
 from src.llm.providers.openai import OpenAIProvider

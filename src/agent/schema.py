@@ -1,7 +1,6 @@
 from typing import Optional, Literal
 
-from pydantic import BaseModel
-
+from packages.common_general.pydantic import BaseModel
 from src.schema import ModelType
 
 
