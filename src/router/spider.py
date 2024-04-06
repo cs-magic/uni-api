@@ -10,9 +10,9 @@ from packages.common_api.index import api
 from packages.common_fastapi.error_handler import error_handler
 from packages.common_markdown.html2md import html2md
 from packages.common_spider.schema import IArticle, IUserBasic, IImage, PlatformType, ISummary
-from packages.common_wechat.utils import is_wechat_url
 from src.router.llm import call_agent
 from src.schema import ModelType
+from src.utils import check_platform_type
 
 spider_router = APIRouter(prefix="/spider", tags=["Spider"])
 
@@ -71,13 +71,6 @@ async def parse_url_route(
         contentMd=content_md,
         contentSummary=content_summary,
     )
-
-
-def check_platform_type(url: str) -> PlatformType:
-    if is_wechat_url(url):
-        return "wxmpArticle"
-    else:
-        return "unknown"
 
 #
 # def check_platform_type_2(url: str) -> PlatformType:
