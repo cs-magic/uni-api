@@ -1,4 +1,5 @@
 import json
+import re
 import shutil
 import time
 from io import BytesIO
@@ -8,15 +9,19 @@ from typing import Literal
 from PIL import Image
 from loguru import logger
 from selenium import webdriver
-from selenium.common import NoSuchElementException, StaleElementReferenceException
+from selenium.common import NoSuchElementException, StaleElementReferenceException, ElementNotInteractableException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 
 from packages.common_datetime.utils import get_current_timestamp
+from packages.common_general.css import TOASTER_CSS_SELECTOR
 from packages.common_general.tracker import Tracker
+from packages.common_wechat.patches.filebox import FileBox
 from settings import settings
 from src.path import GENERATED_PATH
 
@@ -26,7 +31,7 @@ class Simulator(Tracker):
     def __init__(
         self,
         download_dir: Path = GENERATED_PATH,
-        capture_type: Literal["direct", "crop", "frontend"] = "frontend",
+        capture_type: Literal["direct", "crop", "frontend-download", "frontend-upload"] = "frontend-upload",
         input_type: Literal["send_keys", "js"] = 'js',
         dpi: int = 1,
         headless=True
@@ -80,11 +85,11 @@ class Simulator(Tracker):
         indeed = ele.get_attribute("value")
         self.track(f"inputted {id}, target={len(value)}, indeed={len(indeed)}, ok={len(value) == len(indeed)}")
     
-    def _capture(self):
+    def _capture(self) -> FileBox:
         # 等待 action 按钮 ok 才可以开始导出图，否则不完整
         self.track("capturing")
         # ref: https://stackoverflow.com/a/44914767/9422455
-        ignored_exceptions = (NoSuchElementException, StaleElementReferenceException)
+        ignored_exceptions = (NoSuchElementException, StaleElementReferenceException, ElementNotInteractableException)
         WebDriverWait(self.driver, 10, .1, ignored_exceptions=ignored_exceptions) \
             .until(lambda driver: driver.find_element(By.ID, "download-card").is_enabled())
         # todo: robuster wait download
@@ -92,9 +97,21 @@ class Simulator(Tracker):
         self.track("action buttons prepared")
         ele_preview = self.driver.find_element(By.ID, "card-preview")
         
+        def wait_toast(type: Literal["upload", "download"]):
+            self.driver.find_element(By.ID, f"{type}-card").click()
+            # 如果不基于toast检测而基于Download text的话，则需要等待 .1 s
+            toast_ele: WebElement = WebDriverWait(self.driver, 10, .1, ignored_exceptions=ignored_exceptions)\
+                .until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".toast")))
+            url = re.search(rf'{type}ed at (.*?)$', toast_ele.text)[1]
+            logger.info(f"matched in toast: {url}")
+            WebDriverWait(toast_ele, 3).until(EC.element_to_be_clickable((By.TAG_NAME, "button"))).click()
+            return url
+        
         if self.capture_type == "direct":
             fn = f"{get_current_timestamp(kind='s')}_{self.dpi}.png"
-            ele_preview.screenshot(GENERATED_PATH.joinpath())
+            ele_preview.screenshot(GENERATED_PATH.joinpath(fn))
+            fn = wait_toast("download")
+            return FileBox.from_file(self.download_dir.joinpath(fn).as_posix(), fn)
         
         # ref: https://chat.openai.com/c/6e606653-0f65-493a-9259-2599c723963e
         elif self.capture_type == "crop":
@@ -109,13 +126,21 @@ class Simulator(Tracker):
             fs = Image.open(BytesIO(bs))
             element_screenshot = fs.crop((int(x), int(y), int(width), int(height)))
             element_screenshot.save(GENERATED_PATH.joinpath(fn))
+            fn = wait_toast("download")
+            return FileBox.from_file(self.download_dir.joinpath(fn).as_posix(), fn)
         
-        elif self.capture_type == "frontend":
-            self.driver.find_element(By.ID, "download-card").click()
+        elif self.capture_type == "frontend-download":
+            fn = wait_toast("download")
+            return FileBox.from_file(self.download_dir.joinpath(fn).as_posix(), fn)
+        
+        elif self.capture_type == "frontend-upload":
+            url = wait_toast("upload")
+            return FileBox.from_url(url, url)
+        
         else:
             raise Exception("invalid capture type")
     
-    def run(self, content: str, user_name: str = None, user_avatar: str = None) -> str:
+    def run(self, content: str, user_name: str = None, user_avatar: str = None) -> FileBox:
         try:
             data = json.loads(content)
             fn = f"{data['platformType']}_{data['platformId']}.png"
@@ -125,10 +150,8 @@ class Simulator(Tracker):
             if user_avatar: self._send("card-user-avatar", user_avatar)
             self._send("card-content", content)
             
-            p = self._capture()
-            
-            self._wait_exists(fn)
-            return p
+            return self._capture()
+        
         except Exception as e:
             logger.error(e)
     

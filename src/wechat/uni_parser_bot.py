@@ -9,7 +9,6 @@ from wechaty_grpc.wechaty.puppet import MessageType
 
 from packages.common_spider.parse_url import parse_url
 from packages.common_wechat.bot.base import BaseWechatyBot
-from packages.common_wechat.patches.filebox import FileBox
 from packages.common_wechat.utils import parse_url_from_wechat_message
 from src.path import PROJECT_PATH, GENERATED_PATH
 from src.wechat.simulate_card_2 import Simulator
@@ -50,17 +49,14 @@ class UniParserBot(BaseWechatyBot):
             room = msg.room()
             
             conversation: Union[Room, Contact] = sender if room is None else room
+            
             # await conversation.ready()
             
             async def simulate_card(content: str):
                 try:
                     self._validate_content(content)
-                    fn = self.simulator.run(content, sender_name, sender_avatar)
-                    if fn:
-                        logger.info(f"sending fn={fn}")
-                        # 本地文件，对文件名有要求，建议不要有 @_-+ 等符号
-                        await conversation.say(FileBox.from_file(self.dir.joinpath(fn).as_posix(), fn))
-                        logger.info("sent")
+                    fb = self.simulator.run(content, sender_name, sender_avatar)
+                    await conversation.say(fb)
                 except Exception as e:
                     await conversation.say(f"failed to generate card, reason: {e}")
             
@@ -115,6 +111,7 @@ class UniParserBot(BaseWechatyBot):
                         ):
                             res = parse_url(url_model.url, True)
                             await simulate_card(res.json())
+ 
         except Exception as e:
             logger.error(e)
             await self.self().say(f"error: {e}")
