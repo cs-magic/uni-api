@@ -123,6 +123,7 @@ class UniParserBot(BaseWechatyBot):
                         await conversation.say("ok")
                     elif command == "set-summary-model":
                         await conversation.say("todo set")
+                        return
                     await conversation.say("ok")
                 return
             
