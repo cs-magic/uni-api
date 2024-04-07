@@ -81,15 +81,7 @@ class UniParserBot(BaseWechatyBot):
             
             # await conversation.ready()
             
-            async def simulate_card():
-                try:
-                    res = parse_url(url_model.url, self.status.summary_model)
-                    content = res.json()
-                    self._validate_content(content)
-                    fb = self.simulator.run(content, sender_name, sender_avatar)
-                    await conversation.say(fb)
-                except Exception as e:
-                    await conversation.say(f"failed to generate card, reason: {e}")
+
             
             # logger.debug(f"<< Room(name={room_name}), Sender(id={sender.contact_id}, name={sender_name}), Message(type={type}, text={text}), ")
             
@@ -146,6 +138,16 @@ class UniParserBot(BaseWechatyBot):
                         if (
                             url_model.type == "wxmp-article"  # todo: more types
                         ):
+                            async def simulate_card():
+                                try:
+                                    res = parse_url(url_model.url, self.status.summary_model)
+                                    content = res.json()
+                                    self._validate_content(content)
+                                    fb = self.simulator.run(content, sender_name, sender_avatar)
+                                    await conversation.say(fb)
+                                except Exception as e:
+                                    await conversation.say(f"failed to generate card, reason: {e}")
+                                    
                             await simulate_card()
         
         except Exception as e:
