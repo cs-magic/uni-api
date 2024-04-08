@@ -2,10 +2,10 @@ import yaml
 from loguru import logger
 
 from packages.common_algo.string import compress_content
-from src.agent.schema import AgentType, AgentConfig
-from src.llm.utils import get_provider
+from packages.common_llm.agent.schema import AgentType, AgentConfig
+from packages.common_llm.utils import get_provider
 from src.path import AGENT_CONFIG_PATH
-from src.schema.llm import ModelType
+from packages.common_llm.schema import ModelType
 
 
 def call_agent(input: str, agent_type: AgentType, llm_model_type: ModelType):
@@ -44,3 +44,7 @@ def call_agent(input: str, agent_type: AgentType, llm_model_type: ModelType):
     )
     logger.info(f"<< result: {res}")
     return res.choices[0].message.content
+
+
+if __name__ == '__main__':
+    call_agent("hello", "default", "gpt-3.5-turbo")

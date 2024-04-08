@@ -11,7 +11,7 @@ from packages.common_llm.call_agent import call_agent
 from packages.common_markdown.html2md import html2md
 from packages.common_spider.schema import ICard, ISummary, PlatformType, IUserBasic, IImage
 from src.path import GENERATED_PATH
-from src.schema.llm import ModelType
+from packages.common_llm.schema import ModelType
 from src.utils import check_platform_type
 
 

@@ -5,10 +5,10 @@ from fastapi import APIRouter, Security, Form
 from packages.common_fastapi.error_handler import error_handler
 from packages.common_general.pydantic import BaseModel
 from packages.common_llm.call_agent import call_agent
-from src.agent.schema import AgentType
-from src.llm.providers.openai import OpenAIProvider
+from packages.common_llm.agent.schema import AgentType
+from packages.common_llm.providers.openai import OpenAIProvider
 from src.router.account import User, get_current_active_user
-from src.schema.llm import ModelType
+from packages.common_llm.schema import ModelType
 
 llm_router = APIRouter(prefix='/llm', tags=['LLM'])
 

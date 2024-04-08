@@ -5,7 +5,7 @@ import yaml
 from jinja2 import Environment, FileSystemLoader
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from src.schema.bot import BotSettings
+from packages.common_wechat.bot.schema import BotSettings
 from src.path import PROJECT_PATH
 
 

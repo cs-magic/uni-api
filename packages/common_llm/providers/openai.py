@@ -1,8 +1,8 @@
 from openai import Client
 
 from settings import settings
-from src.llm.providers._base import LLMProviderBase
-from src.schema.llm import OpenAIModel
+from packages.common_llm.providers._base import LLMProviderBase
+from packages.common_llm.schema import OpenAIModel
 
 
 class OpenAIProvider(LLMProviderBase[OpenAIModel]):

@@ -1,5 +1,5 @@
 from packages.common_general.pydantic import BaseModel
-from src.schema.llm import ModelType
+from packages.common_llm.schema import ModelType
 
 
 class BotStatus(BaseModel):

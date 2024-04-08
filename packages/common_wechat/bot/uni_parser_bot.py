@@ -16,9 +16,9 @@ from packages.common_wechat.bot.base import BaseWechatyBot
 from packages.common_wechat.utils import parse_url_from_wechat_message
 from settings import settings
 from src.path import GENERATED_PATH, PROJECT_PATH
-from src.schema.bot import BotStatus, BotSettings
-from src.schema.llm import ModelType
-from src.wechat.simulate_card_2 import Simulator
+from packages.common_wechat.bot.schema import BotStatus, BotSettings
+from packages.common_llm.schema import ModelType
+from packages.common_wechat.bot.simulate_card_2 import Simulator
 
 
 class UniParserBot(BaseWechatyBot):

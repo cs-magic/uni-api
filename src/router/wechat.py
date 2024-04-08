@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, BackgroundTasks, Form
 
 from packages.common_fastapi.error_handler import error_handler
-from src.wechat.uni_parser_bot import uni_parser_bot
+from packages.common_wechat.bot.uni_parser_bot import uni_parser_bot
 
 wechat_router = APIRouter(prefix="/wechat", tags=["WeChat"])
 

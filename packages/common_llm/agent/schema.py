@@ -1,7 +1,7 @@
 from typing import Optional, Literal
 
 from packages.common_general.pydantic import BaseModel
-from src.llm.providers._base import M
+from packages.common_llm.providers._base import M
 
 
 class AgentConfig(BaseModel):

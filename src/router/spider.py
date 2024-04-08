@@ -5,7 +5,7 @@ from fastapi import APIRouter
 from packages.common_fastapi.error_handler import error_handler
 from packages.common_spider.parse_url import parse_url
 from packages.common_spider.schema import ICard
-from src.schema.llm import ModelType
+from packages.common_llm.schema import ModelType
 
 spider_router = APIRouter(prefix="/spider", tags=["Spider"])
 
