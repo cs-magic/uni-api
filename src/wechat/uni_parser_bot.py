@@ -26,13 +26,14 @@ class UniParserBot(BaseWechatyBot):
     def __init__(self):
         super().__init__()
         self.dir = GENERATED_PATH
-        self.simulator = Simulator(self.dir)
+        self.simulator: Simulator | None = None
         self.started_time = time.time()
         self.normal_commands = ['help', 'ding', 'status']
-        self.super_commands = ['shelp', "start", "stop", "enable-llm", "disable-llm", "refresh-driver-page", "set-summary-model"]
+        self.super_commands = ['shelp', "start", "stop", "enable-llm", "disable-llm", "refresh-driver-page",
+                               "set-summary-model"]
         self.version = "0.5.0"
         self.features_enabled = True
-        self.summary_model: ModelType | None= None
+        self.summary_model: ModelType | None = None
     
     @property
     def status(self):
@@ -80,8 +81,6 @@ class UniParserBot(BaseWechatyBot):
             conversation: Union[Room, Contact] = sender if room is None else room
             
             # await conversation.ready()
-            
-
             
             # logger.debug(f"<< Room(name={room_name}), Sender(id={sender.contact_id}, name={sender_name}), Message(type={type}, text={text}), ")
             
@@ -143,11 +142,13 @@ class UniParserBot(BaseWechatyBot):
                                     res = parse_url(url_model.url, self.status.summary_model)
                                     content = res.json()
                                     self._validate_content(content)
+                                    if self.simulator is None:
+                                        self.simulator = Simulator(self.dir)
                                     fb = self.simulator.run(content, sender_name, sender_avatar)
                                     await conversation.say(fb)
                                 except Exception as e:
                                     await conversation.say(f"failed to generate card, reason: {e}")
-                                    
+                            
                             await simulate_card()
         
         except Exception as e:
@@ -158,4 +159,4 @@ class UniParserBot(BaseWechatyBot):
 uni_parser_bot = UniParserBot()
 
 if __name__ == '__main__':
-    asyncio.run(UniParserBot().start())
+    asyncio.run(uni_parser_bot.start())
