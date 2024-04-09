@@ -1,16 +1,11 @@
 import pathlib
 
-import dotenv
-
-dotenv.load_dotenv()
-
 import yaml
-from loguru import logger
 
 from packages.common_common.compress_content import compress_content
+from packages.common_llm.agent.call_llm import call_llm
 from packages.common_llm.agent.schema import AgentType, AgentConfig
 from packages.common_llm.schema import ModelType
-from packages.common_llm.utils import get_provider
 
 
 def call_agent(input: str, agent_type: AgentType, llm_model_type: ModelType):
@@ -41,15 +36,12 @@ def call_agent(input: str, agent_type: AgentType, llm_model_type: ModelType):
         "content": content
     })
     
-    logger.info(f">> calling LLM: Agent={agent}, Messages={messages}")
-    res = get_provider(model).call(
-        model=model,
-        messages=messages,
-        top_p=0.03,  # ref: https://platform.openai.com/docs/api-reference/chat/create
-        # temperature=0
+    return call_llm(
+        messages,
+        model,
+        max_tokens=agent.total_tokens,
+        # todo: more args
     )
-    logger.info(f"<< result: {res}")
-    return res.choices[0].message.content
 
 
 if __name__ == '__main__':

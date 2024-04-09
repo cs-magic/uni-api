@@ -4,8 +4,10 @@ import httpx
 from openai import Client, NotGiven, NOT_GIVEN
 from openai._types import Headers, Query, Body
 from openai._utils import required_args
-from openai.types.chat import ChatCompletionMessageParam, ChatCompletionToolChoiceOptionParam, ChatCompletionToolParam, \
+from openai.types.chat import ChatCompletionToolChoiceOptionParam, ChatCompletionToolParam, \
     completion_create_params
+
+from packages.common_llm.schema import IMessage
 
 M = TypeVar("M")
 
@@ -22,7 +24,7 @@ class LLMProviderBase(Generic[M]):
     @required_args(["messages", "model"], ["messages", "model", "stream"])
     def call(self,
              *,
-             messages: Iterable[ChatCompletionMessageParam],
+             messages: List[IMessage],
              model: M,
              frequency_penalty: Optional[float] | NotGiven = NOT_GIVEN,
              function_call: completion_create_params.FunctionCall | NotGiven = NOT_GIVEN,

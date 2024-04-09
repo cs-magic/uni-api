@@ -1,9 +1,7 @@
 from typing import Literal, Optional, Iterable, Union, List, Dict
 
-import dashscope
 import httpx
 from openai import NotGiven
-
 from openai.types.chat import ChatCompletionSystemMessageParam, ChatCompletionUserMessageParam, \
     completion_create_params, ChatCompletionToolChoiceOptionParam, ChatCompletionToolParam
 from pydantic import Field
@@ -51,6 +49,11 @@ Messages = Iterable[Union[
     ChatCompletionUserMessageParam,
     ChatCompletionAssistantMessageParam,
 ]]
+
+
+class IMessage(TypedDict):
+    content: str
+    role: Literal["system", "user", "assistant"]
 
 
 class LLMBodyBase(BaseModel):
