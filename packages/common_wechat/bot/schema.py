@@ -1,4 +1,4 @@
-from packages.common_general.pydantic import BaseModel
+from packages.common_common.pydantic import BaseModel
 from packages.common_llm.schema import ModelType
 
 

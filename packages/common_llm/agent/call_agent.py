@@ -1,15 +1,21 @@
+import pathlib
+
+import dotenv
+
+dotenv.load_dotenv()
+
 import yaml
 from loguru import logger
 
-from packages.common_algo.string import compress_content
+from packages.common_common.compress_content import compress_content
 from packages.common_llm.agent.schema import AgentType, AgentConfig
-from packages.common_llm.utils import get_provider
-from src.path import AGENT_CONFIG_PATH
 from packages.common_llm.schema import ModelType
+from packages.common_llm.utils import get_provider
 
 
 def call_agent(input: str, agent_type: AgentType, llm_model_type: ModelType):
-    with open(AGENT_CONFIG_PATH.joinpath(f"{agent_type}.agent.yml")) as f:
+    config_dir = pathlib.Path(__file__).parent.joinpath("config")
+    with open(config_dir.joinpath(f"{agent_type}.agent.yml")) as f:
         agent = AgentConfig.parse_obj(yaml.safe_load(f))
     
     model = llm_model_type if llm_model_type else agent.model
@@ -47,4 +53,5 @@ def call_agent(input: str, agent_type: AgentType, llm_model_type: ModelType):
 
 
 if __name__ == '__main__':
-    call_agent("hello", "default", "gpt-3.5-turbo")
+    # call_agent("hello", "default", "gpt-3.5-turbo")
+    call_agent("hello", "default", "qwen-turbo")

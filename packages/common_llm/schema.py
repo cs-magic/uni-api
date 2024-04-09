@@ -1,5 +1,6 @@
 from typing import Literal, Optional, Iterable, Union, List, Dict
 
+import dashscope
 import httpx
 from openai import NotGiven
 
@@ -8,7 +9,7 @@ from openai.types.chat import ChatCompletionSystemMessageParam, ChatCompletionUs
 from pydantic import Field
 from typing_extensions import TypedDict, Required
 
-from packages.common_general.pydantic import BaseModel
+from packages.common_common.pydantic import BaseModel
 
 ProviderType = Literal["openai", "moonshot"]
 
@@ -129,12 +130,21 @@ MoonshotModel = Literal[
 ZhipuModel = Literal[
     "glm-4"
 ]
+
 MinimaxModel = Literal[
     "abab6-chat",
     "abab5.5-chat",
     "abab5.5s-chat"
 ]
-ModelType = Literal[OpenAIModel, MoonshotModel, ZhipuModel, MinimaxModel]
+
+DashscopeModel = Literal[
+    # dashscope.Generation.Models.qwen_turbo,
+    'qwen-turbo',
+    'qwen-plus',
+    'qwen-max',
+]
+
+ModelType = Literal[OpenAIModel, MoonshotModel, ZhipuModel, MinimaxModel, DashscopeModel]
 
 
 class MoonshotBody(LLMBodyBase):

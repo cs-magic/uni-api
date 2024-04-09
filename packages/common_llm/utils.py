@@ -1,3 +1,4 @@
+from packages.common_llm.providers.ali import DashscopeProvider
 from packages.common_llm.providers.minimax import MinimaxProvider
 from packages.common_llm.providers.moonshot import MoonshotProvider
 from packages.common_llm.providers.openai import OpenAIProvider
@@ -17,5 +18,11 @@ def get_provider(model: ModelType):
     
     elif model.startswith("abab"):
         return MinimaxProvider()
+    
+    elif model.startswith("qwen"):
+        return DashscopeProvider()
+    
+    # elif model.startswith("Baichuan"):
+    #     return
     
     raise Exception(f"no provider from model(name={model})")

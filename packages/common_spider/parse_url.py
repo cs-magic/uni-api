@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 from loguru import logger
 
 from packages.common_api.index import api
-from packages.common_llm.call_agent import call_agent
+from packages.common_llm.agent.call_agent import call_agent
 from packages.common_markdown.html2md import html2md
 from packages.common_spider.schema import ICard, ISummary, PlatformType, IUserBasic, IImage
 from src.path import GENERATED_PATH

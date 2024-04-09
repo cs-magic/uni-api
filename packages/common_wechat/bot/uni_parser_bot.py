@@ -10,7 +10,7 @@ from loguru import logger
 from wechaty import Message, Room, Contact
 from wechaty_grpc.wechaty.puppet import MessageType
 
-from packages.common_general.format_duration import format_duration
+from packages.common_common.format_duration import format_duration
 from packages.common_spider.parse_url import parse_url
 from packages.common_wechat.bot.base import BaseWechatyBot
 from packages.common_wechat.utils import parse_url_from_wechat_message

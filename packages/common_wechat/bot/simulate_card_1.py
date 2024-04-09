@@ -8,7 +8,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 
 from packages.common_datetime.utils import get_current_timestamp
-from packages.common_general.parse_first_url import parse_first_url
+from packages.common_common.parse_first_url import parse_first_url
 from settings import settings
 
 

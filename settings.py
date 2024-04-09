@@ -66,6 +66,7 @@ class Settings(BaseSettings):
     ZHIPU_API_KEY: str
     MINIMAX_API_KEY: str
     MINIMAX_GROUP_ID: str
+    DASHSCOPE_API_KEY: str
     
     # APP
     FRONTEND_BASEURL: str

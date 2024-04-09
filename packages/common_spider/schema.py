@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Literal
 
-from packages.common_general.pydantic import BaseModel
+from packages.common_common.pydantic import BaseModel
 
 
 class IUserBasic(BaseModel):

@@ -1,6 +1,6 @@
 from typing import Optional, Literal
 
-from packages.common_general.pydantic import BaseModel
+from packages.common_common.pydantic import BaseModel
 from packages.common_llm.providers._base import M
 
 

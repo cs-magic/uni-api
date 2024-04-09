@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from loguru import logger
 
-from packages.common_general.pydantic import BaseModel
+from packages.common_common.pydantic import BaseModel
 
 account_router = APIRouter(prefix='/account', tags=['Account'], )
 

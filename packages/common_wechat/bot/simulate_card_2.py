@@ -19,7 +19,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 
 from packages.common_datetime.utils import get_current_timestamp
-from packages.common_general.tracker import Tracker
+from packages.common_common.tracker import Tracker
 from packages.common_wechat.patches.filebox import FileBox
 from settings import settings
 from src.path import GENERATED_PATH
