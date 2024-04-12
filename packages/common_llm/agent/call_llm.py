@@ -50,4 +50,4 @@ def call_llm(
         messages=messages, model=model, frequency_penalty=frequency_penalty, function_call=function_call, functions=functions, logit_bias=logit_bias, logprobs=logprobs, max_tokens=max_tokens, n=n, presence_penalty=presence_penalty, response_format=response_format, seed=seed, stop=stop, stream=stream, temperature=temperature, tool_choice=tool_choice, tools=tools, top_logprobs=top_logprobs, top_p=top_p, user=user, extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
     )
     logger.info(f"<< result: {res}")
-    return res.choices[0].message.content
+    return res

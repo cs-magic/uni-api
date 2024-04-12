@@ -130,8 +130,15 @@ MoonshotModel = Literal[
     "moonshot-v1-32k",
     "moonshot-v1-128k"
 ]
+
+BaichuanModel = Literal[
+    "Baichuan2-Turbo",
+    "Baichuan2-Turbo-192k",
+]
+
 ZhipuModel = Literal[
-    "glm-4"
+    "glm-3-turbo",
+    "glm-4",
 ]
 
 MinimaxModel = Literal[
@@ -147,7 +154,7 @@ DashscopeModel = Literal[
     'qwen-max',
 ]
 
-ModelType = Literal[OpenAIModel, MoonshotModel, ZhipuModel, MinimaxModel, DashscopeModel]
+ModelType = Literal[OpenAIModel, MoonshotModel, ZhipuModel, MinimaxModel, DashscopeModel, BaichuanModel]
 
 
 class MoonshotBody(LLMBodyBase):

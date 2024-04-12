@@ -1,3 +1,4 @@
+import json
 from http import HTTPStatus
 from typing import Iterable, Union, Literal, Optional, Dict, List
 
@@ -55,7 +56,8 @@ class DashscopeProvider(LLMProviderBase[DashscopeModel]):
         )
         if response.status_code == HTTPStatus.OK:
             print(response)
-            return response.output
+            # serialize again in order to handle null
+            return json.loads(json.dumps(response.output))
         else:
             print('Request id: %s, Status code: %s, error code: %s, error message: %s' % (
                 response.request_id, response.status_code,
