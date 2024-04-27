@@ -13,4 +13,4 @@ class AgentConfig(BaseModel):
     system_prompt: Optional[str] = None
 
 
-AgentType = Literal["default", "summarize-content"]
+AgentType = Literal["default", "summarize-content", "summarize-poem"]
