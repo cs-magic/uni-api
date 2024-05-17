@@ -67,6 +67,9 @@ class Settings(BaseSettings):
     MINIMAX_API_KEY: str
     MINIMAX_GROUP_ID: str
     DASHSCOPE_API_KEY: str
+    DOUBAO_AK: str
+    DOUBAO_SK: str
+    DOUBAO_API_KEY: str
     
     # APP
     FRONTEND_BASEURL: str

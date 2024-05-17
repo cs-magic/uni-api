@@ -9,7 +9,7 @@ from typing_extensions import TypedDict, Required
 
 from packages.common_common.pydantic import BaseModel
 
-ProviderType = Literal["openai", "moonshot"]
+ProviderType = Literal["openai", "moonshot", "doubao", "baichuan", "zhipu", "dashscope"]
 
 
 class ChatCompletionAssistantMessageParam(TypedDict, total=False):
@@ -154,7 +154,16 @@ DashscopeModel = Literal[
     'qwen-max',
 ]
 
-ModelType = Literal[OpenAIModel, MoonshotModel, ZhipuModel, MinimaxModel, DashscopeModel, BaichuanModel]
+DoubaoModel = Literal[
+    "Doubao-lite-4k",
+    "Doubao-lite-32k",
+    "Doubao-lite-128k",
+    "Doubao-pro-4k",
+    "Doubao-pro-32k",
+    "Doubao-pro-128k",
+]
+
+ModelType = Literal[OpenAIModel, MoonshotModel, ZhipuModel, MinimaxModel, DashscopeModel, BaichuanModel, DoubaoModel]
 
 
 class MoonshotBody(LLMBodyBase):
