@@ -1,33 +1,40 @@
-from fastapi import FastAPI
+import os.path
+from contextlib import asynccontextmanager
 
+from fastapi import FastAPI
+from starlette.responses import FileResponse
+
+from packages.common_fastapi.dum_openapi import dump_openapi
 from settings import settings
 from src.router import root_router
-# from src.wechat.uni_parser_bot import uni_parser_bot
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # startup
+    yield
+    # shutdown
+
 
 app = FastAPI(
     title=settings.app_title,
     description=settings.description,
     openapi_tags=settings.tags,
     version=settings.version,
+    lifespan=lifespan
 )
 
 app.include_router(root_router)
 
 
-@app.on_event("startup")
-async def startup_event():
-    # ref: https://chat.openai.com/c/e5ad0da5-7e39-4ad4-9bed-ca94a5456d82
-    # import asyncio
-    # asyncio.create_task(uni_parser_bot.start())
-    pass
-
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    # await uni_parser_bot.stop()
-    pass
-
-
 @app.get("/")
 async def read_system_status():
     return {"status": "ok"}
+
+
+@app.get("/openapi")
+async def get_openapi():
+    return FileResponse(os.path.join(__file__, "../openapi.json"))
+
+
+dump_openapi(app)

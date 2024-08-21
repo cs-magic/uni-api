@@ -3,7 +3,6 @@ import json
 import re
 import time
 from typing import Union
-
 import yaml
 from jinja2 import Environment, FileSystemLoader
 from loguru import logger
@@ -14,11 +13,12 @@ from packages.common_common.format_duration import format_duration
 from packages.common_spider.parse_url import parse_url
 from packages.common_wechat.bot.base import BaseWechatyBot
 from packages.common_wechat.utils import parse_url_from_wechat_message
-from settings import settings
-from src.path import GENERATED_PATH, PROJECT_PATH
 from packages.common_wechat.bot.schema import BotStatus, BotSettings
 from packages.common_llm.schema import ModelType
 from packages.common_wechat.bot.simulate_card_2 import Simulator
+
+from settings import settings
+from src.path import GENERATED_PATH, PROJECT_PATH
 
 
 class UniParserBot(BaseWechatyBot):

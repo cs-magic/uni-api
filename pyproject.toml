@@ -6,7 +6,8 @@ authors = ["markshawn2020 <shawninjuly@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+# 3.11 会让 wechaty 报错，因为它的dataclass不支持
+python = "^3.10,<3.11"
 fastapi = {extras = ["all"], version = "^0.110.0"}
 uvicorn = "^0.29.0"
 python-multipart = "^0.0.9"
