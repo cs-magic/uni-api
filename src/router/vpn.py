@@ -12,7 +12,7 @@ vpn_router = APIRouter(prefix='/vpn', tags=["VPN"])
 
 @vpn_router.get('/config')
 @error_handler
-async def get_config(
+async def get_vpn_config_route(
     # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
 ):
     content_raw = api.get('https://xn--eckvarq8ld5k.xn--zckq7gxe.xn--tckwe/link/4lHIflFQQsH1S8qM?clash=1').text

@@ -10,7 +10,7 @@ oss_router = APIRouter(prefix='/oss', tags=["OSS"])
 
 @oss_router.post('/upload')
 @error_handler
-async def oss_upload(
+async def upload_oss_route(
     # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
 ):
     return "ok"
