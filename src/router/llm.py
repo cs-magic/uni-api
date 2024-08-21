@@ -24,7 +24,7 @@ class ILLMBody(BaseModel):
 
 @llm_router.post('/base')
 @error_handler
-async def call_llm_base_route(
+async def call_llm_base(
     body: ILLMBody
 ):
     return call_llm(body.messages, body.model, body.top_p, body.temperature)
@@ -32,7 +32,7 @@ async def call_llm_base_route(
 
 @llm_router.post('/agent')
 @error_handler
-async def call_llm_agent_route(
+async def call_llm_agent(
     # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
     input: Annotated[str, Form()],
     agent_type: Annotated[AgentType, Form()] = "default",
@@ -43,7 +43,7 @@ async def call_llm_agent_route(
 
 @llm_router.get('/openai/list-models')
 @error_handler
-async def query_openai(
+async def list_models(
     # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
 ):
     return OpenAIProvider().client.models.list()
@@ -53,7 +53,7 @@ class QueryPromptModel(BaseModel):
     query: str
 
 
-@llm_router.get('/{provider}/stat', summary='todo')
+@llm_router.get('/{provider}/stat', description='todo')
 @error_handler
 async def check_llm_provider_stat(
     user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
@@ -61,7 +61,7 @@ async def check_llm_provider_stat(
     return 'chatgpt'
 
 
-@llm_router.get('/{provider}/balance', summary='todo')
+@llm_router.get('/{provider}/balance', description='todo')
 @error_handler
 async def check_llm_provider_balance(
     user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
