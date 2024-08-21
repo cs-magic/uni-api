@@ -148,7 +148,7 @@ async def get_current_active_user(
 
 
 @account_router.post("/token")
-async def login_for_access_token_route(
+async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
 ) -> Token:
     user = authenticate_user(fake_users_db, form_data.username, form_data.password)
@@ -165,7 +165,7 @@ async def login_for_access_token_route(
 
 
 @account_router.get("/user/me/", response_model=User)
-async def read_me_route(
+async def read_me(
     user: Annotated[User, Depends(get_current_active_user)],
 ):
     return user

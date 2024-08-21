@@ -15,7 +15,7 @@ spider_router = APIRouter(prefix="/spider", tags=["Spider"])
     response_model=ICard
 )
 @error_handler
-async def parse_url_route(
+async def parse_url_(
     # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
     url: str,
     summary_model: Optional[ModelType] = None,
