@@ -1,11 +1,11 @@
 from functools import lru_cache
-from typing import Any
+from typing import Any, Optional
 
 import yaml
 from jinja2 import Environment, FileSystemLoader
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from packages.common_wechat.bot.schema import BotSettings
+from apps.wechaty_bot.wechaty_bot.schema import BotSettings
 from src.path import PROJECT_PATH
 
 
@@ -29,7 +29,7 @@ class Settings(BaseSettings):
     @property
     def bot(self) -> BotSettings:
         env = Environment(loader=FileSystemLoader(PROJECT_PATH))
-        template = env.get_template('bot.yml')
+        template = env.get_template('wechaty_bot.yml')
         
         rendered_yaml = template.render({
             "version": self.version,
@@ -75,11 +75,11 @@ class Settings(BaseSettings):
     FRONTEND_BASEURL: str
     
     # Wechaty
-    WECHATY_PUPPET: str
+    WECHATY_PUPPET: Optional[str] = None
     WECHATY_PUPPET_SERVICE_ENDPOINT: str
     WECHATY_PUPPET_SERVICE_TOKEN: str
     
-    model_config = SettingsConfigDict(env_file=PROJECT_PATH.joinpath(".env"))
+    model_config = SettingsConfigDict(env_file=PROJECT_PATH.joinpath(".env"), extra="ignore")
 
 
 @lru_cache
