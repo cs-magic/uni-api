@@ -1,10 +1,15 @@
+import json
 import os.path
+from cgi import logfp
 from contextlib import asynccontextmanager
 
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Response
+from starlette.datastructures import MutableHeaders
+from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.middleware.gzip import GZipMiddleware
-from starlette.responses import FileResponse
+from starlette.responses import FileResponse, StreamingResponse, JSONResponse
+from starlette.types import ASGIApp
 
 from packages.common_fastapi.dum_openapi import dump_openapi
 from settings import settings
@@ -17,6 +22,14 @@ async def lifespan(app: FastAPI):
     yield
     # shutdown
 
+class PreserveHeaderCaseMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+
+        # response.headers['Date2'] = response.headers['Date'].capitalize()
+        print("response headers: ", response.headers)
+
+        return response
 
 app = FastAPI(
     title=settings.app_title,
@@ -26,6 +39,7 @@ app = FastAPI(
     lifespan=lifespan
 )
 app.add_middleware(GZipMiddleware)
+app.add_middleware(PreserveHeaderCaseMiddleware)
 
 app.include_router(root_router)
 
