@@ -1,5 +1,6 @@
 import io
 import time
+from typing import Literal
 
 from fastapi import APIRouter, Request
 from starlette.responses import StreamingResponse
@@ -9,11 +10,13 @@ from packages.common_fastapi.error_handler import error_handler
 
 vpn_router = APIRouter(prefix='/vpn', tags=["VPN"])
 
+type Provider =  Literal["foosber", "biznet"]
+
 
 @vpn_router.get('/config')
 @error_handler
 async def get_vpn_config(  # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
-        request: Request, provider: "foosber" | "biznet" = "biznet"):
+        request: Request, provider: Provider = "biznet"):
     if provider == "foosber":
         content_raw = api.get('https://xn--eckvarq8ld5k.xn--zckq7gxe.xn--tckwe/link/4lHIflFQQsH1S8qM?clash=1').text
 
@@ -37,7 +40,7 @@ async def get_vpn_config(  # user: Annotated[User, Security(get_current_active_u
         content = api.get(target_url, headers={"User-Agent": "clash-verge/v2.0.0"}).text
 
     else:
-        raise Exception("no current version")
+        raise Exception("not supported provider")
 
     headers = {'Content-Disposition': f'attachment; filename="config_{time.time()}.yaml"'}
     return StreamingResponse(io.BytesIO(content.encode('utf-8')), media_type='text/plain', headers=headers)
