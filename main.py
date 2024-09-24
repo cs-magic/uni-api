@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI
+from starlette.middleware.gzip import GZipMiddleware
 from starlette.responses import FileResponse
 
 from packages.common_fastapi.dum_openapi import dump_openapi
@@ -24,6 +25,7 @@ app = FastAPI(
     version=settings.version,
     lifespan=lifespan
 )
+app.add_middleware(GZipMiddleware)
 
 app.include_router(root_router)
 
@@ -41,4 +43,4 @@ async def get_openapi():
 dump_openapi(app)
 
 if __name__ == '__main__':
-    uvicorn.run("main:app", host="localhost", port=8000, reload=True)
+    uvicorn.run("main:app", host="localhost", port=8000, reload=True, server_header=False, date_header=False)
