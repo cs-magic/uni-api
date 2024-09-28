@@ -23,7 +23,7 @@ class MarkdownConverter(RawMarkdownConverter):
         title = el.attrs.get('title', None) or ''
         title_part = ' "%s"' % title.replace('"', r'\"') if title else ''
         if (convert_as_inline
-            and el.parent.name not in self.options['keep_inline_images_in']):
+            and el.parent.company_name not in self.options['keep_inline_images_in']):
             return alt
         
         return '![%s](%s%s)' % (alt, src, title_part)
