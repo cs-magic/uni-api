@@ -3,7 +3,7 @@ from typing import Optional
 import requests
 
 
-rama_router = APIRouter(prefix='/ramra')
+rama_router = APIRouter(prefix='/ramra', tags=['Rama'])
 
 @rama_router.get("/pixiv/novels/search")
 async def search_novels(
