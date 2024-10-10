@@ -17,8 +17,6 @@ async def search_novels(
     lang: str = Query("en", description="Language"),
     version: Optional[str] = Query(None, description="API version")
 ):
-    # Here you would typically make a request to the Pixiv API
-    # and return the results. For now, we'll just return the parameters.
 
     params = {
         "word": word,
