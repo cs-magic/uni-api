@@ -2,9 +2,7 @@ import re
 from enum import Enum
 from typing import Optional
 from urllib.parse import quote_plus
-from xml.etree.ElementInclude import include
 
-import pythonmonkey
 import pythonmonkey as pm
 import requests
 from fastapi import APIRouter, Query
@@ -64,7 +62,7 @@ dwr = {
         content = pm.eval(content, {})
 
         def replace_null_object(obj):
-            if obj is pythonmonkey.null:
+            if obj is pm.null:
                 return None
             elif isinstance(obj, dict):
                 return {k: replace_null_object(v) for k, v in obj.items()}
@@ -86,6 +84,7 @@ dwr = {
             if PAGE_KEY in value:
                 items.append(value)
     return items
+
 
 class Category(str, Enum):
     date = "date"
@@ -127,20 +126,22 @@ c0-id={id}
 c0-param0=string:{keyword}
 c0-param1=number:{param1}
 c0-param2=string:{param2 or ''}
-c0-param3=string:{category}
+c0-param3=string:{category.value}
 c0-param4=boolean:{str(param4).lower()}
 c0-param5=number:{param5}
 c0-param6=number:{page_size}
 c0-param7=number:{page_no}
 c0-param8=number:{param8}
 batchId={batch_id}"""
+    # print(payload)
 
     url = "https://www.lofter.com/dwr/call/plaincall/TagBean.search.dwr"
 
     headers = {
         'Referer': 'https://www.lofter.com/tag/puppy/total?tab=archive',
         'Content-Type': 'text/plain',
-        'Cookie': 'HMACCOUNT=F2993D5B41121606; Hm_lpvt_c5c55f9c94fbca8efd7d891afb3210e8=1728891466; Hm_lvt_c5c55f9c94fbca8efd7d891afb3210e8=1728891466; JSESSIONID-WLF-XXD=03fb249509f15bfe33d7f12b2df6d0ccf25a6f118b17719982527c11a213eb4de46d76495f2747d89625ed7d53fc85760c7fc277c41590f6b0c190a26f3ffaf66b2aae7b0ea1b88d479ffc6ae2bc97aa86981833227880ca4442ce62694332e1b76438d022512aed218eed17fa4edc0261832f33a10e0c7b9218a474fc3acb51542765be; LOFTER_SESS=Q_yiq1PyLbtcexv_P6dzelQ_pG4j8MSj2pXjVJsa4foL5dmfURVQ8sMe0xOg5aB1Z7j4RinnrzMYAN4PeP7IR-t0EeF672eG5gXnqynPLXpdTzRkVHzE_GzL99DpeIHkkpo_1K3DXeVh4h6FAc4x4hPijmSYSA1wFim0jeR_xMRhi3S4X8f12vDdYHu5YtWFjghLcshT-pj7braVdmmBO9ozWVuH_3on; LOFT_SESSION_ID=AjL0IyRo0rLeXSonKDeaHL5lumQCUm5A; NETEASE_WDA_UID=2216403593#|#1728891481954; firstentry=%2Flogin.do|https%3A%2F%2Fwww.google.com%2F; hb_MA-BFD7-963BF6846668_source=axuzaibailan.lofter.com; reglogin_isLoginFlag=1; usertrack=dZPgEWcMyjQ9qd5yA0J5Ag==; NTESwebSI=E21CF11EB2A25650DC717D7FB00541F2.lofter-webapp-web-old-docker-lftpro-3-3nhsm-87n68-58f9455bjgl2m-8080; __LOFTER_TRACE_UID=E97060C8E14E40F8A11906730F70D22B#2216403593#12; __snaker__id=rBFF6uAyPJBnDDaN; gdxidpyhxdE=Yzs4NhyhMeHhkf5ik%5CIPRcy%5CVRX9%5CSoRRVMWyEf%5Clk9%2FoR4l7SOho40nOXkRdaLJzQ5dSsejJ1qtfCGp7jXDh38SkyewBDBAjSbbz0dsQgAyQp2qRnSMVZt8tgZRjpYUEeKKUx%2FDtjPoZ%2FKEPaXZhRMn1QTIN8VY%5CYhtJ2DvkCIGgdbr%3A1728892367321; noAdvancedBrowser=0'}
+        'Cookie': 'HMACCOUNT=F2993D5B41121606; Hm_lpvt_c5c55f9c94fbca8efd7d891afb3210e8=1728891466; Hm_lvt_c5c55f9c94fbca8efd7d891afb3210e8=1728891466; JSESSIONID-WLF-XXD=03fb249509f15bfe33d7f12b2df6d0ccf25a6f118b17719982527c11a213eb4de46d76495f2747d89625ed7d53fc85760c7fc277c41590f6b0c190a26f3ffaf66b2aae7b0ea1b88d479ffc6ae2bc97aa86981833227880ca4442ce62694332e1b76438d022512aed218eed17fa4edc0261832f33a10e0c7b9218a474fc3acb51542765be; LOFTER_SESS=Q_yiq1PyLbtcexv_P6dzelQ_pG4j8MSj2pXjVJsa4foL5dmfURVQ8sMe0xOg5aB1Z7j4RinnrzMYAN4PeP7IR-t0EeF672eG5gXnqynPLXpdTzRkVHzE_GzL99DpeIHkkpo_1K3DXeVh4h6FAc4x4hPijmSYSA1wFim0jeR_xMRhi3S4X8f12vDdYHu5YtWFjghLcshT-pj7braVdmmBO9ozWVuH_3on; LOFT_SESSION_ID=AjL0IyRo0rLeXSonKDeaHL5lumQCUm5A; NETEASE_WDA_UID=2216403593#|#1728891481954; firstentry=%2Flogin.do|https%3A%2F%2Fwww.google.com%2F; hb_MA-BFD7-963BF6846668_source=qita297790.lofter.com; reglogin_isLoginFlag=1; regtoken=2000; usertrack=dZPgEWcMyjQ9qd5yA0J5Ag==; NTESwebSI=1E12F50676A469369A03E6A3A08B023A.lofter-webapp-web-old-docker-lftpro-3-3nhsm-87n68-58f9455bdpzrp-8080; __LOFTER_TRACE_UID=E97060C8E14E40F8A11906730F70D22B#2216403593#12; __snaker__id=rBFF6uAyPJBnDDaN; gdxidpyhxdE=Yzs4NhyhMeHhkf5ik%5CIPRcy%5CVRX9%5CSoRRVMWyEf%5Clk9%2FoR4l7SOho40nOXkRdaLJzQ5dSsejJ1qtfCGp7jXDh38SkyewBDBAjSbbz0dsQgAyQp2qRnSMVZt8tgZRjpYUEeKKUx%2FDtjPoZ%2FKEPaXZhRMn1QTIN8VY%5CYhtJ2DvkCIGgdbr%3A1728892367321; noAdvancedBrowser=0'
+    }
 
     response = requests.request("POST", url, headers=headers, data=payload)
 
