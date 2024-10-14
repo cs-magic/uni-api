@@ -1,5 +1,6 @@
 import io
 import time
+from enum import Enum
 from typing import Literal
 
 from fastapi import APIRouter, Request
@@ -10,7 +11,9 @@ from packages.common_fastapi.error_handler import error_handler
 
 vpn_router = APIRouter(prefix='/vpn', tags=["VPN"])
 
-type Provider =  Literal["foosber", "biznet"]
+class Provider(str, Enum):
+    foosber = "foosbar"
+    biznet = "biznet"
 
 
 @vpn_router.get('/config')

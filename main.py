@@ -35,4 +35,4 @@ async def get_openapi():
 dump_openapi(app)
 
 if __name__ == '__main__':
-    uvicorn.run("core:app", host="localhost", port=8000, reload=True, server_header=False, date_header=False)
+    uvicorn.run("main:app", host="localhost", port=8000, reload=True, server_header=False, date_header=False)

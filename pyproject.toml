@@ -1,0 +1,50 @@
+[tool.poetry]
+name = "codebase-py"
+version = "0.1.0"
+description = ""
+authors = ["markshawn2020 <shawninjuly@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+# 3.11 会让 wechaty 报错，因为它的dataclass不支持
+# 3.12 会让 jspy 报错
+# uni-api
+beautifulsoup4 = "^4.12.3"
+darkdetect = "^0.8.0"
+dashscope = "^1.17.0"
+fastapi = {extras = ["standard"], version = "^0.115.0"}
+jinja2 = "^3.1.3"
+loguru = "^0.7.2"
+markdownify = "^0.12.1"
+openai = ">=1.0"
+opencv-python = "^4.10.0.84"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+pillow = "^10.4.0"
+pyautogui = "^0.9.54"
+pynput = "^1.7.7"
+pyperclip = "^1.9.0"
+python = "^3.11"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+python-multipart = "^0.0.9"
+pyyaml = "^6.0.1"
+requests = "^2.31.0"
+selenium = "^4.19.0"
+urllib3 = "<2"
+uvicorn = "^0.29.0"
+volcengine-python-sdk = "^1.0.80"
+webdriver-manager = "^4.0.1"
+whisper = "^1.1.10"
+zhipuai = "^2.0.1"
+sqlmodel = "^0.0.22"
+scrapy = "^2.11.2"
+pydantic-settings = "^2.5.2"
+gerapy = "^0.9.13"
+js2py = "^0.74"
+mini-racer = "^0.12.4"
+pythonmonkey = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+

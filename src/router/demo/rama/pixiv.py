@@ -1,12 +1,11 @@
-from fastapi import APIRouter, Query
+from fastapi import Query, APIRouter
 from typing import Optional
 import requests
 
+pixiv_router = APIRouter()
 
-rama_router = APIRouter(prefix='/rama', tags=['Rama'])
-
-@rama_router.get("/pixiv/novels/search")
-async def search_novels(
+@pixiv_router.get("/pixiv/search")
+async def search_pixiv(
     word: str = Query(..., description="Search word"),
     order: str = Query("date_d", description="Order of results"),
     mode: str = Query("all", description="Search mode"),

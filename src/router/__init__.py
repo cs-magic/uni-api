@@ -6,6 +6,7 @@ from src.router.oss import oss_router
 from src.router.spider import spider_router
 from src.router.vpn import vpn_router
 from src.router.demo.rama import rama_router
+
 root_router = APIRouter()
 
 root_router.include_router(account_router)
