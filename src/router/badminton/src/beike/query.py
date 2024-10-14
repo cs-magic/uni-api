@@ -2,6 +2,8 @@ import json
 from pprint import pprint
 import requests
 
+from ..types import BadmintonCourtStatus
+
 from ..utils import normalize_time
 
 def query_beike_badminton(date):
@@ -18,7 +20,7 @@ def query_beike_badminton(date):
         # print(item['id'], item['timemc'], item['endtimemc'])
         # 'lxbh1': 'Y', 'cdbh1': '1', 'cdmc1': '羽1', 'c1': 'u', 'price1': '', 'packageid1': '',
         available = sum([1 for k, v in item.items() if k.startswith("lxbh") and v != "Y"])
-        result.append({"start_time": normalize_time(item['timemc']), "end_time": normalize_time(item['endtimemc']), "available": available})
+        result.append(BadmintonCourtStatus(start_time=normalize_time(item['timemc']), end_time=normalize_time(item['endtimemc']), available_count=available))
     # print(data)
     return result
 
