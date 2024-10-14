@@ -1,0 +1,682 @@
+<!-- Ñ§ÉúÍøÉÏÔ¤¶¨ -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=gbk">
+<title>Çå»ª´óÑ§ÌåÓý¹Ý¹ÜÀíÓëÍøÉÏÔ¤Ô¼ÏµÍ³</title>
+<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" id="main-theme-script">
+<link href="../css/themes/default.css" rel="stylesheet" id="theme-specific-script">
+<link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link type="text/css" href="../page.css" rel="stylesheet" />
+<script type="text/javascript" src="../js/jquery.js" ></script>
+<link href="../css/simplenso.css" rel="stylesheet">
+<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js "></script>
+<script src="../scripts/jquery.cookie/jquery.cookie.js"></script>
+<script src="../scripts/simplenso/simplenso.js"></script>
+<script src="../My97DatePicker/WdatePicker.js"></script>
+
+<script src="../gymjs/gymcommon.js"></script>
+<script src="../gymjs/gymbook.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	initResourceTable(parent.limitBookDate,parent.limitBookCount,parent.time_date,parent.limitBookInit);
+
+		markStatusColor('14567227','Ñ§Éú','1','');
+
+		markStatusColor('14567229','Ñ§Éú','1','');
+
+		markStatusColor('14567231','Ñ§Éú','1','');
+
+		markStatusColor('14567233','Ñ§Éú','1','');
+
+		markStatusColor('14567277','Ñ§Éú','1','');
+
+		markStatusColor('14567281','Ñ§Éú','1','');
+
+		markStatusColor('14567331','Ñ§Éú','1','');
+
+		markStatusColor('14567333','Ñ§Éú','1','');
+
+		markStatusColor('14567435','ÀÏÊ¦','1','');
+
+		markStatusColor('14567485','Ñ§Éú','1','');
+
+});
+function markStatusColor(resId,userType,paymentStatus,present) {
+	//$("#resourceTd_"+resId).attr("userType",userType);
+	if(paymentStatus == '1'){
+		$("#resourceTd_"+resId).html("");
+		/* if(present == 'true') {
+			$("#resourceTd_"+resId).append("<font color='blue'>ÒÑµ½³¡</font>");
+		}else{
+			//$("#resourceTd_"+resId).append("<font color='green'>ÒÑ½»·Ñ</font>");
+		} */
+	}else{
+		$("#resourceTd_"+resId).html("<font color='red'>Î´½»·Ñ</font>");
+	}
+}
+</script>
+</head>
+<!-- ÏÔÊ¾Ô¤Ô¼Çé¿öµÄ±í¸ñ -->
+<!-- ÏÔÊ¾³¡¹Ý×ÊÔ´µÄ±í¸ñ -->
+
+<style type="text/css">
+
+#resourceTable {
+	border-collapse: collapse;
+	border-style:solid;
+  	border-width:3px;
+
+	vertical-align: middle;
+	font-size: 12px;
+	Table-layout: fixed;
+}
+
+#resourceTable th {
+	text-align: center;
+	padding: 0 0 0 0;
+	border-style:solid;
+	border-width:2px;
+	line-height: 20px;
+	word-wrap: break-word;
+	width: 5.5%;
+}
+
+#resourceTable td {
+	text-align: center;
+	padding: 0 0 0 0;
+	border-style:solid;
+	border-width:2px;
+	line-height: 20px;
+	word-wrap: break-word;
+}
+#resourceTable .datetime {
+	width: 10%;
+}
+</style>
+<input type="hidden" id="forMode" value="yuding"/>
+<input type="hidden" id="forbidName" value="ÔÝÍ£¿ª·Å"/>
+<input type="hidden" id="forbidReason" value="ÔÝÍ£¿ª·Å"/>
+<p id="forbidReasonShow"></p>
+<table id="resourceTable" style="font-size:10px">
+</table>
+<script>
+var resourcesm = new Map();
+function Map() {
+    this.elements = new Array();
+
+    //»ñÈ¡MAPÔªËØ¸öÊý
+    this.size = function() {
+        return this.elements.length;
+    };
+
+    //ÅÐ¶ÏMAPÊÇ·ñÎª¿Õ
+    this.isEmpty = function() {
+        return (this.elements.length < 1);
+    };
+
+    //É¾³ýMAPËùÓÐÔªËØ
+    this.clear = function() {
+        this.elements = new Array();
+    };
+
+    //ÏòMAPÖÐÔö¼ÓÔªËØ£¨key, value)
+    this.put = function(_key, _value) {
+   		if(this.containsKey(_key)) {
+    		this.remove(_key);
+    	}
+        this.elements.push( {
+            key : _key,
+            value : _value
+        });
+    };
+
+    //É¾³ýÖ¸¶¨KEYµÄÔªËØ£¬³É¹¦·µ»ØTrue£¬Ê§°Ü·µ»ØFalse
+    this.remove = function(_key) {
+        var bln = false;
+        try {
+            for (i = 0; i < this.elements.length; i++) {
+                if (this.elements[i].key == _key) {
+                    this.elements.splice(i, 1);
+                    return true;
+                }
+            }
+        } catch (e) {
+            bln = false;
+        }
+        return bln;
+    };
+
+    //»ñÈ¡Ö¸¶¨KEYµÄÔªËØÖµVALUE£¬Ê§°Ü·µ»ØNULL
+    this.get = function(_key) {
+        try {
+            for (i = 0; i < this.elements.length; i++) {
+                if (this.elements[i].key == _key) {
+                    return this.elements[i].value;
+                }
+            }
+        } catch (e) {
+            return null;
+        }
+    };
+
+    //»ñÈ¡Ö¸¶¨Ë÷ÒýµÄÔªËØ£¨Ê¹ÓÃelement.key£¬element.value»ñÈ¡KEYºÍVALUE£©£¬Ê§°Ü·µ»ØNULL
+    this.element = function(_index) {
+        if (_index < 0 || _index >= this.elements.length) {
+            return null;
+        }
+        return this.elements[_index];
+    };
+
+    //ÅÐ¶ÏMAPÖÐÊÇ·ñº¬ÓÐÖ¸¶¨KEYµÄÔªËØ
+    this.containsKey = function(_key) {
+        var bln = false;
+        try {
+            for (i = 0; i < this.elements.length; i++) {
+                if (this.elements[i].key == _key) {
+                    bln = true;
+                }
+            }
+        } catch (e) {
+            bln = false;
+        }
+        return bln;
+    };
+
+    //ÅÐ¶ÏMAPÖÐÊÇ·ñº¬ÓÐÖ¸¶¨VALUEµÄÔªËØ
+    this.containsValue = function(_value) {
+        var bln = false;
+        try {
+            for (i = 0; i < this.elements.length; i++) {
+                if (this.elements[i].value == _value) {
+                    bln = true;
+                }
+            }
+        } catch (e) {
+            bln = false;
+        }
+        return bln;
+    };
+
+    //»ñÈ¡MAPÖÐËùÓÐVALUEµÄÊý×é£¨ARRAY£©
+    this.values = function() {
+        var arr = new Array();
+        for (i = 0; i < this.elements.length; i++) {
+            arr.push(this.elements[i].value);
+        }
+        return arr;
+    };
+
+    //»ñÈ¡MAPÖÐËùÓÐKEYµÄÊý×é£¨ARRAY£©
+    this.keys = function() {
+        var arr = new Array();
+        for (i = 0; i < this.elements.length; i++) {
+            arr.push(this.elements[i].key);
+        }
+        return arr;
+    };
+}
+
+
+function myserialize(objs){
+	var parmString = $(objs).serialize();
+	var parmArray = parmString.split("&");
+	var parmStringNew="";
+	$.each(parmArray,function(index,data){
+	var li_pos = data.indexOf("=");
+	if(li_pos >0){
+		var name = data.substring(0,li_pos);
+		var value = escape(decodeURIComponent(data.substr(li_pos+1)));
+		var parm = name+"="+value;
+		parmStringNew = parmStringNew=="" ? parm : parmStringNew + '&' + parm;
+	}
+	});
+	return parmStringNew;
+}
+
+
+function ajaxSubmit(formId,callback,nowait) {
+	var params = myserialize($("#"+formId));
+	if(!nowait) {
+		$("#myWait").show();
+	}
+	$.ajax({
+	type:'POST',
+	url:$("#"+formId).attr("action"),
+	data:params,
+	success: function(dataMsg){
+		if(callback){
+			callback(dataMsg);
+		}
+		if(!nowait) {
+			$("#myWait").hide();
+		}
+	}
+  });
+}
+
+function isEmpty(value){
+    return /^\s*$/.test(value);
+}
+
+
+function isDateIn(dateStr,limitCount){
+	var now = new Date();    //½áÊøÊ±¼ä
+	dateStr = dateStr.replace(/-/g,"/");
+	var date = new Date(dateStr);
+	var timeDiffer = date.getTime() - now.getTime();  //Ê±¼ä²îµÄºÁÃëÊý
+	//¼ÆËã³öÏà²îÌìÊý
+	var dayDiffer=parseInt(timeDiffer / (1000 * 60 * 60 * 24));
+	if(dayDiffer < 0) {
+		return false;
+	}
+	return dayDiffer < limitCount;
+}
+
+Date.prototype.format = function(format) {
+    var o =
+    {
+        "M+" : this.getMonth()+1, //month
+        "d+" : this.getDate(),    //day
+        "h+" : this.getHours(),   //hour
+        "m+" : this.getMinutes(), //minute
+        "s+" : this.getSeconds(), //second
+        "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+        "S" : this.getMilliseconds() //millisecond
+    }
+    if(/(y+)/.test(format))
+    format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    for(var k in o)
+    if(new RegExp("("+ k +")").test(format))
+    format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    return format;
+}
+
+</script>
+<script>
+	//µã»÷±í¸ñÍ·²¿¹ØÁªµã»÷ÕûÁÐ
+	var forUsual = false;
+function clickth(thobj) {
+	forUsual = false;
+	 var thisIndex = $(thobj).index();
+	var tds = $(thobj).parent().parent().find("td");
+	var forModeVal = $("#forMode").val();
+	if(forModeVal=="xuanze") {
+		tds.each(function(){
+			if($(this).index()==thisIndex) {
+				$(this).trigger('click');
+			}
+		});
+	}else {
+		tds.each(function(){
+			if(!forUsual) {
+				if($(this).index()==thisIndex && typeof($(this).attr("bookId"))=="undefined") {
+					$(this).trigger('click');
+				}
+			}
+		});
+	}
+}
+//µã»÷±í¸ñÐÐÊ×¹ØÁªÕûÐÐ
+function clicktr(thobj) {
+	forUsual = false;
+	var tds = $(thobj).parent().find("td");
+	var forModeVal = $("#forMode").val();
+	if(forModeVal=="xuanze") {
+		tds.each(function(){
+				$(this).trigger('click');
+		});
+	}else {
+		tds.each(function(){
+			if(!forUsual) {
+				if(typeof($(this).attr("bookId"))=="undefined") {
+					$(this).trigger('click');
+				}
+			}
+		});
+	}
+}
+//µã»÷±í¸ñÐÐÊ×¹ØÁªÈ«²¿
+function clickAll(thobj) {
+	forUsual = false;
+	var tds = $(thobj).parent().parent().find("td");
+	var forModeVal = $("#forMode").val();
+	if(forModeVal=="xuanze") {
+		tds.each(function(){
+				$(this).trigger('click');
+		});
+	}else {
+		tds.each(function(){
+			if(!forUsual) {
+				if(typeof($(this).attr("bookId"))=="undefined") {
+					$(this).trigger('click');
+				}
+			}
+		});
+	}
+	$(thobj).attr("style","cursor:pointer;background-color:#00FFFF");
+}
+var item_name = '';
+function renderTable(){
+	var resourceArray = new Array();
+	/* $.each(JSON.parse('[cn.edu.tsinghua.gym.pojo.GymResourceData@130bb8bd[id=14567235,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567220,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@5c2f06b6[id=14567220,name=Ì¨1,code=1,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨1,field_code=1,time_session=17:00-18:00,enabled=true,show_hide=true,sort_rank=34,overlay=14567235,14567234,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@28db33d[id=14567285,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567270,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@7e217dc8[id=14567270,name=Ì¨2,code=2,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨2,field_code=2,time_session=17:00-18:00,enabled=true,show_hide=true,sort_rank=34,overlay=14567285,14567284,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@27558ae9[id=14567335,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567320,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@28ce2c57[id=14567320,name=Ì¨3,code=3,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨3,field_code=3,time_session=17:00-18:00,enabled=true,show_hide=true,sort_rank=34,overlay=14567335,14567334,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@1b1ee51a[id=14567385,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567370,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@48c91629[id=14567370,name=Ì¨4,code=4,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨4,field_code=4,time_session=17:00-18:00,enabled=true,show_hide=true,sort_rank=34,overlay=14567385,14567384,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@5931c1a8[id=14567435,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567420,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@9ce0314[id=14567420,name=Ì¨5,code=5,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨5,field_code=5,time_session=17:00-18:00,enabled=true,show_hide=true,sort_rank=34,overlay=14567435,14567434,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@2be2df9f[id=14567485,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567470,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@342c1b13[id=14567470,name=Ì¨6,code=6,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨6,field_code=6,time_session=17:00-18:00,enabled=true,show_hide=true,sort_rank=34,overlay=14567485,14567484,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@3bc7563b[id=14567535,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567520,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@d11014a[id=14567520,name=Ì¨7,code=7,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨7,field_code=7,time_session=17:00-18:00,enabled=true,show_hide=true,sort_rank=34,overlay=14567535,14567534,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@1bee5a26[id=14567233,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567220,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@5c2f06b6[id=14567220,name=Ì¨1,code=1,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨1,field_code=1,time_session=18:00-19:00,enabled=true,show_hide=true,sort_rank=36,overlay=14567233,14567232,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@3d60831d[id=14567283,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567270,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@7e217dc8[id=14567270,name=Ì¨2,code=2,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨2,field_code=2,time_session=18:00-19:00,enabled=true,show_hide=true,sort_rank=36,overlay=14567283,14567282,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@b400466[id=14567333,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567320,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@28ce2c57[id=14567320,name=Ì¨3,code=3,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨3,field_code=3,time_session=18:00-19:00,enabled=true,show_hide=true,sort_rank=36,overlay=14567333,14567332,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@6f2b86c4[id=14567383,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567370,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@48c91629[id=14567370,name=Ì¨4,code=4,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨4,field_code=4,time_session=18:00-19:00,enabled=true,show_hide=true,sort_rank=36,overlay=14567383,14567382,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@248d1791[id=14567433,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567420,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@9ce0314[id=14567420,name=Ì¨5,code=5,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨5,field_code=5,time_session=18:00-19:00,enabled=true,show_hide=true,sort_rank=36,overlay=14567433,14567432,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@2b064356[id=14567483,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567470,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@342c1b13[id=14567470,name=Ì¨6,code=6,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨6,field_code=6,time_session=18:00-19:00,enabled=true,show_hide=true,sort_rank=36,overlay=14567483,14567482,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@282ed92b[id=14567533,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567520,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@d11014a[id=14567520,name=Ì¨7,code=7,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨7,field_code=7,time_session=18:00-19:00,enabled=true,show_hide=true,sort_rank=36,overlay=14567533,14567532,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@25b2b586[id=14567231,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567220,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@5c2f06b6[id=14567220,name=Ì¨1,code=1,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨1,field_code=1,time_session=19:00-20:00,enabled=true,show_hide=true,sort_rank=38,overlay=14567231,14567230,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@77ab83bf[id=14567281,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567270,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@7e217dc8[id=14567270,name=Ì¨2,code=2,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨2,field_code=2,time_session=19:00-20:00,enabled=true,show_hide=true,sort_rank=38,overlay=14567281,14567280,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@1d56adfa[id=14567331,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567320,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@28ce2c57[id=14567320,name=Ì¨3,code=3,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨3,field_code=3,time_session=19:00-20:00,enabled=true,show_hide=true,sort_rank=38,overlay=14567331,14567330,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@54dc5c86[id=14567381,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567370,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@48c91629[id=14567370,name=Ì¨4,code=4,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨4,field_code=4,time_session=19:00-20:00,enabled=true,show_hide=true,sort_rank=38,overlay=14567381,14567380,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@20dd809f[id=14567431,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567420,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@9ce0314[id=14567420,name=Ì¨5,code=5,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨5,field_code=5,time_session=19:00-20:00,enabled=true,show_hide=true,sort_rank=38,overlay=14567431,14567430,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@2e275794[id=14567481,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567470,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@342c1b13[id=14567470,name=Ì¨6,code=6,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨6,field_code=6,time_session=19:00-20:00,enabled=true,show_hide=true,sort_rank=38,overlay=14567481,14567480,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@18e6cd38[id=14567531,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567520,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@d11014a[id=14567520,name=Ì¨7,code=7,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨7,field_code=7,time_session=19:00-20:00,enabled=true,show_hide=true,sort_rank=38,overlay=14567531,14567530,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@58ab244d[id=14567229,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567220,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@5c2f06b6[id=14567220,name=Ì¨1,code=1,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨1,field_code=1,time_session=20:00-21:00,enabled=true,show_hide=true,sort_rank=40,overlay=14567229,14567228,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@4bdc68b5[id=14567279,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567270,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@7e217dc8[id=14567270,name=Ì¨2,code=2,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨2,field_code=2,time_session=20:00-21:00,enabled=true,show_hide=true,sort_rank=40,overlay=14567279,14567278,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@735e69fb[id=14567329,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567320,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@28ce2c57[id=14567320,name=Ì¨3,code=3,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨3,field_code=3,time_session=20:00-21:00,enabled=true,show_hide=true,sort_rank=40,overlay=14567329,14567328,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@5bd61dac[id=14567379,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567370,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@48c91629[id=14567370,name=Ì¨4,code=4,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨4,field_code=4,time_session=20:00-21:00,enabled=true,show_hide=true,sort_rank=40,overlay=14567379,14567378,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@40ca70bc[id=14567429,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567420,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@9ce0314[id=14567420,name=Ì¨5,code=5,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨5,field_code=5,time_session=20:00-21:00,enabled=true,show_hide=true,sort_rank=40,overlay=14567429,14567428,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@36b0acd4[id=14567479,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567470,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@342c1b13[id=14567470,name=Ì¨6,code=6,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨6,field_code=6,time_session=20:00-21:00,enabled=true,show_hide=true,sort_rank=40,overlay=14567479,14567478,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@44bfebc4[id=14567529,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567520,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@d11014a[id=14567520,name=Ì¨7,code=7,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨7,field_code=7,time_session=20:00-21:00,enabled=true,show_hide=true,sort_rank=40,overlay=14567529,14567528,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@140fb41f[id=14567227,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567220,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@5c2f06b6[id=14567220,name=Ì¨1,code=1,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨1,field_code=1,time_session=21:00-22:00,enabled=true,show_hide=true,sort_rank=42,overlay=14567227,14567226,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@76252130[id=14567277,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567270,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@7e217dc8[id=14567270,name=Ì¨2,code=2,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨2,field_code=2,time_session=21:00-22:00,enabled=true,show_hide=true,sort_rank=42,overlay=14567277,14567276,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@2a5ac334[id=14567327,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567320,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@28ce2c57[id=14567320,name=Ì¨3,code=3,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨3,field_code=3,time_session=21:00-22:00,enabled=true,show_hide=true,sort_rank=42,overlay=14567327,14567326,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@2cc5a0a5[id=14567377,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567370,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@48c91629[id=14567370,name=Ì¨4,code=4,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨4,field_code=4,time_session=21:00-22:00,enabled=true,show_hide=true,sort_rank=42,overlay=14567377,14567376,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@62b5c799[id=14567427,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567420,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@9ce0314[id=14567420,name=Ì¨5,code=5,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨5,field_code=5,time_session=21:00-22:00,enabled=true,show_hide=true,sort_rank=42,overlay=14567427,14567426,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@133b7f5a[id=14567477,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567470,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@342c1b13[id=14567470,name=Ì¨6,code=6,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨6,field_code=6,time_session=21:00-22:00,enabled=true,show_hide=true,sort_rank=42,overlay=14567477,14567476,overlaySize=2], cn.edu.tsinghua.gym.pojo.GymResourceData@2725f793[id=14567527,gymnasium_id=4836273,gymnasiumData=cn.edu.tsinghua.gym.pojo.GymnasiumData@1441e2aa[id=4836273,org_id=1,name=Î÷ÌåÓý¹Ý,english_name=WestGymnasium,brief_desc=Î÷ÌåÓý¹ÝÊÇÇå»ªµÄµÚÒ»¸öÌåÓý¹Ý£¬Î»ÓÚÇå»ªµÚÒ»¸öÔË¶¯³¡¡ª¡ªÎ÷´ó²Ù³¡µÄÅÔ±ß£¬Ò²ÊÇÇå»ªÔçÆÚËÄ´ó½¨ÖþÖ®Ò»¡£,detail_desc=<null>,location=Çå»ª´óÑ§Î÷´ó²Ù³¡Î÷²à,baidu_location=116.328211,40.010752,last_modify_time=<null>,last_modify_zjh=<null>,last_modify_name=<null>,pay_project_no=100171,pay_online=1,update_time=2019-05-06,sm_pay_project_no=100415,sm_pay_project_no_wx=100416,item_id=200029],item_id=14567218,itemData=cn.edu.tsinghua.gym.pojo.ItemData@1d83bfee[id=14567218,name=Î÷ÌåÌ¨Çò,gymnasium_id=4836273,item0_id=14567207,open_session_period=<null>,enable=1,charge_mode=<null>,charge_standard=<null>,field_introduction=<null>,mgr_introduction=<null>,can_net_book=1,book_open_session_period=<null>,net_book_rule=<null>,can_unsubscribe=<null>,overlay_enable=1],field_id=14567520,fieldData=cn.edu.tsinghua.gym.pojo.FieldData@d11014a[id=14567520,name=Ì¨7,code=7,gymnasium_id=4836273,item_id=14567218,enable=1,can_net_book=1],field_name=Ì¨7,field_code=7,time_session=21:00-22:00,enabled=true,show_hide=true,sort_rank=42,overlay=14567527,14567526,overlaySize=2]]'),function(key,resource){
+			resourceArray.push({id:resource.id,time_session:resource.time_session,field_name:resource.field_name,overlaySize:resource.overlaySize,can_see_student:resource.itemData.can_see_student,can_net_book:resource.fieldData.can_net_book});
+			resourcesm.put(resource.id, resource.idm);
+		}); */
+
+	resourceArray.push({id:'14567235',time_session:'17:00-18:00',field_name:'Ì¨1',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567235', 'D06139055CB6EFA3B20DAB2D94D7B6AD01012600C7567DC1');
+
+	resourceArray.push({id:'14567285',time_session:'17:00-18:00',field_name:'Ì¨2',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567285', 'FF0B8FCCC5C0D9EA192EE573FD33A5B9F17C9EDA2D6771F1');
+
+	resourceArray.push({id:'14567335',time_session:'17:00-18:00',field_name:'Ì¨3',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567335', '437405E1E793C3498797ABD7058D3CB61293AE6EB2C9B814');
+
+	resourceArray.push({id:'14567385',time_session:'17:00-18:00',field_name:'Ì¨4',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567385', '23B315F0B194BF8DC453197E97B5F66395381CAC46A6DECF');
+
+	resourceArray.push({id:'14567435',time_session:'17:00-18:00',field_name:'Ì¨5',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567435', '3D5515731C61132391774B254ED0A22C9ECE9184C058981A');
+
+	resourceArray.push({id:'14567485',time_session:'17:00-18:00',field_name:'Ì¨6',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567485', '9EE3BB15C0B42C82E86A353C5B3BC33FCF29786A30D705A5');
+
+	resourceArray.push({id:'14567535',time_session:'17:00-18:00',field_name:'Ì¨7',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567535', '3972FACBAECA13458FF9D6169F465527123BEFD115545C18');
+
+	resourceArray.push({id:'14567233',time_session:'18:00-19:00',field_name:'Ì¨1',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567233', '0A4E4389C9EE62B2F68083AB8FA974EBE469A4F2997B1F35');
+
+	resourceArray.push({id:'14567283',time_session:'18:00-19:00',field_name:'Ì¨2',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567283', 'DC929EDDC5E5A9EE3A2E18B21B6EE80FAAE7FD97962F8AB5');
+
+	resourceArray.push({id:'14567333',time_session:'18:00-19:00',field_name:'Ì¨3',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567333', '61EF05BFC00D09D640C05C98464110683CEE9567F8887C11');
+
+	resourceArray.push({id:'14567383',time_session:'18:00-19:00',field_name:'Ì¨4',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567383', '07FECAB98C39F6830C04A9F4C4A3DBFA4D5C94AE55DD26EB');
+
+	resourceArray.push({id:'14567433',time_session:'18:00-19:00',field_name:'Ì¨5',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567433', '652DED91591DFFA5FD0D7DAE1F2DAAA48BA4EEDD3D4F1D34');
+
+	resourceArray.push({id:'14567483',time_session:'18:00-19:00',field_name:'Ì¨6',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567483', 'C29D45494BF2D51A90B59692BCE4B463E638C81B45F121FA');
+
+	resourceArray.push({id:'14567533',time_session:'18:00-19:00',field_name:'Ì¨7',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567533', 'F4B59A648FA53511B55ADC7FF93E4F88412826903A0C7E37');
+
+	resourceArray.push({id:'14567231',time_session:'19:00-20:00',field_name:'Ì¨1',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567231', '85998D74214C74FC31F8A457079708FC4CEEE2230B523C45');
+
+	resourceArray.push({id:'14567281',time_session:'19:00-20:00',field_name:'Ì¨2',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567281', 'DEFEB3033075973DDFF02FDF648828AAC0BA989B4620024F');
+
+	resourceArray.push({id:'14567331',time_session:'19:00-20:00',field_name:'Ì¨3',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567331', 'FB70F54721F91DB8C536779E389DBEFEB0780CD23E53349C');
+
+	resourceArray.push({id:'14567381',time_session:'19:00-20:00',field_name:'Ì¨4',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567381', '54A390887DD8905504E321D786F17567E5599E7BE7634156');
+
+	resourceArray.push({id:'14567431',time_session:'19:00-20:00',field_name:'Ì¨5',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567431', '81239C74F36FC778F45CE205C38F13255D0808A53C068D2A');
+
+	resourceArray.push({id:'14567481',time_session:'19:00-20:00',field_name:'Ì¨6',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567481', '33889FB19A7C5E06EE255C7F56B72FDA41ADD382672FBAEC');
+
+	resourceArray.push({id:'14567531',time_session:'19:00-20:00',field_name:'Ì¨7',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567531', 'F89399DD5B6E18A904C64FAE23EC5A97AB1446C145EAEF1D');
+
+	resourceArray.push({id:'14567229',time_session:'20:00-21:00',field_name:'Ì¨1',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567229', 'F3681513C5BC25CEC8D6BDBEE23A7E24A98E96798E0FC7D1');
+
+	resourceArray.push({id:'14567279',time_session:'20:00-21:00',field_name:'Ì¨2',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567279', '792D60F16F7F273D9F284ED5221F4BE508841AC3EF18FB64');
+
+	resourceArray.push({id:'14567329',time_session:'20:00-21:00',field_name:'Ì¨3',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567329', '442432D72FC14DE301983FE5EF7B4D74074EE3362FB5C6C7');
+
+	resourceArray.push({id:'14567379',time_session:'20:00-21:00',field_name:'Ì¨4',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567379', '630071524743B2AC3778B1E9951129D0A34BB0AC19D811BD');
+
+	resourceArray.push({id:'14567429',time_session:'20:00-21:00',field_name:'Ì¨5',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567429', 'CFAE21C701802055F13034E84B0ADEE9CDFE68B192F87CF7');
+
+	resourceArray.push({id:'14567479',time_session:'20:00-21:00',field_name:'Ì¨6',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567479', '35845942FAE28022D1376E5209F4C10804747E8F552F4E84');
+
+	resourceArray.push({id:'14567529',time_session:'20:00-21:00',field_name:'Ì¨7',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567529', '9F3466ADD612F1DD72CEF56933343B114E81EC07DAC3E9A3');
+
+	resourceArray.push({id:'14567227',time_session:'21:00-22:00',field_name:'Ì¨1',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567227', 'D48F3412D61EE57F9559AB0E19F0FA61414C032CF971038A');
+
+	resourceArray.push({id:'14567277',time_session:'21:00-22:00',field_name:'Ì¨2',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567277', 'E4A1F8DF2146ABE22B87DDA12F4E58642A25623B7DD027D4');
+
+	resourceArray.push({id:'14567327',time_session:'21:00-22:00',field_name:'Ì¨3',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567327', '863E7632BCFBC4DB06A396C8FB77A6E9927507FADD2DE26F');
+
+	resourceArray.push({id:'14567377',time_session:'21:00-22:00',field_name:'Ì¨4',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567377', '30241CB1CDC34D05C0FDFE3D7C76BD1CD6A8EEB74A6EE758');
+
+	resourceArray.push({id:'14567427',time_session:'21:00-22:00',field_name:'Ì¨5',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567427', '9DD22E563AE8EF142189254B56FCA2BC8F7EB2826CC7F7BB');
+
+	resourceArray.push({id:'14567477',time_session:'21:00-22:00',field_name:'Ì¨6',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567477', 'A92F5F6F2B71952D7F1954CA64C71879AF38EB89C3622A79');
+
+	resourceArray.push({id:'14567527',time_session:'21:00-22:00',field_name:'Ì¨7',overlaySize:'2',can_net_book:'1'});
+	resourcesm.put('14567527', '294310DD7C040F7B6DA0E7516405F0CCE773540792279AA1');
+
+
+	var head = new Map();
+	var trs = new Map();
+
+	$.each(resourceArray,function(i,o){
+		head.put(o.field_name,o.field_name);
+
+		var trArray = trs.get(o.time_session);
+		if(!trArray) {
+			trArray = new Array();
+			trs.put(o.time_session,trArray);
+		}
+		trArray.push(o);
+	});
+
+	//make Th
+	if(trs.size()==0) {
+		$("#resourceTable").append("<h4>¸Ã³¡µØÔÚ´ËÊ±¶Î²»¿ª·ÅÍøÉÏÔ¤Ô¼</h4>");
+	}else {
+		var thHtml = "<tr><th onclick='clickAll(this)' onmouseover=\"this.style.cssText='cursor:pointer;background-color:#00FFFF'\" onmouseout=\"this.style.cssText='cursor:pointer'\" onmousedown=\"this.style.cssText='cursor:progress;background-color:blue'\">"+item_name+"</th>";
+		$.each(head.keys(),function(i,o){
+			thHtml += "<th onclick='clickth(this)' onmouseup=\"this.style.cssText='cursor:pointer;background-color:#00FFFF'\" onmouseover=\"this.style.cssText='cursor:pointer;background-color:#00FFFF'\" onmouseout=\"this.style.cssText='cursor:pointer'\" onmousedown=\"this.style.cssText='cursor:pointer;background-color:blue'\">"+o+"</th>";
+		});
+		thHtml += "</tr>";
+		$("#resourceTable").append(thHtml);
+		$.each(trs.keys(),function(i,trName){
+			var trHtml = "<tr class='resourceTr' ><th class='datetime' onclick='clicktr(this)' onmouseup=\"this.style.cssText='cursor:pointer;background-color:#00FFFF'\" onmouseover=\"this.style.cssText='cursor:pointer;background-color:#00FFFF'\" onmouseout=\"this.style.cssText='cursor:pointer'\" onmousedown=\"this.style.cssText='cursor:pointer;background-color:blue'\">"+trName+"</th>";
+			$.each(trs.get(trName),function(i2,resObj){
+				trHtml += "<td class='resourceTd' id='resourceTd_"+resObj.id+"' fieldName=\""+resObj.field_name+"\" time_session=\""+resObj.time_session+"\" overlaySize=\""+resObj.overlaySize+"\"  resource_id = \""+resObj.id+"\" can_net_book='"+resObj.can_net_book+"'>&nbsp;<div id='res_div_"+resObj.id+"' class='simpleDiv'></div></td>";
+			});
+			trHtml += "</tr>";
+			$("#resourceTable").append(trHtml);
+		});
+	}
+}
+	renderTable();
+</script>
+
+<script>
+
+	//add ×´Ì¬
+	function markResStatus(bookId,resId,status) {
+		$("#resourceTd_"+resId).attr("bookId",bookId);
+		if(status == '1'){
+			$("#resourceTd_"+resId).attr("lock","true");
+			$("#resourceTd_"+resId).css("background","yellow");
+		}
+	}
+	//updateInTime
+
+		markResStatus('23342831','14567227','1');
+
+		markResStatus('23342875','14567229','1');
+
+		markResStatus('23338932','14567231','1');
+
+		markResStatus('23338928','14567233','1');
+
+		markResStatus('23338833','14567277','1');
+
+		markResStatus('23339591','14567281','1');
+
+		markResStatus('23342932','14567331','1');
+
+		markResStatus('23340341','14567333','1');
+
+		markResStatus('23340170','14567435','1');
+
+		markResStatus('23343013','14567485','1');
+
+	//updateForUnsubscribe
+
+
+	//ÉèÖÃtdÊ±¼äÖµÒÔ¼°ÊÇ·ñ¹ýÆÚ (¸ñÊ½ '5:00-6:00') ³¬¹ý½áÊøÊ±¼äËã¹ýÆÚ
+	function isLate(time_date,tSession) {
+		var now = new Date();
+	    var sd=time_date.split("-");
+	    eval("sd[1]=" + sd[1] + "-1");
+	    var dNow = new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
+	    var dTarget = new Date(sd[0],sd[1],sd[2]).getTime();
+		if( dNow > dTarget) {
+			return true;
+		}else{
+			if(dNow == dTarget){
+				var endHour = tSession.substr(tSession.indexOf('-') + 1);
+				endHour = endHour.substring(0,endHour.indexOf(':'));
+				eval("endHour="+endHour+";");
+
+				if(now.getHours() >= endHour) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+
+  	var time_date = '2024-10-15';
+	$.each($(".resourceTd"),function(i,o){
+		$(o).attr("time_date",time_date);
+		var tdTime_session = $(o).attr("time_session");
+		if(isLate(time_date,tdTime_session)) {
+			$(o).attr("isLate","true");
+		}
+		var catNet = $(o).attr("can_net_book");
+		if(catNet == '0'){
+			$(o).attr("isCatNet","true");
+		}
+
+	});
+
+
+	//Ìí¼Ó¼Û¸ñ
+	function addCost(resId,cost) {
+		var resTdId="resourceTd_"+resId;
+		$("#"+resTdId).attr("cost",cost);
+	}
+
+
+		addCost('14567227','15.0');
+
+		addCost('14567229','15.0');
+
+		addCost('14567231','15.0');
+
+		addCost('14567233','15.0');
+
+		addCost('14567235','15.0');
+
+		addCost('14567277','15.0');
+
+		addCost('14567279','15.0');
+
+		addCost('14567281','15.0');
+
+		addCost('14567283','15.0');
+
+		addCost('14567285','15.0');
+
+		addCost('14567327','15.0');
+
+		addCost('14567329','15.0');
+
+		addCost('14567331','15.0');
+
+		addCost('14567333','15.0');
+
+		addCost('14567335','15.0');
+
+		addCost('14567377','15.0');
+
+		addCost('14567379','15.0');
+
+		addCost('14567381','15.0');
+
+		addCost('14567383','15.0');
+
+		addCost('14567385','15.0');
+
+		addCost('14567427','15.0');
+
+		addCost('14567429','15.0');
+
+		addCost('14567431','15.0');
+
+		addCost('14567433','15.0');
+
+		addCost('14567435','15.0');
+
+		addCost('14567477','15.0');
+
+		addCost('14567479','15.0');
+
+		addCost('14567481','15.0');
+
+		addCost('14567483','15.0');
+
+		addCost('14567485','15.0');
+
+		addCost('14567527','15.0');
+
+		addCost('14567529','15.0');
+
+		addCost('14567531','15.0');
+
+		addCost('14567533','15.0');
+
+		addCost('14567535','15.0');
+
+
+
+	//¹ÜÀíÔ±ÁÙÊ±Ö¸¶¨½ûÖ¹ÍøÉÏÔ¤¶¨
+
+
+</script>
+
+
