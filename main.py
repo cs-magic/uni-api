@@ -3,7 +3,8 @@ from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI
-from starlette.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
 from packages.common_fastapi.dum_openapi import dump_openapi
 from settings import settings
@@ -21,6 +22,18 @@ app = FastAPI(title=settings.app_title, description=settings.description, openap
 
 app.include_router(root_router)
 
+
+origins = [
+    "*"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 async def read_system_status():
