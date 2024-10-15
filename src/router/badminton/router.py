@@ -11,13 +11,8 @@ badminton_router = APIRouter()
 from enum import Enum
 from typing import Literal
 
-class GymEnum(str, Enum):
-    BEIKE = "北科大体育馆"
-    TSINGHUA_QIMO = "清华大学气膜馆羽毛球场"
-    TSINGHUA_ZONGTI = "清华大学综体羽毛球场"
-    TSINGHUA_XITI = "清华大学西体羽毛球场"
 
-GymLiteral = Literal["北科大体育馆", "清华大学气膜馆羽毛球场", "清华大学综体羽毛球场", "清华大学西体羽毛球场"]
+GymLiteral = Literal["北科大体育馆", "清华大学气膜馆", "清华大学综合体育馆", "清华大学西区体育馆"]
 
 @badminton_router.get("/badminton", response_model=List[BadmintonCourtStatus], tags=["Badminton"])
 async def get_badminton_status(
@@ -26,13 +21,13 @@ async def get_badminton_status(
 ):
     date_str = date.strftime("%Y-%m-%d")
 
-    if gym == GymEnum.BEIKE:
+    if gym == "北科大体育馆":
         return query_beike_badminton(date_str)
-    elif gym == GymEnum.TSINGHUA_QIMO:
+    elif gym == "清华大学气膜馆":
         return query_tsinghua_badminton(date_str, TsinghuaBadmintonGym.清华大学气膜馆羽毛球场)
-    elif gym == GymEnum.TSINGHUA_ZONGTI:
+    elif gym == "清华大学综合体育馆":
         return query_tsinghua_badminton(date_str, TsinghuaBadmintonGym.清华大学综体羽毛球场)
-    elif gym == GymEnum.TSINGHUA_XITI:
+    elif gym == "清华大学西区体育馆":
         return query_tsinghua_badminton(date_str, TsinghuaBadmintonGym.清华大学西体羽毛球场)
     else:
         raise ValueError(f"不支持的体育场: {gym}")
