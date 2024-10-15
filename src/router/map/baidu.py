@@ -10,6 +10,7 @@ baidu_router = APIRouter()
 
 BAIDU_AK = os.getenv("BAIDU_MAP_AK")
 BASE_URL = "https://api.map.baidu.com/reverse_geocoding/v3/"
+GEOCODING_URL = "https://api.map.baidu.com/geocoding/v3/"
 
 @baidu_router.get("/reverse_geocoding")
 async def baidu_reverse_geocoding(
@@ -46,3 +47,30 @@ async def baidu_reverse_geocoding(
         response = await client.get(BASE_URL, params=params)
         return response.json()
 
+@baidu_router.get("/geocoding")
+async def baidu_geocoding(
+    address: str = Query(..., description="待解析的地址"),
+    city: Optional[str] = Query(None, description="地址所在的城市名"),
+    ret_coordtype: Optional[str] = Query(None, description="返回的坐标类型"),
+    output: Optional[str] = Query("json", description="输出格式"),
+    callback: Optional[str] = Query(None, description="回调函数名称"),
+    extension_analys_level: Optional[int] = Query(None, description="是否触发解析到最小地址结构功能")
+):
+    params = {
+        "ak": BAIDU_AK,
+        "address": address,
+        "output": output,
+    }
+    
+    if city:
+        params["city"] = city
+    if ret_coordtype:
+        params["ret_coordtype"] = ret_coordtype
+    if callback:
+        params["callback"] = callback
+    if extension_analys_level is not None:
+        params["extension_analys_level"] = extension_analys_level
+
+    async with httpx.AsyncClient() as client:
+        response = await client.get(GEOCODING_URL, params=params)
+        return response.json()
