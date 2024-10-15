@@ -10,6 +10,8 @@ load_dotenv()
 tencent_router = APIRouter()
 
 TENCENT_MAP_KEY = os.getenv("TENCENT_MAP_KEY")
+print("TENCENT_MAP_KEY", TENCENT_MAP_KEY)
+
 TENCENT_GEOCODER_URL = "https://apis.map.qq.com/ws/geocoder/v1/"
 
 class GeocoderResponse(BaseModel):
