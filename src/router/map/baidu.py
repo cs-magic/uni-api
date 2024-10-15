@@ -8,7 +8,7 @@ load_dotenv()
 
 baidu_router = APIRouter()
 
-BAIDU_AK = os.getenv("BAIDU_AK")
+BAIDU_AK = os.getenv("BAIDU_MAP_AK")
 BASE_URL = "https://api.map.baidu.com/reverse_geocoding/v3/"
 
 @baidu_router.get("/reverse_geocoding")
