@@ -1,5 +1,5 @@
 from functools import lru_cache
-from typing import Any, Optional
+from typing import Any
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -25,7 +25,7 @@ class Settings(BaseSettings):
 
     # ref: https://fastapi.tiangolo.com/tutorial/metadata/#metadata-for-tags
     tags: Any = [{"name": "Account", }, {"name": "LLM", }, {"name": "Spider", }, {"name": "OSS", "description": "todo"},
-        {"name": "default", }]
+                 {"name": "Cases", }, {"name": "Rama", }, {"name": "default", }, ]
 
     # LLM
     MOONSHOT_API_KEY: str

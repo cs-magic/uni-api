@@ -17,23 +17,22 @@ async def lifespan(app: FastAPI):
     yield  # shutdown
 
 
-app = FastAPI(title=settings.app_title, description=settings.description, openapi_tags=settings.tags,
-    version=settings.version, lifespan=lifespan)
+app = FastAPI(title=settings.app_title,
+              description=settings.description,
+              openapi_tags=settings.tags,
+              version=settings.version,
+              lifespan=lifespan)
 
 app.include_router(root_router)
 
+origins = ["*"]
 
-origins = [
-    "*"
-]
+app.add_middleware(CORSMiddleware,
+                   allow_origins=origins,
+                   allow_credentials=True,
+                   allow_methods=["*"],
+                   allow_headers=["*"], )
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 @app.get("/")
 async def read_system_status():
