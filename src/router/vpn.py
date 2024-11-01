@@ -19,7 +19,7 @@ class Provider(str, Enum):
 @vpn_router.get('/config')
 @error_handler
 async def get_vpn_config(  # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
-        request: Request, provider: Provider = "biznet"):
+        request: Request, provider: Provider = "foosber"):
     if provider == "foosber":
         content_raw = api.get('https://xn--eckvarq8ld5k.xn--zckq7gxe.xn--tckwe/link/4lHIflFQQsH1S8qM?clash=1').text
 

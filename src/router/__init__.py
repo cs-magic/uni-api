@@ -17,6 +17,5 @@ root_router.include_router(spider_router)
 root_router.include_router(oss_router)
 root_router.include_router(vpn_router)
 root_router.include_router(cases_router)
-
 root_router.include_router(sport_router)
 root_router.include_router(map_router)

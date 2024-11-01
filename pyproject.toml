@@ -42,6 +42,7 @@ gerapy = "^0.9.13"
 js2py = "^0.74"
 mini-racer = "^0.12.4"
 pythonmonkey = "^1.0.0"
+websockets = "^13.1"
 
 
 [build-system]

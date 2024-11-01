@@ -14,6 +14,7 @@ def query_beike_badminton(date, options={"wxkey": "E7E7EB4C8EC1A817B3858271B986F
     response = requests.get(url)
 
     data = response.json()[1]
+    print('data: ', data)
     data = json.loads(data)['rows']
     result = []
     for item in data:
