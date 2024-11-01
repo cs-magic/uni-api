@@ -12,7 +12,7 @@ from packages.common_fastapi.error_handler import error_handler
 vpn_router = APIRouter(prefix='/vpn', tags=["VPN"])
 
 class Provider(str, Enum):
-    foosber = "foosbar"
+    foosber = "foosber"
     biznet = "biznet"
 
 
