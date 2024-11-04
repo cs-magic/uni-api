@@ -10,8 +10,8 @@ BASE_URL = "https://web-api.okjike.com/api/graphql"
 @router.post("/api/graphql")
 async def api_graphql(
     text: str,
-    host: Optional[str] = Header("web-api.okjike.com"),
-    cookie: Optional[str] = Header("_ga=GA1.2.1329611284.1728629767; x-jike-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiWXloUlwvUXhQSXNIV1MrMzB0VjJjRHhzK3V4M2lMbUlhckhrdzNpdVwvRGpITUdCVXh3T3pjQ1hGaGlJNGlmTW9wdUZWNXo4disyVVdNNkt6TUNhUUg5UDJWUlh2T1M4U3RFSnlMcnlyTTNXeEliYVZrQWxzemxuQlRjeW9keUZJWFJpViszVXNFbkw3TUtFZHJsWnJkUTNQZjkzdTlDYVwvYnU1Y2xEZUFBbDIrNE9ZWXh5UWtEY1M2RllNOHhxM28wbUNrWGQzQ0tnc3ZzR0x3ajZlcXhcL3BkaVlKMURYNmhuTEJpeXo1eTVGWHpmTXhtVDQ5TjJoWjVjbit3RnZBSHJYSjc5QTh1TnJaa2diWWlBVGJQa1NhUHJRcmFUZXlwVzlCbnVPaEV0VVRuNVYxN3pRaVpvamF2aUEwU2NoRUdyQ0ZTTVdIWjB4SVArcHZ3Um5EbmVyeTdleE5WdnZ6UFVYUUtydUJcL2J6dU09IiwidiI6MywiaXYiOiJxczVmcHk3a0MyaE5EaFFkWk1qVTNBPT0iLCJpYXQiOjE3MzA3MzY1MjkuNTU3fQ.tmuTQ1E4WXdH6A8xJFJrngcSs2jKSuvIwZLuFnstPCA; x-jike-refresh-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoib2toV1VTXC9kYkQ0ZzI1MXl3NU1VQjBcL3h3Y0VzRXdBZXREMEhFOTFWYXJhMW5QNGJMaXpUMVZxZmNqbk0rNm1pVjA4dldKMFIwYVJmNzVTeEVwRFR1eVgzdXV0SVwvQVRiWG03QVFvVVwveTlDalwvZlppYTd5aUJuU2poZGlLZmpWQ2dHVDdcL2VINjRLYmtOcWpGbTlyUE1OeWlHdHM4QkFKaW1sRElIV0xiQ1VVPSIsInYiOjMsIml2IjoiSFc3WW5wbmdGS2hWZDY2TmVQV1ZrUT09IiwiaWF0IjoxNzMwNzM2NTI5LjU1N30.O5yL2NdEG4ucKJc2_cVk98F3SVHH8xXiXoVitCTcZjo; fetchRankedUpdate=1730736532039; _gid=GA1.2.1224935922.1730736532; _ga_LQ23DKJDEL=GS1.2.1730736532.5.0.1730736532.60.0.0"),
+    # host: Optional[str] = Header("web-api.okjike.com"),
+    cookie: Optional[str] = Header("_ga=GA1.2.1329611284.1728629767; fetchRankedUpdate=1730736532039; _gid=GA1.2.1224935922.1730736532; _ga_LQ23DKJDEL=GS1.2.1730757159.7.1.1730758654.60.0.0; x-jike-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoibGNSc0FtZHhGQWhod1M1RWdjcXduUGp5cDlGR0xGelhwbDlpdVVPdjdcL3k0RHhCd21YZ3hJSVJoQnRIRU9RQ0JnbXlcL0dvWis2WStuQ2FVZlk4eDZ2R3F2UTRxbElcL3RqckYrXC9DUFEwZFFacGJGM3Fsek1ySGM3R0QwSFE3bDE2aGQ5MUFvak9LZHMwdk01eU9XTU5GcTVNVmFWemxPY0JNbmhcL283V2F0ZXdsVUtkOEQzMU4zc0ZsaWRaTEk1UUxqZnR5WUV5ekxBY1lTSjBleGNRa3Npd3pvNHM1ek4wZ1J1OFpNbVhVQmluR2RVeDlsMHJjQWxaQmdQQVgzUlI0YnBHTjRueXdKK09TdWNjb2c3VGo1WEJCMllndHI4cmx4d2JYUWFrR0U3QjNHUU00UXdtdUJ2MGJcL0tURENpaG05Sll2dW1LMHY0N3FCbkJYcGhPUGtuRmk4OHpLc05yU0d4WGtVamgyU2dJPSIsInYiOjMsIml2IjoiVFBtMGVvcEtRTENsc2gwdVpRMWJQZz09IiwiaWF0IjoxNzMwNzU4OTcwLjI0M30.s5nR6klSxxeDRQEslr6XpUny76azfzCW9tx7tXlUIbc; x-jike-refresh-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiR3l4aHM1Rm53aEdnTVlYVEFPRU5cL1VxS0Q5WFB2NWxLdlwvWkM1Qkt6clE2UzJMUWFTXC9veGdwNG5ZWlVsNE5JYVFLcXJYbTRocG16K1ZBekd0YkF5K3JqeTRaQlUzR0t2UUh6SjRLR09va2paSUR1VXYwYWpZQkJXMVlcL2hBUk94dlVIM25PVm1ybDNBbk9vZThmSVJjSlIxSFZWVjA4MlFqNnFHKzVGZE9hcz0iLCJ2IjozLCJpdiI6IktmNUlRZE5zYUVFbEhBUTh1bWR4emc9PSIsImlhdCI6MTczMDc1ODk3MC4yNDN9.Y2rwVQDHVoHxTg-bwD4qQ9S6puEuxaUR6CkJcMN3xqE"),
     sec_ch_ua_platform: Optional[str] = Header(""),
     user_agent: Optional[str] = Header("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"),
     accept: Optional[str] = Header("*/*"),
@@ -33,7 +33,7 @@ async def api_graphql(
     """
     # Construct headers
     headers = {
-        "Host": host,
+        # "Host": host,
         "Cookie": cookie,
         "sec-ch-ua-platform": sec_ch_ua_platform,
         "user-agent": user_agent,
