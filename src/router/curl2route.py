@@ -1,15 +1,15 @@
 import re
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Optional
 from urllib.parse import urlparse
 import json
-import subprocess
-import shlex
-import gzip
-import io
 
-def parse_curl_command(curl_command: str) -> Tuple[Dict, str, str, str, Dict]:
-    """Parse curl command and extract headers, method, url, and data"""
-    # 提取headers
+def convert_js_to_python_bool(json_str: str) -> str:
+    """Convert JavaScript boolean values to Python boolean values"""
+    return json_str.replace('true', 'True').replace('false', 'False').replace('null', 'None')
+
+def parse_curl_command(curl_command: str) -> Tuple[Dict, str, str, str, Optional[Dict]]:
+    """Parse curl command and extract headers, method, url, path and data"""
+    # Extract headers
     headers = {}
     header_pattern = r'-H\s*"([^"]+)"'
     header_matches = re.finditer(header_pattern, curl_command)
@@ -17,219 +17,164 @@ def parse_curl_command(curl_command: str) -> Tuple[Dict, str, str, str, Dict]:
         header_line = match.group(1)
         if ':' in header_line:
             key, value = header_line.split(':', 1)
-            headers[key.strip()] = value.strip()
+            key = key.strip()
+            # Skip Host header as it will be automatically set by requests
+            if key.lower() != "host":
+                headers[key] = value.strip()
     
-    # 提取URL - 修改为查找最后的URL模式
+    # Extract URL
     url_pattern = r'(?:"|\')?((https?://[^\s"\']+))(?:"|\')?(?:\s+)?$'
     url_match = re.search(url_pattern, curl_command)
     url = url_match.group(1) if url_match else ""
     
-    # 提取请求方法 (默认为GET)
+    # Extract method
     method = "POST" if "--data-binary" in curl_command or "-d" in curl_command else "GET"
     
-    # 提取请求体数据 - 改进数据提取模式
+    # Extract request body data
     data = None
     data_pattern = r'--data-binary\s*[\'"](\{.*?\})[\'"](?:\s+--compressed|\s|$)'
     data_match = re.search(data_pattern, curl_command, re.DOTALL)
     if data_match:
         try:
             data_str = data_match.group(1).strip()
-            # Handle escaped characters and normalize newlines
-            data_str = data_str.replace('\\"', '"')
-            data_str = re.sub(r'\\n\s*', ' ', data_str)  # Replace \n with space
-            data_str = re.sub(r'\s+', ' ', data_str)  # Normalize whitespace
-            data = json.loads(data_str)
-        except json.JSONDecodeError as e:
-            print(f"Warning: Could not parse JSON data: {e}")
+            data_str = data_str.replace('\\"', '"').replace('\\n', ' ')
+            data_str = re.sub(r'\s+', ' ', data_str)
+            # Convert JavaScript booleans to Python booleans before parsing JSON
+            data_str = convert_js_to_python_bool(data_str)
+            data = eval(data_str)  # Using eval instead of json.loads to handle Python literals
+        except Exception as e:
+            print(f"Warning: Could not parse data: {e}")
             data = data_match.group(1)
     
-    # 从URL中提取路径
+    # Extract path from URL
     parsed_url = urlparse(url)
     path = parsed_url.path
     
     return headers, method, url, path, data
 
-def curl_to_fastapi_route(curl_command: str) -> str:
+def generate_fastapi_route(curl_command: str) -> str:
     """Convert curl command to FastAPI route code"""
     headers, method, url, path, data = parse_curl_command(curl_command)
     
-    if not url:
-        raise ValueError("No URL found in curl command")
-    
-    # 生成路由代码
-    code = f'''from fastapi import APIRouter, Header, Response
+    # Generate imports
+    code = '''from fastapi import APIRouter, Header
 from typing import Optional, Dict, Any
 import requests
 import json
 
 router = APIRouter()
 
-# 原始请求URL
-ORIGINAL_URL = "{url}"
-
 '''
     
-    # 生成路由函数
+    # Add URL constant
+    code += f'BASE_URL = "{url}"\n\n'
+    
+    # Generate route function
     function_name = path.replace('/', '_').strip('_') or 'root'
     if function_name.startswith('v2_'):
         function_name = function_name[3:]
-        
-    code += f'''@router.{method.lower()}("{path}")'''
     
-    # 添加函数定义
-    code += f'''
-async def {function_name}('''
+    # Add route decorator
+    code += f'@router.{method.lower()}("{path}")\n'
     
-    # 添加参数
+    # Start function definition
+    code += f'async def {function_name}(\n'
+    
+    # Add parameters
     params = []
-    if data:
-        params.append(f'request_data: Dict[str, Any] = {json.dumps(data)}')
     
-    # 添加header参数，带默认值
+    # Add data parameter if it exists
+    if data:
+        # Convert the data dict to a string and handle boolean values
+        data_str = str(data)
+        params.append(f'    request_data: Dict[str, Any] = {data_str}')
+    
+    # Add header parameters
     for header, value in headers.items():
         header_var = header.lower().replace('-', '_')
-        # 处理字符串中的引号，确保生成的代码语法正确
         value = value.replace('"', '\\"')
-        params.append(f'{header_var}: Optional[str] = Header("{value}")')
+        params.append(f'    {header_var}: Optional[str] = Header("{value}")')
     
-    code += ', '.join(params)
-    code += ''') -> Dict[str, Any]:
-    """
-    Proxy route automatically generated from curl command
-    Original URL: {url}
-    Method: {method}
-    """
-    # 构建请求头
+    # Add parameters to function definition
+    code += ',\n'.join(params)
+    code += '\n) -> Dict[str, Any]:\n'
+    
+    # Add docstring
+    code += f'    """\n    Route generated from curl command\n    Original URL: {url}\n    Method: {method}\n    """\n'
+    
+    # Add request implementation
+    code += '''    # Construct headers
     headers = {'''
     
-    # 添加原始headers
+    # Add headers
     for header in headers:
-        code += f'''
-        "{header}": {header.lower().replace('-', '_')},'''
+        code += f'\n        "{header}": {header.lower().replace("-", "_")},'
     
     code += '''
     }
     
-    # 移除None值的headers
+    # Remove None values from headers
     headers = {k: v for k, v in headers.items() if v is not None}
     
-    try:'''
+    try:
+        # Add common headers
+        headers.update({
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+        })
+'''
     
-    # 在发送请求之前添加一些额外的头信息
-    code += '''
-        # 添加一些额外的头信息
-        if "Accept-Encoding" not in headers:
-            headers["Accept-Encoding"] = "gzip, deflate, br"
-        if "Connection" not in headers:
-            headers["Connection"] = "keep-alive"
-        if "Pragma" not in headers:
-            headers["Pragma"] = "no-cache"
-        if "Cache-Control" not in headers:
-            headers["Cache-Control"] = "no-cache"
-            
-        print(f"Sending request to: {ORIGINAL_URL}")
-        print(f"Headers: {headers}")'''
-    
+    # Add request code based on method
     if method.upper() == "POST":
-        code += '''
-        if request_data:
-            print(f"Request data: {request_data}")
-            
-        import subprocess
-        import shlex
-        import gzip
-        import io
-        
-        # 构建curl命令
-        curl_command = f"""curl -H "Host: api.zsxq.com" """
-        for header, value in headers.items():
-            # 处理特殊字符
-            value = value.replace('"', '\\"')
-            curl_command += f'-H "{header}: {value}" '
-        
-        # 正确处理 JSON 数据
-        if request_data:
-            # 确保 JSON 数据被正确转义
-            json_str = json.dumps(request_data)
-            # 转义双引号和其他特殊字符
-            json_str = json_str.replace('"', '\\"').replace('$', '\\$')
-            curl_command += f'--data-binary "{json_str}" '
-            
-        curl_command += '--compressed '
-        curl_command += f'"{ORIGINAL_URL}"'
-        
-        print(f"Executing curl command: {curl_command}")
-        
-        # 执行curl命令
-        try:
-            # 使用 list 形式传递参数，避免 shell 解析问题
-            curl_args = ['curl', '-H', 'Host: api.zsxq.com']
-            
-            # 添加 headers
-            for header, value in headers.items():
-                curl_args.extend(['-H', f'{header}: {value}'])
-            
-            # 添加数据
-            if request_data:
-                curl_args.extend(['--data-binary', json.dumps(request_data)])
-            
-            # 添加其他参数
-            curl_args.extend(['--compressed', ORIGINAL_URL])
-            
-            print(f"Executing curl with args: {curl_args}")
-            
-            result = subprocess.run(
-                curl_args,
-                capture_output=True,
-                check=True
-            )'''
-    else:
-        code += '''
-        # 发送GET请求
-        session = requests.Session()
-        session.mount('https://', requests.adapters.HTTPAdapter(max_retries=3))
-        
-        response = session.get(
-            ORIGINAL_URL,
+        code += '''        # Send POST request
+        response = requests.post(
+            BASE_URL,
             headers=headers,
-            verify=True,
-            allow_redirects=True
+            json=request_data,
+            verify=True
         )
-        
-        # 检查响应状态码
+'''
+    else:
+        code += '''        # Send GET request
+        response = requests.get(
+            BASE_URL,
+            headers=headers,
+            verify=True
+        )
+'''
+    
+    # Add response handling
+    code += '''        # Check response status
         response.raise_for_status()
         
-        # 尝试解析JSON响应
+        # Try to parse JSON response
         try:
             return response.json()
         except json.JSONDecodeError:
-            # 如果响应不是JSON格式，返回原始文本
-            return {"response": response.text}'''
-    
-    code += '''
+            return {"response": response.text}
+            
     except requests.exceptions.RequestException as e:
         return {
             "error": str(e),
-            "status_code": getattr(e.response, 'status_code', None),
-            "response_text": getattr(e.response, 'text', None)
+            "status_code": getattr(e.response, "status_code", None),
+            "response_text": getattr(e.response, "text", None)
         }
-    except Exception as e:
-        return {"error": str(e)}
 '''
     
     return code
 
-# 示例使用
+# Example usage
 if __name__ == "__main__":
-    # 测试用的curl命令
-    curl_command = '''curl -H "Host: api.zsxq.com" -H "Cookie: zsxq_access_token=A1A047AB-483F-F2F6-27EF-831393870534_1E07900F500D3426; zsxqsessionid=7ea23150bf6824166e923cd620adf32d; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%2228242851215251%22%2C%22first_id%22%3A%22192f0c0191d1983-0199f37f9d1c95c-1f525636-3686400-192f0c0191e2a46%22%2C%22props%22%3A%7B%7D%2C%22identities%22%3A%22eyIkaWRlbnRpdHlfY29va2llX2lkIjoiMTkyZjBjMDE5MWQxOTgzLTAxOTlmMzdmOWQxYzk1Yy0xZjUyNTYzNi0zNjg2NDAwLTE5MmYwYzAxOTFlMmE0NiIsIiRpZGVudGl0eV9sb2dpbl9pZCI6IjI4MjQyODUxMjE1MjUxIn0%3D%22%2C%22history_login_id%22%3A%7B%22name%22%3A%22%24identity_login_id%22%2C%22value%22%3A%2228242851215251%22%7D%7D; abtest_env=product" -H "x-request-id: 239dc4d1c-0679-f2cc-d21c-d3dcd822013" -H "x-version: 2.64.0" -H "sec-ch-ua-platform: \"macOS\"" -H "sec-ch-ua: \"Not?A_Brand\";v=\"99\", \"Chromium\";v=\"130\"" -H "x-timestamp: 1730731549" -H "sec-ch-ua-mobile: ?0" -H "x-signature: 90500d7ba435ab968bf0193996b27ff68e4850c2" -H "user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" -H "accept: application/json, text/plain, */*" -H "dnt: 1" -H "content-type: application/json" -H "origin: https://wx.zsxq.com" -H "sec-fetch-site: same-site" -H "sec-fetch-mode: cors" -H "sec-fetch-dest: empty" -H "referer: https://wx.zsxq.com/" -H "accept-language: en-US,en;q=0.9" -H "priority: u=1, i" --data-binary "{
-	\"req_data\": {
-		\"mentioned_user_ids\": [],
-		\"file_ids\": [],
-		\"image_ids\": [],
-		\"text\": \"tttest2\n\",
-		\"type\": \"topic\"
-	}
-}" --compressed "https://api.zsxq.com/v2/groups/51111828288514/topics"'''
-    route_code = curl_to_fastapi_route(curl_command)
-    print(route_code)
+    curl_command = '''curl -H "Host: web-api.okjike.com" -H "Cookie: _ga=GA1.2.1329611284.1728629767; x-jike-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiWXloUlwvUXhQSXNIV1MrMzB0VjJjRHhzK3V4M2lMbUlhckhrdzNpdVwvRGpITUdCVXh3T3pjQ1hGaGlJNGlmTW9wdUZWNXo4disyVVdNNkt6TUNhUUg5UDJWUlh2T1M4U3RFSnlMcnlyTTNXeEliYVZrQWxzemxuQlRjeW9keUZJWFJpViszVXNFbkw3TUtFZHJsWnJkUTNQZjkzdTlDYVwvYnU1Y2xEZUFBbDIrNE9ZWXh5UWtEY1M2RllNOHhxM28wbUNrWGQzQ0tnc3ZzR0x3ajZlcXhcL3BkaVlKMURYNmhuTEJpeXo1eTVGWHpmTXhtVDQ5TjJoWjVjbit3RnZBSHJYSjc5QTh1TnJaa2diWWlBVGJQa1NhUHJRcmFUZXlwVzlCbnVPaEV0VVRuNVYxN3pRaVpvamF2aUEwU2NoRUdyQ0ZTTVdIWjB4SVArcHZ3Um5EbmVyeTdleE5WdnZ6UFVYUUtydUJcL2J6dU09IiwidiI6MywiaXYiOiJxczVmcHk3a0MyaE5EaFFkWk1qVTNBPT0iLCJpYXQiOjE3MzA3MzY1MjkuNTU3fQ.tmuTQ1E4WXdH6A8xJFJrngcSs2jKSuvIwZLuFnstPCA; x-jike-refresh-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoib2toV1VTXC9kYkQ0ZzI1MXl3NU1VQjBcL3h3Y0VzRXdBZXREMEhFOTFWYXJhMW5QNGJMaXpUMVZxZmNqbk0rNm1pVjA4dldKMFIwYVJmNzVTeEVwRFR1eVgzdXV0SVwvQVRiWG03QVFvVVwveTlDalwvZlppYTd5aUJuU2poZGlLZmpWQ2dHVDdcL2VINjRLYmtOcWpGbTlyUE1OeWlHdHM4QkFKaW1sRElIV0xiQ1VVPSIsInYiOjMsIml2IjoiSFc3WW5wbmdGS2hWZDY2TmVQV1ZrUT09IiwiaWF0IjoxNzMwNzM2NTI5LjU1N30.O5yL2NdEG4ucKJc2_cVk98F3SVHH8xXiXoVitCTcZjo; fetchRankedUpdate=1730736532039; _gid=GA1.2.1224935922.1730736532; _ga_LQ23DKJDEL=GS1.2.1730736532.5.0.1730736532.60.0.0" -H "sec-ch-ua-platform: \"macOS\"" -H "user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" -H "accept: */*" -H "sec-ch-ua: \"Not?A_Brand\";v=\"99\", \"Chromium\";v=\"130\"" -H "content-type: application/json" -H "dnt: 1" -H "sec-ch-ua-mobile: ?0" -H "origin: https://web.okjike.com" -H "sec-fetch-site: same-site" -H "sec-fetch-mode: cors" -H "sec-fetch-dest: empty" -H "accept-language: en-US,en;q=0.9" -H "priority: u=1, i" --data-binary "{\"operationName\":\"CreateMessage\",\"variables\":{\"message\":{\"content\":\"tttest1\",\"syncToPersonalUpdate\":true,\"submitToTopic\":\"59747bef311d650011d5ab09\",\"pictureKeys\":[]}},\"query\":\"mutation CreateMessage($message: CreateMessageInput!) {\n  createMessage(input: $message) {\n    success\n    toast\n    __typename\n  }\n}\n\"}" --compressed "https://web-api.okjike.com/api/graphql"'''
+#     '''curl -H "Host: api.zsxq.com" -H "Cookie: zsxq_access_token=A1A047AB-483F-F2F6-27EF-831393870534_1E07900F500D3426; zsxqsessionid=7ea23150bf6824166e923cd620adf32d; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%2228242851215251%22%2C%22first_id%22%3A%22192f0c0191d1983-0199f37f9d1c95c-1f525636-3686400-192f0c0191e2a46%22%2C%22props%22%3A%7B%7D%2C%22identities%22%3A%22eyIkaWRlbnRpdHlfY29va2llX2lkIjoiMTkyZjBjMDE5MWQxOTgzLTAxOTlmMzdmOWQxYzk1Yy0xZjUyNTYzNi0zNjg2NDAwLTE5MmYwYzAxOTFlMmE0NiIsIiRpZGVudGl0eV9sb2dpbl9pZCI6IjI4MjQyODUxMjE1MjUxIn0%3D%22%2C%22history_login_id%22%3A%7B%22name%22%3A%22%24identity_login_id%22%2C%22value%22%3A%2228242851215251%22%7D%7D; abtest_env=product" -H "x-request-id: 239dc4d1c-0679-f2cc-d21c-d3dcd822013" -H "x-version: 2.64.0" -H "sec-ch-ua-platform: \"macOS\"" -H "sec-ch-ua: \"Not?A_Brand\";v=\"99\", \"Chromium\";v=\"130\"" -H "x-timestamp: 1730731549" -H "sec-ch-ua-mobile: ?0" -H "x-signature: 90500d7ba435ab968bf0193996b27ff68e4850c2" -H "user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" -H "accept: application/json, text/plain, */*" -H "dnt: 1" -H "content-type: application/json" -H "origin: https://wx.zsxq.com" -H "sec-fetch-site: same-site" -H "sec-fetch-mode: cors" -H "sec-fetch-dest: empty" -H "referer: https://wx.zsxq.com/" -H "accept-language: en-US,en;q=0.9" -H "priority: u=1, i" --data-binary "{
+# 	\"req_data\": {
+# 		\"mentioned_user_ids\": [],
+# 		\"file_ids\": [],
+# 		\"image_ids\": [],
+# 		\"text\": \"tttest2\n\",
+# 		\"type\": \"topic\"
+# 	}
+# }" --compressed "https://api.zsxq.com/v2/groups/51111828288514/topics"'''
+    route_code = generate_fastapi_route(curl_command)
+    print(route_code) 
