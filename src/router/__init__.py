@@ -6,8 +6,7 @@ from src.router.llm import llm_router
 from src.router.oss import oss_router
 from src.router.spider import spider_router
 from src.router.vpn import vpn_router
-from src.router.zsxq import router as zsxq_router
-from src.router.jike import router as jike_router
+from src.router.uni_pusher import uni_pusher_router
 
 from src.router.map import map_router
 from src.router.sport import sport_router
@@ -21,5 +20,4 @@ root_router.include_router(vpn_router)
 root_router.include_router(cases_router)
 root_router.include_router(sport_router)
 root_router.include_router(map_router)
-root_router.include_router(zsxq_router)
-root_router.include_router(jike_router)
+root_router.include_router(uni_pusher_router)

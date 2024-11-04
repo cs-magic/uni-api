@@ -1,13 +1,15 @@
+from sys import prefix
+
 from fastapi import APIRouter, Header
 from typing import Optional, Dict, Any
 import requests
 import json
 
-router = APIRouter()
+router = APIRouter(prefix='/zsxq')
 
 BASE_URL = "https://api.zsxq.com/v2/groups/51111828288514/topics"
 
-@router.post("/v2/groups/51111828288514/topics")
+@router.post("/push")
 async def groups_51111828288514_topics(
     request_data: Dict[str, Any] = {
     "req_data": {
