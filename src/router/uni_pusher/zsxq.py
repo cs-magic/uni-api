@@ -18,18 +18,13 @@ async def groups_51111828288514_topics(
     x_version: Optional[str] = Header("2.64.0"),
     x_timestamp: Optional[str] = Header("1730731549"),
     x_signature: Optional[str] = Header("90500d7ba435ab968bf0193996b27ff68e4850c2"),
-) -> Dict[str, Any]:
-    """
-    Route generated from curl command
-    Original URL: https://api.zsxq.com/v2/groups/51111828288514/topics
-    Method: POST
-    """
 
     referer: Optional[str] = Header("https://wx.zsxq.com/"),
 
     sec_ch_ua_platform: Optional[str] = Header(""),
     sec_ch_ua: Optional[str] = Header(""),
-    user_agent: Optional[str] = Header("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"),
+    user_agent: Optional[str] = Header(
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"),
     accept: Optional[str] = Header("application/json, text/plain, */*"),
     dnt: Optional[str] = Header("1"),
     content_type: Optional[str] = Header("application/json"),
@@ -40,6 +35,14 @@ async def groups_51111828288514_topics(
     sec_fetch_dest: Optional[str] = Header("empty"),
     accept_language: Optional[str] = Header("en-US,en;q=0.9"),
     priority: Optional[str] = Header("u=1, i"),
+) -> Dict[str, Any]:
+    """
+    Route generated from curl command
+    Original URL: https://api.zsxq.com/v2/groups/51111828288514/topics
+    Method: POST
+    """
+
+
     # Construct headers
     headers = {
         "Cookie": cookie,
