@@ -11,6 +11,14 @@ BASE_URL = "https://web-api.okjike.com/api/graphql"
 async def api_graphql(
     text: str,
     cookie: Optional[str] = Header("_ga=GA1.2.1329611284.1728629767; x-jike-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiWXloUlwvUXhQSXNIV1MrMzB0VjJjRHhzK3V4M2lMbUlhckhrdzNpdVwvRGpITUdCVXh3T3pjQ1hGaGlJNGlmTW9wdUZWNXo4disyVVdNNkt6TUNhUUg5UDJWUlh2T1M4U3RFSnlMcnlyTTNXeEliYVZrQWxzemxuQlRjeW9keUZJWFJpViszVXNFbkw3TUtFZHJsWnJkUTNQZjkzdTlDYVwvYnU1Y2xEZUFBbDIrNE9ZWXh5UWtEY1M2RllNOHhxM28wbUNrWGQzQ0tnc3ZzR0x3ajZlcXhcL3BkaVlKMURYNmhuTEJpeXo1eTVGWHpmTXhtVDQ5TjJoWjVjbit3RnZBSHJYSjc5QTh1TnJaa2diWWlBVGJQa1NhUHJRcmFUZXlwVzlCbnVPaEV0VVRuNVYxN3pRaVpvamF2aUEwU2NoRUdyQ0ZTTVdIWjB4SVArcHZ3Um5EbmVyeTdleE5WdnZ6UFVYUUtydUJcL2J6dU09IiwidiI6MywiaXYiOiJxczVmcHk3a0MyaE5EaFFkWk1qVTNBPT0iLCJpYXQiOjE3MzA3MzY1MjkuNTU3fQ.tmuTQ1E4WXdH6A8xJFJrngcSs2jKSuvIwZLuFnstPCA; x-jike-refresh-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoib2toV1VTXC9kYkQ0ZzI1MXl3NU1VQjBcL3h3Y0VzRXdBZXREMEhFOTFWYXJhMW5QNGJMaXpUMVZxZmNqbk0rNm1pVjA4dldKMFIwYVJmNzVTeEVwRFR1eVgzdXV0SVwvQVRiWG03QVFvVVwveTlDalwvZlppYTd5aUJuU2poZGlLZmpWQ2dHVDdcL2VINjRLYmtOcWpGbTlyUE1OeWlHdHM4QkFKaW1sRElIV0xiQ1VVPSIsInYiOjMsIml2IjoiSFc3WW5wbmdGS2hWZDY2TmVQV1ZrUT09IiwiaWF0IjoxNzMwNzM2NTI5LjU1N30.O5yL2NdEG4ucKJc2_cVk98F3SVHH8xXiXoVitCTcZjo; fetchRankedUpdate=1730736532039; _gid=GA1.2.1224935922.1730736532; _ga_LQ23DKJDEL=GS1.2.1730736532.5.0.1730736532.60.0.0"),
+
+) -> Dict[str, Any]:
+    """
+    Route generated from curl command
+    Original URL: https://web-api.okjike.com/api/graphql
+    Method: POST
+    """
+
     sec_ch_ua_platform: Optional[str] = Header(""),
     user_agent: Optional[str] = Header("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"),
     accept: Optional[str] = Header("*/*"),
@@ -24,12 +32,6 @@ async def api_graphql(
     sec_fetch_dest: Optional[str] = Header("empty"),
     accept_language: Optional[str] = Header("en-US,en;q=0.9"),
     priority: Optional[str] = Header("u=1, i")
-) -> Dict[str, Any]:
-    """
-    Route generated from curl command
-    Original URL: https://web-api.okjike.com/api/graphql
-    Method: POST
-    """
     # Construct headers
     headers = {
         "Cookie": cookie,
