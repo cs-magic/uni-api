@@ -36,11 +36,11 @@ app.add_middleware(CORSMiddleware,
                    allow_headers=["*"], )
 
 # ref: [App setup instructions - Apitally](https://app.apitally.io/apps/uni-api/setup)
-app.add_middleware(
-    ApitallyMiddleware,
-    client_id="a89ca501-a269-4fdd-9de8-e7bd3432f8ef",
-    env="prod",  # or "dev"
-)
+# app.add_middleware(
+#     ApitallyMiddleware,
+#     client_id="a89ca501-a269-4fdd-9de8-e7bd3432f8ef",
+#     env="prod",  # or "dev"
+# )
 
 @app.get("/")
 async def read_system_status():
