@@ -1,3 +1,4 @@
+import fastapi
 from fastapi import APIRouter, Header
 from typing import Optional, Dict, Any
 import requests
@@ -7,10 +8,12 @@ router = APIRouter(prefix='/jike')
 
 BASE_URL = "https://web-api.okjike.com/api/graphql"
 
+
 @router.post("/push")
 async def api_graphql(
     text: str,
-    cookie: Optional[str] = Header("_ga=GA1.2.1329611284.1728629767; x-jike-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiWXloUlwvUXhQSXNIV1MrMzB0VjJjRHhzK3V4M2lMbUlhckhrdzNpdVwvRGpITUdCVXh3T3pjQ1hGaGlJNGlmTW9wdUZWNXo4disyVVdNNkt6TUNhUUg5UDJWUlh2T1M4U3RFSnlMcnlyTTNXeEliYVZrQWxzemxuQlRjeW9keUZJWFJpViszVXNFbkw3TUtFZHJsWnJkUTNQZjkzdTlDYVwvYnU1Y2xEZUFBbDIrNE9ZWXh5UWtEY1M2RllNOHhxM28wbUNrWGQzQ0tnc3ZzR0x3ajZlcXhcL3BkaVlKMURYNmhuTEJpeXo1eTVGWHpmTXhtVDQ5TjJoWjVjbit3RnZBSHJYSjc5QTh1TnJaa2diWWlBVGJQa1NhUHJRcmFUZXlwVzlCbnVPaEV0VVRuNVYxN3pRaVpvamF2aUEwU2NoRUdyQ0ZTTVdIWjB4SVArcHZ3Um5EbmVyeTdleE5WdnZ6UFVYUUtydUJcL2J6dU09IiwidiI6MywiaXYiOiJxczVmcHk3a0MyaE5EaFFkWk1qVTNBPT0iLCJpYXQiOjE3MzA3MzY1MjkuNTU3fQ.tmuTQ1E4WXdH6A8xJFJrngcSs2jKSuvIwZLuFnstPCA; x-jike-refresh-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoib2toV1VTXC9kYkQ0ZzI1MXl3NU1VQjBcL3h3Y0VzRXdBZXREMEhFOTFWYXJhMW5QNGJMaXpUMVZxZmNqbk0rNm1pVjA4dldKMFIwYVJmNzVTeEVwRFR1eVgzdXV0SVwvQVRiWG03QVFvVVwveTlDalwvZlppYTd5aUJuU2poZGlLZmpWQ2dHVDdcL2VINjRLYmtOcWpGbTlyUE1OeWlHdHM4QkFKaW1sRElIV0xiQ1VVPSIsInYiOjMsIml2IjoiSFc3WW5wbmdGS2hWZDY2TmVQV1ZrUT09IiwiaWF0IjoxNzMwNzM2NTI5LjU1N30.O5yL2NdEG4ucKJc2_cVk98F3SVHH8xXiXoVitCTcZjo; fetchRankedUpdate=1730736532039; _gid=GA1.2.1224935922.1730736532; _ga_LQ23DKJDEL=GS1.2.1730736532.5.0.1730736532.60.0.0"),
+    cookie: Optional[str] = Header(
+        "_ga=GA1.2.1329611284.1728629767; fetchRankedUpdate=1730736532039; _gid=GA1.2.1224935922.1730736532; x-jike-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiMWNwb3pQQ0dTODkyTFdIa2VxVVwvdEV1Y0pYS0dGSDFlRGlteVJLdmpNZmpKb3JoRE1NeFNaRm9aQU5aeFZLMHA4SzV3YmJJcWFsUVJNWENzWkxJNWNkNWFha0hZNHNzUkM4dXluRHJzblFibCtqdmltMFVjVGNLNHNqWUJ6Mk1FYnlPdlkxa3FXR0VhOGgxb21tQTVsdTNYRkg2XC9BdGN4N082a1IyQms2Q0ZMclNkU00yRWgzOVZzYThOZ1c0QlFYVm5WM3I1OXR5RDdhZXBsREdCclNyTnlwV1A4YUNRRFVhVWFiMG00VzRjSEVndXBRZDFVSUlIR0hGUk1VSmdCdEU4RzB6OUFKVzNjbTZcLzdIbkl0MmNkZzBCN01FNVwvY3BJY3pqemtYaDBTOEVUMXFHcndxYkxDaUFrM1F3Q0I3dkxwYjhZSlJEcWlPcVwvOEZuVUN0ZFpPZE9BcGdGNGZ3Zm1VNEJVZDdpYm89IiwidiI6MywiaXYiOiJ5SExPZTB4eURBZEhZWitzNlwvVm94UT09IiwiaWF0IjoxNzMwNzU3MTU3LjQ4NH0.171Q4BnTTh_1a80sImyAiI_04V1HEWNUtfPtY3c_i0o; x-jike-refresh-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiTWd3THpyOGNpbVFLTGNHTkhJalIrd0FFdmhaNUJHTkgrRXJiZ2grYjR0WEhIb3R1UzVBa0tnU3dKM0Z5VFRFM2FnQ1owdmZ2QXl1XC9cLzhLbmx2WWZIVXVCbDhSMU1IVFhJYjIzRVlGUStYM0VlN0hzZTIwQk1MWkdqZnVuYmx1VVpYXC9cL1NmXC9SS3dyRE1HNWVJOUhYNTNuU1pUamRTK1FvTDZRNmlyVTh0cG89IiwidiI6MywiaXYiOiJYZXVoTHhyMUVqYlBwRjBrUk5teEZnPT0iLCJpYXQiOjE3MzA3NTcxNTcuNDg0fQ.dow6NCdvw6dDSiFDOEFmKQBwI6KUXKQF07ET5wis3JA; _ga_LQ23DKJDEL=GS1.2.1730757159.7.1.1730757197.22.0.0"),
 
     sec_ch_ua_platform: Optional[str] = Header(""),
     user_agent: Optional[str] = Header(
@@ -26,13 +29,12 @@ async def api_graphql(
     sec_fetch_dest: Optional[str] = Header("empty"),
     accept_language: Optional[str] = Header("en-US,en;q=0.9"),
     priority: Optional[str] = Header("u=1, i")
-) -> Dict[str, Any]:
+) -> Dict[str, Any] | list:
     """
     Route generated from curl command
     Original URL: https://web-api.okjike.com/api/graphql
     Method: POST
     """
-
 
     # Construct headers
     headers = {
@@ -51,10 +53,10 @@ async def api_graphql(
         "accept-language": accept_language,
         "priority": priority,
     }
-    
+
     # Remove None values from headers
     headers = {k: v for k, v in headers.items() if v is not None}
-    
+
     try:
         # Add common headers
         headers.update({
@@ -64,7 +66,15 @@ async def api_graphql(
         })
 
         # Send POST request
-        request_data = {'operationName': 'CreateMessage', 'variables': {'message': {'content': text, 'syncToPersonalUpdate': True, 'submitToTopic': '59747bef311d650011d5ab09', 'pictureKeys': []}}, 'query': 'mutation CreateMessage($message: CreateMessageInput!) { createMessage(input: $message) { success toast __typename } } '},
+        request_data = {
+            'operationName': 'CreateMessage',
+            'variables': {
+                'message': {
+                    'content': text,
+                    'syncToPersonalUpdate': True,
+                    'submitToTopic': '59747bef311d650011d5ab09',
+                    'pictureKeys': []}},
+            'query': 'mutation CreateMessage($message: CreateMessageInput!) { createMessage(input: $message) { success toast __typename } } '},
         response = requests.post(
             BASE_URL,
             headers=headers,
@@ -73,17 +83,16 @@ async def api_graphql(
         )
         # Check response status
         response.raise_for_status()
-        
+
         # Try to parse JSON response
         try:
             return response.json()
-        except json.JSONDecodeError:
+        except (json.JSONDecodeError):
             return {"response": response.text}
-            
-    except requests.exceptions.RequestException as e:
+
+    except (requests.exceptions.RequestException,) as e:
         return {
             "error": str(e),
             "status_code": getattr(e.response, "status_code", None),
             "response_text": getattr(e.response, "text", None)
         }
-
