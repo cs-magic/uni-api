@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from .jike import router as jike_router
+from .jike2 import router as jike_router
 from .zsxq import router as zsxq_router
 
 uni_pusher_router = APIRouter(prefix='/uni-pusher', tags=['uni-pusher'])

@@ -19,8 +19,8 @@ def parse_curl_command(curl_command: str) -> Tuple[Dict, str, str, str, Optional
             key, value = header_line.split(':', 1)
             key = key.strip()
             # Skip Host header as it will be automatically set by requests
-            if key.lower() != "host":
-                headers[key] = value.strip()
+            # if key.lower() != "host":
+            headers[key] = value.strip()
     
     # Extract URL
     url_pattern = r'(?:"|\')?((https?://[^\s"\']+))(?:"|\')?(?:\s+)?$'
