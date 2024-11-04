@@ -91,7 +91,7 @@ async def groups_51111828288514_topics(
             BASE_URL,
             headers=headers,
             json=request_data,
-            verify=True
+            verify=False
         )
         # Check response status
         response.raise_for_status()
