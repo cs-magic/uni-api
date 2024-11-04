@@ -6,6 +6,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
+from apitally.fastapi import ApitallyMiddleware
+
 from packages.common_fastapi.dum_openapi import dump_openapi
 from settings import settings
 from src.router import root_router
@@ -33,6 +35,12 @@ app.add_middleware(CORSMiddleware,
                    allow_methods=["*"],
                    allow_headers=["*"], )
 
+# ref: [App setup instructions - Apitally](https://app.apitally.io/apps/uni-api/setup)
+app.add_middleware(
+    ApitallyMiddleware,
+    client_id="a89ca501-a269-4fdd-9de8-e7bd3432f8ef",
+    env="prod",  # or "dev"
+)
 
 @app.get("/")
 async def read_system_status():

@@ -185,6 +185,32 @@ test = ["anyio[trio]", "coverage[toml] (>=7)", "exceptiongroup (>=1.2.0)", "hypo
 trio = ["trio (>=0.26.1)"]
 
 [[package]]
+name = "apitally"
+version = "0.13.0"
+description = "Simple API monitoring & analytics for REST APIs built with FastAPI, Flask, Django, Starlette and Litestar."
+optional = false
+python-versions = "<4.0,>=3.8"
+files = [
+    {file = "apitally-0.13.0-py3-none-any.whl", hash = "sha256:a12ea54cab0971bd9e3528dd2b86cd5b774d0ef5ab3077e1e9bac39ca86f2449"},
+    {file = "apitally-0.13.0.tar.gz", hash = "sha256:f345ff9cdbb8af0ebd84543646c67b1a77829eda5ded3280b40f2c3785e04d6f"},
+]
+
+[package.dependencies]
+backoff = ">=2.0.0"
+fastapi = {version = ">=0.88.0", optional = true, markers = "extra == \"fastapi\""}
+httpx = {version = ">=0.22.0", optional = true, markers = "extra == \"fastapi\""}
+starlette = {version = ">=0.22.0,<1.0.0", optional = true, markers = "extra == \"fastapi\""}
+
+[package.extras]
+django-ninja = ["django (>=2.2)", "django (>=2.2,<5)", "django-ninja (>=0.18.0)", "requests (>=2.26.0)"]
+django-rest-framework = ["django (>=2.2)", "django (>=2.2,<5)", "djangorestframework (>=3.10.0)", "inflection (>=0.5.1)", "requests (>=2.26.0)", "uritemplate (>=3.0.0)"]
+fastapi = ["fastapi (>=0.88.0)", "httpx (>=0.22.0)", "starlette (>=0.22.0,<1.0.0)"]
+flask = ["flask (>=2.0.0)", "requests (>=2.26.0)"]
+litestar = ["httpx (>=0.22.0)", "litestar (>=2.0.0)"]
+sentry = ["sentry-sdk (>=2.2.0)"]
+starlette = ["httpx (>=0.22.0)", "starlette (>=0.21.0,<1.0.0)"]
+
+[[package]]
 name = "appdirs"
 version = "1.4.4"
 description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
@@ -268,6 +294,17 @@ files = [
 
 [package.extras]
 visualize = ["Twisted (>=16.1.1)", "graphviz (>0.5.1)"]
+
+[[package]]
+name = "backoff"
+version = "2.2.1"
+description = "Function decoration for backoff and retry"
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "backoff-2.2.1-py3-none-any.whl", hash = "sha256:63579f9a0628e06278f7e47b7d7d5b6ce20dc65c5e96a6f3ca99a6adca0396e8"},
+    {file = "backoff-2.2.1.tar.gz", hash = "sha256:03f829f5bb1923180821643f8753b0502c3b682293992485b0eef2807afa5cba"},
+]
 
 [[package]]
 name = "bcrypt"
@@ -4555,4 +4592,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "5f1b960c916fb6fb83df6cf42787ed3412c41abfe92e09410779ca58d7d9c00a"
+content-hash = "a93388565ba8d1cd755dc0313d0ed1b3743b27a9868c0e4f1273f0696852efc0"
