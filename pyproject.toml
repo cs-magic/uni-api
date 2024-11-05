@@ -30,7 +30,7 @@ pyyaml = "^6.0.1"
 requests = "^2.31.0"
 selenium = "^4.19.0"
 urllib3 = "<2"
-uvicorn = "^0.29.0"
+uvicorn = {extras = ["standard"], version = "^0.32.0"}
 volcengine-python-sdk = "^1.0.80"
 webdriver-manager = "^4.0.1"
 whisper = "^1.1.10"

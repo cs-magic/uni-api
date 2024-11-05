@@ -7,11 +7,10 @@ router = APIRouter()
 
 BASE_URL = "https://web-api.okjike.com/api/graphql"
 
-@router.post("/jike")
+@router.post("/api/graphql")
 async def api_graphql(
-    text: str,
-    # host: Optional[str] = Header("web-api.okjike.com"),
-    cookie: Optional[str] = Header("_ga=GA1.2.1329611284.1728629767; fetchRankedUpdate=1730736532039; _gid=GA1.2.1224935922.1730736532; _ga_LQ23DKJDEL=GS1.2.1730757159.7.1.1730759236.60.0.0; x-jike-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoidmk5cjhwR0QwSXBuY290aHNyMUxNclQ4dmR2TzZ2VU1FQVArNlwvKzg1UVpQXC90Vk9sdVwvTjVpcUN2MU0zaTBwMlhiNmdGZmY1RnlHUnRERFRhRmNVbTE4MFo1YVA2K1oxekNSd29TU1ByVnR5cklQWll6dGtsVGF0c0RTQjdLNlBiVEk4RFNNZk9TMk1LN1wvN2VQeFFpODlueE9NUG12YVFEeFNBaG9TYlladGJDM2VCajJXXC9MdGhZOWpNTnUxXC8xUFNuZzRuNWYzeWRIRUpLT2dFRjJDOGJ5N1wvQVhza2QzSVwvbEM3SmUxTVdrdGQ1a2pxeDhGanNKRWRabE1YM0wwTk85Ymc0NmVaSk9BU2ZCWWcyMmpKM2VBTGo5K1poclRROEN5akdzODJhYjB3dkJUSEVYS1ltTmlaVWhvVlZGYklyZ21PQ3RlV1o0a1NNelwvTVBqNlowZ2hcL3dTZzkydEFwNTFaaE15SWhjUT0iLCJ2IjozLCJpdiI6IkVScnVBcFc0cHIzN2s5Q2hmZjFhWlE9PSIsImlhdCI6MTczMDc3NzgwOS41Mjh9.YpDpmhKWgyR4Q50BH0sYr0XxPjf5p6wKiVCbISLLgsQ; x-jike-refresh-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoidjFjQnE0alwvaFVlSXdMVnBINW81QnRnemlmRUxIN0tWaXFucmdMODJ5VE9hTDVQZzNMRDVEM0dRWVRqQ25Dc2ZQZk90UVAwUVgrckFQQ2pscG81RzJqYVNcL3BJd3NySW8rWFZZUlVxeW44cnRHRlRKdWNRSzY2N2RjYVlJUW80Rjc3TXQ5OFY3eDBnM1ZFOHlKZkxhb0NreUJweDY3XC9OQTJINm4yVjZBQVB3PSIsInYiOjMsIml2IjoiUXo2TFFTc211MFdcLytUQVVCOXdjRWc9PSIsImlhdCI6MTczMDc3NzgwOS41Mjh9.rI0tzhvznvdJsNBosNHub8thJgRFJFqgCKj1tkNEQQQ"),
+    request_data: Dict[str, Any] = {'operationName': 'CreateMessage', 'variables': {'message': {'content': 't003', 'syncToPersonalUpdate': True, 'pictureKeys': []}}, 'query': 'mutation CreateMessage($message: CreateMessageInput!) { createMessage(input: $message) { success toast __typename } } '},
+    cookie: Optional[str] = Header("_ga=GA1.2.1329611284.1728629767; _gid=GA1.2.1224935922.1730736532; x-jike-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNklUelVZS3NyUGZkRDU3SG9YZnZSbmh4dHlSWVpLYzNXRkdDMmZ2dWowbHdYTUlPUm9rRHJTQXorV1VMXC9vSGxLdTREVm9NZWNsdVpaSXVVSWZja09RZW1nVThONHpWSWd1NEZUSTFOcldvK3lvb3FiYXFPT0Q4UWFIQTJPXC9XZGRlQ1dSZFdkc2NqTzh6XC9OdDVnVzBSUWpzbDlCK05FdGZQYkkxT0lUUldkTk1DTmdYTnFRN09sV0xPQU9Sa1duZnZiT0Q1c2pQdUw0TERROVQ3dFN6aDlcL0tYTVRHMUlSd3BicWVJditKdmU1Uk5nQ284a1F1SE9VT2JNZjh1alpIV1lYRW9JSkgwRmRLdlpsNkc4bHV0OHpqWjkwZ2dmbEJrdEl2a0VPeGpHWjFIMnN2ejN3OG5LRUpqeWxZN1hwclNwKzZZOGRkMTk2QU83N0I3SzZWdFJham14Yk15S1Q1Qk5kMGtBZ0pndz0iLCJ2IjozLCJpdiI6IlFkWCtvUWRXbEs2bXBoMGR2SEtsUFE9PSIsImlhdCI6MTczMDgxMDg0OS45NDh9.ee9mF570ggkOTWaq4IbdWiHItS9PHwvjFAtJLgdHDEc; x-jike-refresh-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiWlRKWTNBSkNPOHNVZkNQeEtcL2FXVmFaNDdmVDFCeWhNZDBTT0RVcXhiMVoyRU43aUFGMDRqZUI4dlZmMHh4a1N6U0lTamtkSHc4bG5PZFdFUG9SUXZqNkNBVVMwWkdSME16UStoalZRcWU2ekpjRE5MTnF1dnQzMytKOVkxWGlBZXlRTGhhdjRFTFdMV2RKN0daNzBOZXBKUzVPTUFZU09KRDZJOTE0ditGST0iLCJ2IjozLCJpdiI6ImFDYnJMbjRVVVpiMExQd0ZnejkzMlE9PSIsImlhdCI6MTczMDgxMDg0OS45NDh9.IOTmRf5M4hTuh87w5ALzWQ_HD0pECpFhG6O-WmOURrE; _ga_LQ23DKJDEL=GS1.2.1730811764.10.1.1730811991.60.0.0; fetchRankedUpdate=1730811992418"),
     sec_ch_ua_platform: Optional[str] = Header(""),
     user_agent: Optional[str] = Header("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"),
     accept: Optional[str] = Header("*/*"),
@@ -33,7 +32,6 @@ async def api_graphql(
     """
     # Construct headers
     headers = {
-        # "Host": host,
         "Cookie": cookie,
         "sec-ch-ua-platform": sec_ch_ua_platform,
         "user-agent": user_agent,
@@ -60,17 +58,6 @@ async def api_graphql(
             "Connection": "keep-alive",
             "Cache-Control": "no-cache"
         })
-
-        request_data: Dict[str, Any] = {
-            'operationName': 'CreateMessage',
-            'variables': {
-                'message': {
-                    'content': text,
-                    'syncToPersonalUpdate': True,
-                    'submitToTopic': '59747bef311d650011d5ab09',
-                    'pictureKeys': []}},
-            'query': 'mutation CreateMessage($message: CreateMessageInput!) { createMessage(input: $message) { success toast __typename } } '}
-
         # Send POST request
         response = requests.post(
             BASE_URL,
