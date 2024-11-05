@@ -11,7 +11,7 @@ BASE_URL = "https://web-api.okjike.com/api/graphql"
 
 @router.post("/push")
 async def api_graphql(
-    text: str,
+
     cookie: Optional[str] = Header(
         "_ga=GA1.2.1329611284.1728629767; fetchRankedUpdate=1730736532039; _gid=GA1.2.1224935922.1730736532; x-jike-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiMWNwb3pQQ0dTODkyTFdIa2VxVVwvdEV1Y0pYS0dGSDFlRGlteVJLdmpNZmpKb3JoRE1NeFNaRm9aQU5aeFZLMHA4SzV3YmJJcWFsUVJNWENzWkxJNWNkNWFha0hZNHNzUkM4dXluRHJzblFibCtqdmltMFVjVGNLNHNqWUJ6Mk1FYnlPdlkxa3FXR0VhOGgxb21tQTVsdTNYRkg2XC9BdGN4N082a1IyQms2Q0ZMclNkU00yRWgzOVZzYThOZ1c0QlFYVm5WM3I1OXR5RDdhZXBsREdCclNyTnlwV1A4YUNRRFVhVWFiMG00VzRjSEVndXBRZDFVSUlIR0hGUk1VSmdCdEU4RzB6OUFKVzNjbTZcLzdIbkl0MmNkZzBCN01FNVwvY3BJY3pqemtYaDBTOEVUMXFHcndxYkxDaUFrM1F3Q0I3dkxwYjhZSlJEcWlPcVwvOEZuVUN0ZFpPZE9BcGdGNGZ3Zm1VNEJVZDdpYm89IiwidiI6MywiaXYiOiJ5SExPZTB4eURBZEhZWitzNlwvVm94UT09IiwiaWF0IjoxNzMwNzU3MTU3LjQ4NH0.171Q4BnTTh_1a80sImyAiI_04V1HEWNUtfPtY3c_i0o; x-jike-refresh-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiTWd3THpyOGNpbVFLTGNHTkhJalIrd0FFdmhaNUJHTkgrRXJiZ2grYjR0WEhIb3R1UzVBa0tnU3dKM0Z5VFRFM2FnQ1owdmZ2QXl1XC9cLzhLbmx2WWZIVXVCbDhSMU1IVFhJYjIzRVlGUStYM0VlN0hzZTIwQk1MWkdqZnVuYmx1VVpYXC9cL1NmXC9SS3dyRE1HNWVJOUhYNTNuU1pUamRTK1FvTDZRNmlyVTh0cG89IiwidiI6MywiaXYiOiJYZXVoTHhyMUVqYlBwRjBrUk5teEZnPT0iLCJpYXQiOjE3MzA3NTcxNTcuNDg0fQ.dow6NCdvw6dDSiFDOEFmKQBwI6KUXKQF07ET5wis3JA; _ga_LQ23DKJDEL=GS1.2.1730757159.7.1.1730757197.22.0.0"),
 
@@ -59,11 +59,11 @@ async def api_graphql(
 
     try:
         # Add common headers
-        headers.update({
-            "Accept-Encoding": "gzip, deflate, br",
-            "Connection": "keep-alive",
-            "Cache-Control": "no-cache"
-        })
+        # headers.update({
+        #     "Accept-Encoding": "gzip, deflate, br",
+        #     "Connection": "keep-alive",
+        #     "Cache-Control": "no-cache"
+        # })
 
         # Send POST request
         request_data = {
