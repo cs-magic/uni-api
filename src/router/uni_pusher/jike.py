@@ -12,7 +12,7 @@ BASE_URL = "https://web-api.okjike.com/api/graphql"
 @router.post("/push")
 async def api_graphql(
     text: str,
-    cookie: Optional[str] = Header(
+    custom_cookie: Optional[str] = Header(
         "_ga=GA1.2.1329611284.1728629767; fetchRankedUpdate=1730736532039; _gid=GA1.2.1224935922.1730736532; x-jike-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiakZ6UG5obFd5UHI4QnE1VDBpTStiRFdQbkNcLzA2a0ZhVFpKajR6amlUU3kyejNlOVo5WFducUlYdFlrRE9nc0U5Y2VYK1wvVzFmREtCOXZrYmFnZDY0Z1NhWVh4TmRrODhzNzdMdXNHU2VcL2RYT3E2WU5rZ0sweVJIVTBnQk5cL215NW9DXC8xSWVEZDFJU3ZFTFNcL1BJMnNUUDk3Q3ozTkFKQXBGNGsySVhQS2I1R28wa2R5K0pkRkRCUzRkUjFFZ2ZMajNUV3JJclJHK3huNlQxV1pQMGpSM0tJdUU5bFZ1VHo5aDB5NnNzcjdoeFJhWTZDb1E1RWxwTUJ3WTZ2UmdrdkVWNkdhTHV4Uk9yZ2FJcTdGR0UxcENsN3ppcU5XV1V0cTg0UkFjc3B2U3F0VWJWdmM0MTB5Vk1vK3BtXC9JTkFOTVBZZDNTSUdISkpHUTV0czNwU0RUeE9kOHBTZnhXOWJPTHNlMWdnNGIrST0iLCJ2IjozLCJpdiI6InVEazgxXC9XbFN1cVwvSVVvMEVPY1MrZz09IiwiaWF0IjoxNzMwNzc5MzgyLjk0OX0.gZ4XJeSp1wFVmimI5-wOcNKfVfCqKxovuvDO0SPhmwE; x-jike-refresh-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiM0FkUFpEOXY1Snh5cGNhM0xxVVkrYU1QSmV4OWlFbmpSY3YxM2lSUUU2Wk9Sbit1SXZEcmFXUXZpMmk5TlJMOTBweFRFOUgxZkFuOTFxS204TG5kWlwveWlqazY1bVRTWjk0MHZZQ2RqcEZ0bGNRNFJJam00czA1cG1BQlFlOGgwdGtsbjU1YVFIWWdEek92RXg0ckhsQWRsTUt6bUp2RFk4ZUhGelFMclZhQT0iLCJ2IjozLCJpdiI6IjNsT1ZjTGpkUjFGZWthcnAwMmFCZlE9PSIsImlhdCI6MTczMDc3OTM4Mi45NDl9.6CUNTCinTRTMNA7vrtnC_kIWnyCH3cN6UW6Nm3uq0Nw; _ga_LQ23DKJDEL=GS1.2.1730780456.9.0.1730780456.60.0.0; _gat=1"),
 
     sec_ch_ua_platform: Optional[str] = Header(""),
@@ -38,7 +38,7 @@ async def api_graphql(
 
     # Construct headers
     headers = {
-        "Cookie": cookie,
+        "Cookie": custom_cookie,
         "sec-ch-ua-platform": sec_ch_ua_platform,
         "user-agent": user_agent,
         "accept": accept,
