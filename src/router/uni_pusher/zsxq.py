@@ -44,7 +44,7 @@ async def groups_51111828288514_topics(
 
     # Construct headers
     headers = {
-        # "Cookie": cookie,
+        "Cookie": cookie,
         "x-request-id": x_request_id,
         "x-version": x_version,
         "sec-ch-ua-platform": sec_ch_ua_platform,
