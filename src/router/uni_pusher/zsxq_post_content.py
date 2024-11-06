@@ -11,7 +11,7 @@ router = APIRouter(prefix='/zsxq')
 BASE_URL = "https://api.zsxq.com/v2/groups/51111828288514/topics"
 
 
-@router.post("/push")
+@router.post("/content")
 async def groups_51111828288514_topics(
     content: PusherContent,
 
