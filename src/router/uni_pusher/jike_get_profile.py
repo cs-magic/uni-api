@@ -61,6 +61,7 @@ async def jike_profile(
     
     # Remove None values from headers
     headers = {k: v for k, v in headers.items() if v is not None}
+    print(f"headers: {headers}")
     
     try:
         # Add common headers
