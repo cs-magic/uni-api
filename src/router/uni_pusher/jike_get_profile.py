@@ -36,8 +36,8 @@ async def jike_profile(
 
     if custom_cookie:
         cookie = dict(k.split("=", 1) for k in custom_cookie.split("; "))
-        x_jike_access_token = cookie.get("x_jike_access_token")
-        x_jike_refresh_token = cookie.get("x_jike_refresh_token")
+        x_jike_access_token = cookie.get("x-jike-access-token")
+        x_jike_refresh_token = cookie.get("x-jike-refresh-token")
 
     # Construct headers
     headers = {
