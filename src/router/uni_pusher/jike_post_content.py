@@ -10,7 +10,7 @@ router = APIRouter(prefix='/jike')
 BASE_URL = "https://web-api.okjike.com/api/graphql"
 
 
-@router.post("/push")
+@router.post("/content")
 async def api_graphql(
     content: PusherContent,
 

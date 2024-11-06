@@ -2,6 +2,7 @@ import re
 from typing import Dict, Tuple, Optional
 from urllib.parse import urlparse
 import json
+import sys
 
 def convert_js_to_python_bool(json_str: str) -> str:
     """Convert JavaScript boolean values to Python boolean values"""
@@ -28,7 +29,7 @@ def parse_curl_command(curl_command: str) -> Tuple[Dict, str, str, str, Optional
     url = url_match.group(1) if url_match else ""
     
     # Extract method
-    method = "POST" if "--data-binary" in curl_command or "-d" in curl_command else "GET"
+    method = "POST" if " --data-binary " in curl_command or " -d " in curl_command else "GET"
     
     # Extract request body data
     data = None
@@ -52,7 +53,7 @@ def parse_curl_command(curl_command: str) -> Tuple[Dict, str, str, str, Optional
     
     return headers, method, url, path, data
 
-def generate_fastapi_route(curl_command: str) -> str:
+def generate_fastapi_route(curl_command: str, path_name: str) -> str:
     """Convert curl command to FastAPI route code"""
     headers, method, url, path, data = parse_curl_command(curl_command)
     
@@ -70,15 +71,11 @@ router = APIRouter()
     code += f'BASE_URL = "{url}"\n\n'
     
     # Generate route function
-    function_name = path.replace('/', '_').strip('_') or 'root'
-    if function_name.startswith('v2_'):
-        function_name = function_name[3:]
-    
     # Add route decorator
-    code += f'@router.{method.lower()}("{path}")\n'
+    code += f'@router.{method.lower()}("{path_name}")\n'
     
     # Start function definition
-    code += f'async def {function_name}(\n'
+    code += f'async def {path_name.strip('/').replace('/', '_')}(\n'
     
     # Add parameters
     params = []
@@ -166,6 +163,7 @@ router = APIRouter()
 
 # Example usage
 if __name__ == "__main__":
-    curl_command = '''curl -H "Host: web-api.okjike.com" -H "Cookie: _ga=GA1.2.1329611284.1728629767; _gid=GA1.2.1224935922.1730736532; fetchRankedUpdate=1730811992418; x-jike-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiWVBSc2FpUjZOZTc2NU9XK3hXdTV2dm5tZXBQendwR2lDazVpajRaZVlBSDJSa0FVN2llSmZcL1hZZWZ5dzNNb0lGMng5MXBmWUs0djFTcmZTZEJ4MGdmdVhRVk01MmRqNGQzZWpiQUFDZVkxOXVSZjdaRWRTM1A4YjBaMTBUc1ZxS2xDaXJlWk9jeUJcL0toaWVLY0VZY3NTcTBkWTdxT01nYjRyQXBIY0xCa2hSXC9NaU80bHdqY1UyYUo3alVjTWU5cjBxR28wQzk0d1QyRk8yalRId2NxOWNVNG9EU3pTRUYwQ2RMNU54RkVXTXRBQ0M2MHZzeXk3bDN1UTRvSkJcL0QzMStSQkhYb1VHeTBzcGRJTllEanp2dzVQc1U0eTNObWRLYjJPZVNMOW9ZdnRCRlM5ZEJpbWFvVCtrRDdlOHNXXC9FMCswQXBwTW8zUVgyZEVyOFI1TVdJTmd3Y09yS2RvVk1pcjBQZmxTaXc9IiwidiI6MywiaXYiOiJlSWU4dHlabERxS0IxU2dzdlFjc2V3PT0iLCJpYXQiOjE3MzA4MjAwNjMuNDcxfQ.a2SywrTLsOitMMZvs8Em49kV7AWQYGzTL2KSl7yva1g; x-jike-refresh-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiQ2lJOEI3djBwTkVqYXBBeHB5QXZ2S1wvVHVJdkpWYVBGb2FLb2dQZHlFNDFoU0YzWFYyVEloVkdwTHJNa3NWR05DRHY0MmlCNVVSNlwvZUlqcFFMM3VWUCt4dDlGZ1pYWGJUSWNPbDVFd1h3bTB0ektXTWgwMG5XcThuUWdMOFdITXBlUVFzdWtJSEtZdSthWURTQms1K2ErNXhLbHBtYUF0VE40UERKcDBpOXM9IiwidiI6MywiaXYiOiJKUDQ3R1g4YUVsN3h6SCtHZUc1NHNBPT0iLCJpYXQiOjE3MzA4MjAwNjMuNDcxfQ.3vK76b5a0LOjU4CUs7HyPMYQPH0nNjzDEdBbdkevQ-E; _gat=1; _ga_LQ23DKJDEL=GS1.2.1730818883.11.1.1730820133.60.0.0" -H "sec-ch-ua-platform: \"macOS\"" -H "user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" -H "accept: */*" -H "sec-ch-ua: \"Not?A_Brand\";v=\"99\", \"Chromium\";v=\"130\"" -H "content-type: application/json" -H "dnt: 1" -H "sec-ch-ua-mobile: ?0" -H "origin: https://web.okjike.com" -H "sec-fetch-site: same-site" -H "sec-fetch-mode: cors" -H "sec-fetch-dest: empty" -H "accept-language: en-US,en;q=0.9" -H "priority: u=1, i" --data-binary "{\"operationName\":\"CreateMessage\",\"variables\":{\"message\":{\"content\":\"t023\",\"syncToPersonalUpdate\":true,\"pictureKeys\":[]}},\"query\":\"mutation CreateMessage($message: CreateMessageInput!) {\n  createMessage(input: $message) {\n    success\n    toast\n    __typename\n  }\n}\n\"}" --compressed "https://web-api.okjike.com/api/graphql"'''
-    route_code = generate_fastapi_route(curl_command)
-    print(route_code) 
+    print(generate_fastapi_route(
+        '''curl -H "Host: api.ruguoapp.com" -H "sec-ch-ua-platform: \"macOS\"" -H "x-jike-refresh-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiazVva1VQXC8zTTNpOUliQmpZOFFjdU5cL2xqMGpmMElETGhpOEJBZkl6ZFYxR3lWZ2RmWWxcL2llaHhQbDl3TGRPK0h3dVZkWUdqVm1oMFJMOWUwdVJxYkFBR3Z5YWRXYzFnZTE0dmFZNThhR0U1ZVE3Nk54a1NPT3F4R3VETmFVVXEzblRMN3hSRFhtbEVyN1dNOWVpY2hhWnptNmoybHg1UkxGSWV3d1czR20wPSIsInYiOjMsIml2Ijoia25ldTk4K01POTh6NzFEdDc4VlpEUT09IiwiaWF0IjoxNzMwOTAzMDA5LjE1Nn0.fs9VRliivfhHepsDX9rFtsGhwrPXedIfh53ebGPvDxU" -H "sec-ch-ua: \"Not?A_Brand\";v=\"99\", \"Chromium\";v=\"130\"" -H "sec-ch-ua-mobile: ?0" -H "app-version: 7.27.0" -H "user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" -H "accept: application/json, text/plain, */*" -H "x-jike-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiOWI2bTNNMFZ5TU9BZDFtaEFGeEVUOGxsZFlIYlwvZUk0Qk13d25QcU1nY2tHRTUyZ0h6T2xnREUrOE1VTmlVQUpkNWJ3ZkJpYmU3V0IrYlFhczlRMDJNVEtRSW51WGhXbjJHUGxwTm8reFRhbnUyTlpwVFRsVVFcL1piSzdZbjZFYU1aZGVRYk9EU1llMG5ibGZaK0JEZmp6Tk5YVG5RclVcL2toM01MUXZqQnp6XC9zeFpwUjZVa2xzbWphRGdTM0pneWRNXC9Gc2V2NDVvNGRPZHc0M2ptOXFmb2VJRUtUVHV4dERQRk81cU5ZR1JQZXdEbEZrYjZkbjZwXC9yVm1sNmZ6dmQ0V2ZHOCtMUHNnZXN4c29ocUdFQmdEa2s5S1JEQTJ6N3ZsSElaMU9QM21vU1VTNzdJazFVTVVYQmFnUno0WTM0enRjRmFaUGlvSmQ1R085VitpVW5jZUN5VzcwY3lYUG5oWTJJREpGRTdjPSIsInYiOjMsIml2IjoiMzBPY3FENVRaSGlvOUtqd3p0TlpiQT09IiwiaWF0IjoxNzMwOTAzMDA5LjE1Nn0.sKqVFu5iGDa-XhVn-5jDgrJ902cG1-LcRoFd-ztldhw" -H "dnt: 1" -H "origin: https://web.okjike.com" -H "sec-fetch-site: cross-site" -H "sec-fetch-mode: cors" -H "sec-fetch-dest: empty" -H "referer: https://web.okjike.com/" -H "accept-language: en-US,en;q=0.9" -H "priority: u=1, i" --compressed "https://api.ruguoapp.com/1.0/users/profile"''',
+        '/jike/profile'
+    ))
