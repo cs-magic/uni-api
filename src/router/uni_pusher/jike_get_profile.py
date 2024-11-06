@@ -9,14 +9,16 @@ BASE_URL = "https://api.ruguoapp.com/1.0/users/profile"
 
 @router.get("/jike/profile")
 async def jike_profile(
-    sec_ch_ua_platform: Optional[str] = Header(""),
+    custom_cookie = Header(""),
+    x_jike_access_token: Optional[str] = Header("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiOWI2bTNNMFZ5TU9BZDFtaEFGeEVUOGxsZFlIYlwvZUk0Qk13d25QcU1nY2tHRTUyZ0h6T2xnREUrOE1VTmlVQUpkNWJ3ZkJpYmU3V0IrYlFhczlRMDJNVEtRSW51WGhXbjJHUGxwTm8reFRhbnUyTlpwVFRsVVFcL1piSzdZbjZFYU1aZGVRYk9EU1llMG5ibGZaK0JEZmp6Tk5YVG5RclVcL2toM01MUXZqQnp6XC9zeFpwUjZVa2xzbWphRGdTM0pneWRNXC9Gc2V2NDVvNGRPZHc0M2ptOXFmb2VJRUtUVHV4dERQRk81cU5ZR1JQZXdEbEZrYjZkbjZwXC9yVm1sNmZ6dmQ0V2ZHOCtMUHNnZXN4c29ocUdFQmdEa2s5S1JEQTJ6N3ZsSElaMU9QM21vU1VTNzdJazFVTVVYQmFnUno0WTM0enRjRmFaUGlvSmQ1R085VitpVW5jZUN5VzcwY3lYUG5oWTJJREpGRTdjPSIsInYiOjMsIml2IjoiMzBPY3FENVRaSGlvOUtqd3p0TlpiQT09IiwiaWF0IjoxNzMwOTAzMDA5LjE1Nn0.sKqVFu5iGDa-XhVn-5jDgrJ902cG1-LcRoFd-ztldhw"),
     x_jike_refresh_token: Optional[str] = Header("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiazVva1VQXC8zTTNpOUliQmpZOFFjdU5cL2xqMGpmMElETGhpOEJBZkl6ZFYxR3lWZ2RmWWxcL2llaHhQbDl3TGRPK0h3dVZkWUdqVm1oMFJMOWUwdVJxYkFBR3Z5YWRXYzFnZTE0dmFZNThhR0U1ZVE3Nk54a1NPT3F4R3VETmFVVXEzblRMN3hSRFhtbEVyN1dNOWVpY2hhWnptNmoybHg1UkxGSWV3d1czR20wPSIsInYiOjMsIml2Ijoia25ldTk4K01POTh6NzFEdDc4VlpEUT09IiwiaWF0IjoxNzMwOTAzMDA5LjE1Nn0.fs9VRliivfhHepsDX9rFtsGhwrPXedIfh53ebGPvDxU"),
+
+    sec_ch_ua_platform: Optional[str] = Header(""),
     sec_ch_ua: Optional[str] = Header(""),
     sec_ch_ua_mobile: Optional[str] = Header("?0"),
     app_version: Optional[str] = Header("7.27.0"),
     user_agent: Optional[str] = Header("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"),
     accept: Optional[str] = Header("application/json, text/plain, */*"),
-    x_jike_access_token: Optional[str] = Header("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiOWI2bTNNMFZ5TU9BZDFtaEFGeEVUOGxsZFlIYlwvZUk0Qk13d25QcU1nY2tHRTUyZ0h6T2xnREUrOE1VTmlVQUpkNWJ3ZkJpYmU3V0IrYlFhczlRMDJNVEtRSW51WGhXbjJHUGxwTm8reFRhbnUyTlpwVFRsVVFcL1piSzdZbjZFYU1aZGVRYk9EU1llMG5ibGZaK0JEZmp6Tk5YVG5RclVcL2toM01MUXZqQnp6XC9zeFpwUjZVa2xzbWphRGdTM0pneWRNXC9Gc2V2NDVvNGRPZHc0M2ptOXFmb2VJRUtUVHV4dERQRk81cU5ZR1JQZXdEbEZrYjZkbjZwXC9yVm1sNmZ6dmQ0V2ZHOCtMUHNnZXN4c29ocUdFQmdEa2s5S1JEQTJ6N3ZsSElaMU9QM21vU1VTNzdJazFVTVVYQmFnUno0WTM0enRjRmFaUGlvSmQ1R085VitpVW5jZUN5VzcwY3lYUG5oWTJJREpGRTdjPSIsInYiOjMsIml2IjoiMzBPY3FENVRaSGlvOUtqd3p0TlpiQT09IiwiaWF0IjoxNzMwOTAzMDA5LjE1Nn0.sKqVFu5iGDa-XhVn-5jDgrJ902cG1-LcRoFd-ztldhw"),
     dnt: Optional[str] = Header("1"),
     origin: Optional[str] = Header("https://web.okjike.com"),
     sec_fetch_site: Optional[str] = Header("cross-site"),
@@ -31,6 +33,12 @@ async def jike_profile(
     Original URL: https://api.ruguoapp.com/1.0/users/profile
     Method: GET
     """
+
+    if custom_cookie:
+        cookie = dict(k.split("=", 1) for k in custom_cookie.split("; "))
+        x_jike_access_token = cookie.get("x_jike_access_token")
+        x_jike_refresh_token = cookie.get("x_jike_refresh_token")
+
     # Construct headers
     headers = {
         "sec-ch-ua-platform": sec_ch_ua_platform,
