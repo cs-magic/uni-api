@@ -3,7 +3,7 @@ from fastapi import APIRouter, Header, Body
 from typing import Optional, Dict, Any
 import requests
 import json
-from .types import PusherContent
+from .types import PushContent, JikePushContent
 
 router = APIRouter(prefix='/jike')
 
@@ -12,7 +12,7 @@ BASE_URL = "https://web-api.okjike.com/api/graphql"
 
 @router.post("/content")
 async def api_graphql(
-    content: PusherContent,
+    content: JikePushContent,
 
     custom_cookie: Optional[str] = Header(""),
 
@@ -73,8 +73,8 @@ async def api_graphql(
             'variables': {
                 'message': {
                     'content': content.text,
-                    'syncToPersonalUpdate': True,
-                    'submitToTopic': '59747bef311d650011d5ab09',
+                    'syncToPersonalUpdate': content.syncToPersonalUpdate,
+                    'submitToTopic': content.submitToTopic,
                     'pictureKeys': []}},
             'query': 'mutation CreateMessage($message: CreateMessageInput!) { createMessage(input: $message) { success toast __typename } } '},
         response = requests.post(

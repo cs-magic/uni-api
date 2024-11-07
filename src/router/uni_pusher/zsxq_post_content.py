@@ -4,7 +4,7 @@ from typing import Optional, Dict, Any
 import requests
 import json
 
-from src.router.uni_pusher.types import PusherContent
+from src.router.uni_pusher.types import PushContent
 
 router = APIRouter(prefix='/zsxq')
 
@@ -13,10 +13,9 @@ BASE_URL = "https://api.zsxq.com/v2/groups/51111828288514/topics"
 
 @router.post("/content")
 async def groups_51111828288514_topics(
-    content: PusherContent,
+    content: PushContent,
 
-    custom_cookie: Optional[str] = Header("zsxq_access_token=A1A047AB-483F-F2F6-27EF-831393870534_1E07900F500D3426; zsxqsessionid=7ea23150bf6824166e923cd620adf32d; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%2228242851215251%22%2C%22first_id%22%3A%22192f0c0191d1983-0199f37f9d1c95c-1f525636-3686400-192f0c0191e2a46%22%2C%22props%22%3A%7B%7D%2C%22identities%22%3A%22eyIkaWRlbnRpdHlfY29va2llX2lkIjoiMTkyZjBjMDE5MWQxOTgzLTAxOTlmMzdmOWQxYzk1Yy0xZjUyNTYzNi0zNjg2NDAwLTE5MmYwYzAxOTFlMmE0NiIsIiRpZGVudGl0eV9sb2dpbl9pZCI6IjI4MjQyODUxMjE1MjUxIn0%3D%22%2C%22history_login_id%22%3A%7B%22name%22%3A%22%24identity_login_id%22%2C%22value%22%3A%2228242851215251%22%7D%7D; abtest_env=product"),
-
+    custom_cookie: Optional[str] = Header(""),
     x_request_id: Optional[str] = Header("239dc4d1c-0679-f2cc-d21c-d3dcd822013"),
     x_version: Optional[str] = Header("2.64.0"),
     x_timestamp: Optional[str] = Header("1730731549"),

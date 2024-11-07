@@ -174,11 +174,10 @@ router = APIRouter()
 
     return code
 
-
 # Example usage
 if __name__ == "__main__":
-    api = 'jike-search-quanzi'
-    # api = 'jike-read-profile'
+    # api = 'jike-search-quanzi'
+    api = 'jike-read-profile'
 
     with open(f'./.data/apis/{api}.sh') as f:
         res = generate_fastapi_route(f.read(), "/" + api.replace('-', '/'))
