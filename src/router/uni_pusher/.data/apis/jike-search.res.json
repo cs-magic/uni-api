@@ -1,0 +1,1306 @@
+[
+  {
+    "data": {
+      "search": {
+        "integrate": {
+          "pageInfo": {
+            "hasNextPage": true,
+            "loadMoreKey": {
+              "skip": 20
+            },
+            "__typename": "PageInfo"
+          },
+          "highlightWord": {
+            "words": [
+              "吐槽"
+            ],
+            "singleMaxHighlightTime": 2,
+            "totalMaxHighlightTime": 5,
+            "__typename": "HighlightWord"
+          },
+          "nodes": [
+            {
+              "sectionType": "SECTION_HEADER",
+              "sectionViewType": "SEARCH",
+              "sectionContent": null,
+              "title": "话题",
+              "__typename": "SearchIntegrateSection"
+            },
+            {
+              "__typename": "SearchHashtagSection"
+            },
+            {
+              "__typename": "SearchHashtagSection"
+            },
+            {
+              "sectionType": "SECTION_HEADER",
+              "sectionViewType": "SEARCH",
+              "sectionContent": null,
+              "title": "圈子",
+              "__typename": "SearchIntegrateSection"
+            },
+            {
+              "id": "5628fac0daf87d13002c8964",
+              "messagePrefix": "日式冷吐槽",
+              "content": "即刻冷吐槽",
+              "intro": "hi～欢迎加入我们一起玩。\n\n💡在这儿，你可以选择：\n1.发布图片/视频内容，并带上「请配文」，期待即友们的吐槽。\n2.逛逛圈子，给其他即友的内容配上合适的吐槽语，尽情发挥你的吐槽智慧。\n\n⚠️但是，不允许在这里发布色情暴力、政治敏感或者广告内容，一旦发现，可能会置底、删除甚至封禁。",
+              "subscribedStatusRawValue": "NOT_SUBSCRIBED",
+              "subscribersCount": 291029,
+              "squarePicture": {
+                "smallPicUrl": "https://cdnv2.ruguoapp.com/Fi_wefOA35AqwBbhl0RcN6Yy6vwV.png?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/300x300%3E",
+                "middlePicUrl": "https://cdnv2.ruguoapp.com/Fi_wefOA35AqwBbhl0RcN6Yy6vwV.png?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/800x800%3E",
+                "picUrl": "https://cdnv2.ruguoapp.com/Fi_wefOA35AqwBbhl0RcN6Yy6vwV.png?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/1000x1000%3E",
+                "__typename": "PictureInfo"
+              },
+              "tips": {
+                "inComment": "",
+                "inDraft": "",
+                "__typename": "TopicTip"
+              },
+              "subscribersTextSuffix": "名即友已加入",
+              "subscribersName": "即友",
+              "recentPost": "",
+              "__typename": "TopicInfo"
+            },
+            {
+              "id": "59fc1b0b86ebf4001104608d",
+              "messagePrefix": "",
+              "content": "辣鸡拔草吐槽大会",
+              "intro": "想剁手？来这里解毒！即友觉得这些都不行。",
+              "subscribedStatusRawValue": "NOT_SUBSCRIBED",
+              "subscribersCount": 112235,
+              "squarePicture": {
+                "smallPicUrl": "https://cdnv2.ruguoapp.com/FnbVR7W03bYjpcO-cPfzLv40XIC4.png?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/300x300%3E",
+                "middlePicUrl": "https://cdnv2.ruguoapp.com/FnbVR7W03bYjpcO-cPfzLv40XIC4.png?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/800x800%3E",
+                "picUrl": "https://cdnv2.ruguoapp.com/FnbVR7W03bYjpcO-cPfzLv40XIC4.png?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/1000x1000%3E",
+                "__typename": "PictureInfo"
+              },
+              "tips": {
+                "inComment": "",
+                "inDraft": "#又为新品牌花了冤枉钱 话题上线啦！",
+                "__typename": "TopicTip"
+              },
+              "subscribersTextSuffix": "名即友已加入",
+              "subscribersName": "即友",
+              "recentPost": "",
+              "__typename": "TopicInfo"
+            },
+            {
+              "id": "575e800da40fab1200d65966",
+              "messagePrefix": "《吐槽大会》更新",
+              "content": "一起看《吐槽大会》",
+              "intro": "《吐槽大会》是一档即将播出的脱口秀节目，尝试在明星跨界互相吐槽的形式中找到冒犯的边界，用嘲讽和自嘲还原更真实有趣的人。",
+              "subscribedStatusRawValue": "NOT_SUBSCRIBED",
+              "subscribersCount": 110438,
+              "squarePicture": {
+                "smallPicUrl": "https://cdnv2.ruguoapp.com/o_1al5774ih10ne17384h51n1k13e3j.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/300x300%3E",
+                "middlePicUrl": "https://cdnv2.ruguoapp.com/o_1al5774ih10ne17384h51n1k13e3j.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/800x800%3E",
+                "picUrl": "https://cdnv2.ruguoapp.com/o_1al5774ih10ne17384h51n1k13e3j.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/1000x1000%3E",
+                "__typename": "PictureInfo"
+              },
+              "tips": {
+                "inComment": "",
+                "inDraft": "",
+                "__typename": "TopicTip"
+              },
+              "subscribersTextSuffix": "名吐槽大王正在疯狂讲段子",
+              "subscribersName": "吐槽大王",
+              "recentPost": "",
+              "__typename": "TopicInfo"
+            },
+            {
+              "id": "56b5b7446c53a31100267d8f",
+              "messagePrefix": "春晚吐槽",
+              "content": "一起看春晚",
+              "intro": "一年一度的春晚即将开幕，网友各种直播春晚也非常有意思，一起看看网友们又说了什么。",
+              "subscribedStatusRawValue": "NOT_SUBSCRIBED",
+              "subscribersCount": 48051,
+              "squarePicture": {
+                "smallPicUrl": "https://cdnv2.ruguoapp.com/o_1aaqt48ce1hv1hgccked8r1pvfj.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/300x300%3E",
+                "middlePicUrl": "https://cdnv2.ruguoapp.com/o_1aaqt48ce1hv1hgccked8r1pvfj.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/800x800%3E",
+                "picUrl": "https://cdnv2.ruguoapp.com/o_1aaqt48ce1hv1hgccked8r1pvfj.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/1000x1000%3E",
+                "__typename": "PictureInfo"
+              },
+              "tips": {
+                "inComment": "",
+                "inDraft": "根据国家版权局规定，请勿上传传播春晚节目视频、音频、图片版权内容~",
+                "__typename": "TopicTip"
+              },
+              "subscribersTextSuffix": "名即友已加入",
+              "subscribersName": "即友",
+              "recentPost": "",
+              "__typename": "TopicInfo"
+            },
+            {
+              "id": "5a9403e049303a001759aa8b",
+              "messagePrefix": "",
+              "content": "这么过分一定发即刻",
+              "intro": "太可恶了！口亨！",
+              "subscribedStatusRawValue": "NOT_SUBSCRIBED",
+              "subscribersCount": 131488,
+              "squarePicture": {
+                "smallPicUrl": "https://cdnv2.ruguoapp.com/FtiBsL_ZM3evI8-GCDlYZUKQ9eTC.png?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/300x300%3E",
+                "middlePicUrl": "https://cdnv2.ruguoapp.com/FtiBsL_ZM3evI8-GCDlYZUKQ9eTC.png?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/800x800%3E",
+                "picUrl": "https://cdnv2.ruguoapp.com/FtiBsL_ZM3evI8-GCDlYZUKQ9eTC.png?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/1000x1000%3E",
+                "__typename": "PictureInfo"
+              },
+              "tips": {
+                "inComment": "",
+                "inDraft": "",
+                "__typename": "TopicTip"
+              },
+              "subscribersTextSuffix": "名即友正在吐槽 🙃",
+              "subscribersName": "即友",
+              "recentPost": "",
+              "__typename": "TopicInfo"
+            },
+            {
+              "sectionType": "SECTION_FOOTER",
+              "sectionViewType": "SEARCH_MORE",
+              "sectionContent": "查看更多圈子",
+              "title": null,
+              "__typename": "SearchIntegrateSection"
+            },
+            {
+              "sectionType": "SECTION_HEADER",
+              "sectionViewType": "SEARCH",
+              "sectionContent": null,
+              "title": "用户",
+              "__typename": "SearchIntegrateSection"
+            },
+            {
+              "items": [
+                {
+                  "avatarImage": {
+                    "thumbnailUrl": "https://cdnv2.ruguoapp.com/FsZcV2ua65iWu6o3TxSMjl9WXgpfv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                    "smallPicUrl": "https://cdnv2.ruguoapp.com/FsZcV2ua65iWu6o3TxSMjl9WXgpfv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                    "picUrl": "https://cdnv2.ruguoapp.com/FsZcV2ua65iWu6o3TxSMjl9WXgpfv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                    "__typename": "AvatarImage"
+                  },
+                  "isSponsor": false,
+                  "username": "41C6BDC0-01F9-4271-92EF-A8C671CE9C8C",
+                  "screenName": "吐槽",
+                  "briefIntro": "孤独的自由主义者",
+                  "__typename": "User",
+                  "following": false
+                },
+                {
+                  "avatarImage": {
+                    "thumbnailUrl": "https://cdnv2.ruguoapp.com/FidL0i4-VR1NyFcOp6cwBpv5ryE8v3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                    "smallPicUrl": "https://cdnv2.ruguoapp.com/FidL0i4-VR1NyFcOp6cwBpv5ryE8v3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                    "picUrl": "https://cdnv2.ruguoapp.com/FidL0i4-VR1NyFcOp6cwBpv5ryE8v3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                    "__typename": "AvatarImage"
+                  },
+                  "isSponsor": false,
+                  "username": "35474206-2C93-45E4-B0B8-8099F45FC78B",
+                  "screenName": "AI暴躁吐槽君",
+                  "briefIntro": "Hotdog! ✅ Not hotdog! ❌",
+                  "__typename": "User",
+                  "following": false
+                },
+                {
+                  "avatarImage": {
+                    "thumbnailUrl": "https://cdnv2.ruguoapp.com/Fh6D67AnQcLKIJ0MyKyxpKEKShdBv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                    "smallPicUrl": "https://cdnv2.ruguoapp.com/Fh6D67AnQcLKIJ0MyKyxpKEKShdBv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                    "picUrl": "https://cdnv2.ruguoapp.com/Fh6D67AnQcLKIJ0MyKyxpKEKShdBv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                    "__typename": "AvatarImage"
+                  },
+                  "isSponsor": false,
+                  "username": "67acd2c9-1eb7-4d10-a897-29b88fd6cb06",
+                  "screenName": "M77吐槽星人",
+                  "briefIntro": "🌈即使天无雨，我亦留此地",
+                  "__typename": "User",
+                  "following": false
+                },
+                {
+                  "avatarImage": {
+                    "thumbnailUrl": "https://cdnv2.ruguoapp.com/FkK6vWeu3jTpj2apjqUcLfflSAgP.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                    "smallPicUrl": "https://cdnv2.ruguoapp.com/FkK6vWeu3jTpj2apjqUcLfflSAgP.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                    "picUrl": "https://cdnv2.ruguoapp.com/FkK6vWeu3jTpj2apjqUcLfflSAgP.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                    "__typename": "AvatarImage"
+                  },
+                  "isSponsor": false,
+                  "username": "xin4553032",
+                  "screenName": "吐槽型系统AI",
+                  "briefIntro": "最近雨太多，dp29-3插头有点受潮了，哎",
+                  "__typename": "User",
+                  "following": false
+                }
+              ],
+              "__typename": "SearchIntegrateUserSection"
+            },
+            {
+              "sectionType": "SECTION_FOOTER",
+              "sectionViewType": "SEARCH_MORE",
+              "sectionContent": "查看更多用户",
+              "title": null,
+              "__typename": "SearchIntegrateSection"
+            },
+            {
+              "sectionType": "SECTION_HEADER",
+              "sectionViewType": "SEARCH",
+              "sectionContent": null,
+              "title": "动态",
+              "__typename": "SearchIntegrateSection"
+            },
+            {
+              "id": "6718f9ca9d53db7b443b1124",
+              "type": "ORIGINAL_POST",
+              "content": "吐槽了那么久鸿蒙，回旋镖来了，被分去开发了😭",
+              "shareCount": 1,
+              "repostCount": 0,
+              "createdAt": "2024-10-23T13:27:38.757Z",
+              "collected": false,
+              "pictures": [],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 27,
+              "commentCount": 8,
+              "topic": {
+                "id": "55b30e4c00b0bb80c43bf532",
+                "content": "职场那些事儿",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_hot",
+                "recallScore": 501.44415,
+                "rankScore": 0.78026837,
+                "reRankScore": 389
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FtM_6JEpe66a3FbmizwpKRkWk2gK.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FtM_6JEpe66a3FbmizwpKRkWk2gK.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FtM_6JEpe66a3FbmizwpKRkWk2gK.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": false,
+                "username": "9b9a9ff7-2e6e-4435-8ea1-537c9d1809d0",
+                "screenName": "文钦233",
+                "briefIntro": "🧑🏻‍💻前即厂工程师，目前在鹅厂#WXG\n🤯动态都是无聊的碎碎念\n🤩酱酱&多多铲屎官\n❤️老婆的贴心棉袄",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "672ab069a8855e724be82280",
+              "type": "ORIGINAL_POST",
+              "content": "各位即友们，做个调研，你们日常对wps的不管是夸夸还是吐槽，都会在哪个平台去做？\n希望你们评论区告诉我，这个对我很重要",
+              "shareCount": 0,
+              "repostCount": 0,
+              "createdAt": "2024-11-05T23:55:21.770Z",
+              "collected": false,
+              "pictures": [],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 19,
+              "commentCount": 34,
+              "topic": {
+                "id": "5ab9c9ed2ca389001ba1feb5",
+                "content": "运营的日常",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_hot",
+                "recallScore": 501.7965,
+                "rankScore": 0.709643,
+                "reRankScore": 632
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FtsDf_xRREzvLuPv7y7ZDR3a2Lijv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FtsDf_xRREzvLuPv7y7ZDR3a2Lijv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FtsDf_xRREzvLuPv7y7ZDR3a2Lijv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": true,
+                "username": "68b2a426-e5f8-47ac-adf1-652c8586b18e",
+                "screenName": "金小獴宝藏屋",
+                "briefIntro": "个人账号，分享金小獴周边，所有发言仅代表个人。\n即刻抽奖一哥，经得起扒\n永远相信热爱和真诚\n产品问题可通过官方渠道解决，感谢",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "670fb84da8855e724b094723",
+              "type": "ORIGINAL_POST",
+              "content": "没想到支付宝最大的安全漏洞是淘宝！\n淘宝居然不允许解绑支付宝，那么主要满足以下条件，就有概率发生被盗：\n1. 支付宝和淘宝已经绑定，且绑定的支付宝有一定存款\n2. 设置了免密支付\n3. 淘宝密码是中弱密码\n⭐由于淘宝的登录安全策略很弱，没有人脸，没有常用设备校验，没有异地IP校验，所以可以通过暴力破解（我自身账号就试过被爆破过）\n⭐而由于淘宝和支付宝是强绑定的，也就是登陆了淘宝就可以用支付宝的钱（假如免密了）\n⭐而淘宝更恐怖是可以多端登录，存在一种可能，有人在你不知情情况下登录了你淘宝账号，慢慢试出你的支付宝密码\n没想到支付宝安全做得再好也架不住有个猪队友，好多年前我就吐槽过淘宝的安全设计一塌糊涂，没想到这么多年还是一塌糊涂",
+              "shareCount": 0,
+              "repostCount": 0,
+              "createdAt": "2024-10-16T12:57:49.054Z",
+              "collected": false,
+              "pictures": [
+                {
+                  "format": "jpeg",
+                  "watermarkPicUrl": "https://cdnv2.ruguoapp.com/FraD66IJCENshGRRqe4K4F4Yfpecv3.jpg?imageMogr2/auto-orient%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsucnVndW9hcHAuY29tLz90ZXh0PSVFNSU4RCVCMyVFNSU4OCVCQiUyMCU0MFJ5b3V5YW5hJmhlaWdodD01NA==/gravity/SouthEast/dx/10/dy/10",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FraD66IJCENshGRRqe4K4F4Yfpecv3.jpg",
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FraD66IJCENshGRRqe4K4F4Yfpecv3.jpg?imageMogr2/auto-orient/thumbnail/300x2000%3E/quality/70/interlace/1",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FraD66IJCENshGRRqe4K4F4Yfpecv3.jpg?imageMogr2/auto-orient/thumbnail/400x2000%3E/quality/70/interlace/1",
+                  "width": 1080,
+                  "height": 2400,
+                  "__typename": "PictureInfo"
+                }
+              ],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 2,
+              "commentCount": 18,
+              "topic": {
+                "id": "563a2995306dab1300a32227",
+                "content": "产品经理的日常",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_ctr",
+                "recallScore": 501.47192,
+                "rankScore": 0.70209348,
+                "reRankScore": 270
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FjXIqUJN4pWktuKVvompdAG_5Ckl.png?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FjXIqUJN4pWktuKVvompdAG_5Ckl.png?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FjXIqUJN4pWktuKVvompdAG_5Ckl.png?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": false,
+                "username": "91c8635a-09b3-4d4f-8d2d-b47db76381ce",
+                "screenName": "Ryouyana",
+                "briefIntro": "",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "670d0dcf9d53db7b44622b1e",
+              "type": "ORIGINAL_POST",
+              "content": "最近很多人吐槽B站上咋那么多万字拆解，关键电影才1h,复述能讲1h，这不纯流水账废话\n\n首先区别一下，拉片应该是偏分析电影镜头语言这样,但是拆解就是类似前期立项啊剧情分析幕后花絮之类的电子榨菜\n\n拉片推荐(节选)\n1.陈宇讲电影:《寄生虫》\n2.旭亮搜神记:《低俗小说》\n3.吸奇侠:《教父》\n4.风过大泽:《色戒》\n5.野栗树:《傲慢与偏见》\n6.小鱼陪拉片:《血观音》\n7.Buried Alien：超英系列\n8.切片计划：女性电影系列\n\n大家有什么推荐的可以留言哈😊",
+              "shareCount": 8,
+              "repostCount": 11,
+              "createdAt": "2024-10-14T12:25:51.949Z",
+              "collected": false,
+              "pictures": [
+                {
+                  "format": "png",
+                  "watermarkPicUrl": "https://cdnv2.ruguoapp.com/lqiK4W7xS0QVge6pKWp6XIUEg7QFv3.png?imageMogr2/auto-orient/thumbnail/5594680@%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsucnVndW9hcHAuY29tLz90ZXh0PSVFNSU4RCVCMyVFNSU4OCVCQiUyMCU0MCVFOSVBOSVBQyVFNiVBMCVCQyVFOSU4NyU4QyVFNSVCOCU4MyVFNiVCMSU4MiVFNyU5NCU5QSVFOCVBNyVBMyZoZWlnaHQ9OTE=/gravity/SouthEast/dx/10/dy/10",
+                  "picUrl": "https://cdnv2.ruguoapp.com/lqiK4W7xS0QVge6pKWp6XIUEg7QFv3.png?imageMogr2/auto-orient/thumbnail/5594680@",
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/lqiK4W7xS0QVge6pKWp6XIUEg7QFv3.png?imageMogr2/auto-orient/thumbnail/300x2000%3E",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/lqiK4W7xS0QVge6pKWp6XIUEg7QFv3.png?imageMogr2/auto-orient/thumbnail/400x2000%3E",
+                  "width": 3074,
+                  "height": 1820,
+                  "__typename": "PictureInfo"
+                }
+              ],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 63,
+              "commentCount": 48,
+              "topic": {
+                "id": "58b43ebe0f05ff0015121ab0",
+                "content": "一起看电影",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_hot",
+                "recallScore": 502.13574,
+                "rankScore": 0.62744683,
+                "reRankScore": 3523
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FlDhYAvGYccRhm_bj_FrKGFGh2_J?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/120x120%3E",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FlDhYAvGYccRhm_bj_FrKGFGh2_J?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/300x300%3E",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FlDhYAvGYccRhm_bj_FrKGFGh2_J?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/1000x1000%3E",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": false,
+                "username": "5bf60b50-f15f-4c09-9e57-fc67f10c284f",
+                "screenName": "马格里布求甚解",
+                "briefIntro": "以语言上的深奥代替逻辑上的深奥。\n比起逻辑学，在修辞学上更为精深。\n经营二手书店，爱狗，爱咖啡☕️，\n「知识共享计划」撰稿人。",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "67077df754d2a499add7a9d1",
+              "type": "ORIGINAL_POST",
+              "content": "随手一吐槽又是一个过万👁的帖子，评论区盖出600多楼，我还是太懂怎么撩拨网友了，天选自媒体人。",
+              "shareCount": 2,
+              "repostCount": 2,
+              "createdAt": "2024-10-10T07:10:47.686Z",
+              "collected": false,
+              "pictures": [
+                {
+                  "format": "jpeg",
+                  "watermarkPicUrl": "https://cdnv2.ruguoapp.com/Flyho8f7caqRCODD7WzlG3RSOALvv3.jpg?imageMogr2/auto-orient%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsucnVndW9hcHAuY29tLz90ZXh0PSVFNSU4RCVCMyVFNSU4OCVCQiUyMCU0MCVFNiVCOCVBOSVFNCVCOCVCOCVFNSVBRCU5MCZoZWlnaHQ9NjE=/gravity/SouthEast/dx/10/dy/10",
+                  "picUrl": "https://cdnv2.ruguoapp.com/Flyho8f7caqRCODD7WzlG3RSOALvv3.jpg",
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/Flyho8f7caqRCODD7WzlG3RSOALvv3.jpg?imageMogr2/auto-orient/thumbnail/300x2000%3E/quality/70/interlace/1",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/Flyho8f7caqRCODD7WzlG3RSOALvv3.jpg?imageMogr2/auto-orient/thumbnail/400x2000%3E/quality/70/interlace/1",
+                  "width": 1228,
+                  "height": 2700,
+                  "__typename": "PictureInfo"
+                }
+              ],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 20,
+              "commentCount": 10,
+              "topic": {
+                "id": "5ab9c9ed2ca389001ba1feb5",
+                "content": "运营的日常",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_hot",
+                "recallScore": 501.32288,
+                "rankScore": 0.61513662,
+                "reRankScore": 406
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/Fv1lpsc938MorlauJTqRYYIzpgMkv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/Fv1lpsc938MorlauJTqRYYIzpgMkv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/Fv1lpsc938MorlauJTqRYYIzpgMkv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": true,
+                "username": "0bcf6f37-7e78-44ca-ba0b-d6b4c36e0d5b",
+                "screenName": "温丸子",
+                "briefIntro": "来这个世界玩，然后记录🌍",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "6716fbe209f16d196941ec81",
+              "type": "ORIGINAL_POST",
+              "content": "1、 海外用户付费习惯真好，最近谷歌排名从第 2 跌到第 10 左右，流量也暴跌，依然有人付费，正常下个月还会继续扣费。\n\n2、 套壳不可怕，关键是能解决用户需求，搞定渠道和流量，设计好付费动作，后面慢慢算好账，慢慢积累这个品类的从高到低的认知，后面就慢慢知道怎么回答，大厂做了怎么办，别人做了怎么办之类的问题。\n\n3、 看到一些媒体在说 AI 泡沫，传达悲观情绪，泡沫肯定有，但现在这些不那么成熟的 AI 产品确实能解决问题，这不用 Cursor 又做了个文字转语音的工具：\n\nhttps://aivoicelab.net\n\n（原站：https://tiktokvoice.net/）\n\n开发过程中严重的问题是容易优化小点上瘾，意识到后就暂停了，现在没有真正加使用限制，欢迎使用吐槽",
+              "shareCount": 3,
+              "repostCount": 0,
+              "createdAt": "2024-10-22T01:12:02.631Z",
+              "collected": false,
+              "pictures": [
+                {
+                  "format": "jpeg",
+                  "watermarkPicUrl": "https://cdnv2.ruguoapp.com/Ft79eSu72ASeCsheSYQn-T-cl7_Zv3.jpg?imageMogr2/auto-orient%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsucnVndW9hcHAuY29tLz90ZXh0PSVFNSU4RCVCMyVFNSU4OCVCQiUyMCU0MCVFOSU5OCVCRiVFNCVCQSVBRSVFNSU5QyVBOCVFOCVCOSVBNiVFOCVCRiVBQS1DdXJzb3IlRTYlQjIlODklRTglQkYlQjclRTclODklODgmaGVpZ2h0PTU2/gravity/SouthEast/dx/10/dy/10",
+                  "picUrl": "https://cdnv2.ruguoapp.com/Ft79eSu72ASeCsheSYQn-T-cl7_Zv3.jpg",
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/Ft79eSu72ASeCsheSYQn-T-cl7_Zv3.jpg?imageMogr2/auto-orient/thumbnail/300x2000%3E/quality/70/interlace/1",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/Ft79eSu72ASeCsheSYQn-T-cl7_Zv3.jpg?imageMogr2/auto-orient/thumbnail/400x2000%3E/quality/70/interlace/1",
+                  "width": 1125,
+                  "height": 2436,
+                  "__typename": "PictureInfo"
+                }
+              ],
+              "urlsInText": [
+                {
+                  "url": "https://aivoicelab.net",
+                  "originalUrl": "https://aivoicelab.net",
+                  "title": "aivoicelab.net",
+                  "__typename": "TransformedUrl"
+                },
+                {
+                  "url": "https://tiktokvoice.net/",
+                  "originalUrl": "https://tiktokvoice.net/",
+                  "title": "tiktokvoice.net",
+                  "__typename": "TransformedUrl"
+                }
+              ],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 10,
+              "commentCount": 3,
+              "topic": {
+                "id": "63579abb6724cc583b9bba9a",
+                "content": "AI探索站",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_ctr",
+                "recallScore": 501.52286,
+                "rankScore": 0.55152624,
+                "reRankScore": 248
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FsqtX65qxrjEoSnWTdB2CNyExW74v3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FsqtX65qxrjEoSnWTdB2CNyExW74v3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FsqtX65qxrjEoSnWTdB2CNyExW74v3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": true,
+                "username": "AFD40CB0-8C31-4C9A-9268-29F709662872",
+                "screenName": "阿亮在蹦迪-Cursor沉迷版",
+                "briefIntro": "😉PM，设计师\n🛠美团，简单心理，混沌大学，字节\n👽探索 AI 工具出海中\n💻最近是cursor鼓励师🫡",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "671e5d86ef0b07e4ad788499",
+              "type": "ORIGINAL_POST",
+              "content": "想明年试试本地开放麦，不图别的，找个地方吐槽自己污浊的人生",
+              "shareCount": 0,
+              "repostCount": 1,
+              "createdAt": "2024-10-27T15:34:30.652Z",
+              "collected": false,
+              "pictures": [],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 22,
+              "commentCount": 7,
+              "topic": {
+                "id": "5a333f1a6b661f0016f0f1ac",
+                "content": "立个flag",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_hot",
+                "recallScore": 501.42166,
+                "rankScore": 0.51253491,
+                "reRankScore": 326
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FgJP_EDbFsDtJUt8HNaF18UAzgJxv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FgJP_EDbFsDtJUt8HNaF18UAzgJxv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FgJP_EDbFsDtJUt8HNaF18UAzgJxv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": false,
+                "username": "62A7E83C-E28B-4785-88E5-AD82BA1A1342",
+                "screenName": "三鹰",
+                "briefIntro": "㊚♏️INFJ\n北鹰有三，其一名憨\n底色悲凉，向阳而攀\n肆意且克己\n如风行万里，不问归期",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "6713375347f574aa627fc6a8",
+              "type": "ORIGINAL_POST",
+              "content": "观察了好几年杨笠的争议，我发现就算回答故事的原点，很多人还是不了解为啥“普信男”引起那么大争议。\n\n我们先尝试建立梳理几条共识：\n\n1.这个社会上的资源和权力，一定是向少部分人集中的；\n2.一个人想要低成本欺凌另一个人，一定是在权力和资源上占优的；\n3.无论男女，都存在同性别、由上到下欺凌的现象。\n\n那么杨笠说的“普信男”问题在哪里呢？\n\n1.让杨笠和别的女性感到压力，被欺凌的“普信男”，更大程度上是占据了资源和权力的男性；\n2.男性内部的绝大多数，也被这群人欺凌，而且欺凌更隐形；\n3.杨笠的吐槽，对于真正欺凌她们的人，形成不了任何效果。有权在手，再闹挺也只是白费口舌；\n4.而“普信男”作为一个无差别扫射的标签，最后的攻击对象，一定落在了那群绝大多数、没资源没权力、平时还被欺凌的男性身上。在他们心里就是，我没有干坏事，你把别人干的坏事归到我身上，卖赎罪券呢？\n\n再补充一句，其实“普信男”如果仔细分享，它的精准攻击对象是那群占据了资源和权力的男性。就像“某某ceo居然水平那么低，还那么自信”。毕竟有反差才有攻击性吗。\n\n但是很可惜，杨笠没有根据这个点进行申辩和解释，后来还在继续攻击，以及说出“只调侃成功男人”这种话。\n\n把她本身可以代表的平权理念和“慕强”结合在一起了，那在大众眼里，她和房间里那头最该被攻击的大象，站到了一起。",
+              "shareCount": 2,
+              "repostCount": 1,
+              "createdAt": "2024-10-19T04:36:35.591Z",
+              "collected": false,
+              "pictures": [],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 24,
+              "commentCount": 35,
+              "topic": {
+                "id": "57150d1bc77cf211004a6436",
+                "content": "脱口秀俱乐部",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_hot",
+                "recallScore": 501.69675,
+                "rankScore": 0.50854539,
+                "reRankScore": 884
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FsaFUccFw23IP9QbsmhDnbxyei-Nv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FsaFUccFw23IP9QbsmhDnbxyei-Nv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FsaFUccFw23IP9QbsmhDnbxyei-Nv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": false,
+                "username": "9E192A61-815D-4893-B764-96F3B0ED07B2",
+                "screenName": "吕淮190",
+                "briefIntro": "前得到撰稿人 现ICF认证人生教练\n你早就拥有解决问题的所有答案\n教练的作用就是帮你发现它\n亲密关系 自信建立 人生选择\nLvhuai190",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "66ee69611b58c855de5b2ea8",
+              "type": "ORIGINAL_POST",
+              "content": "怎么大半年的瓜还有续集，你们再这样冲上去被割就对不起即刻用户画像：高认知低收入了\n⬇️这些年来即刻瓜田类别，大家自己注意点吧\n1️⃣渣男渣女乱睡被锤（前几年隔三差五就出来一个，这几年渣J 相对老实了）\n\n2️⃣金融大师开班卖课（谁还记得大明湖畔的T Y ，重仓腾讯美团靠BTC财富自由的那位，最后以还不起即友1w 块结尾，是后来即刻翻车的金融大师们的祖师了，星球和私域收割了几百万跑路了）\n\n3️⃣搞社群卖课不好好交付被锤的（一般是交付了，但被吐槽质量水，以至于把641衬托得质量还行。641不再写dating 日记了我很伤心，我关注就是为了看日记结果他天天在视频号讲群响生死存亡🫠）\n\n4️⃣妄想症装逼被雷劈（线上和一众大J 贴贴互送礼物，男友或家人是A10大佬或者红色背景，最后发现是妄想症）\n\n5️⃣身心灵大师算命+睡人被锤（割了几个大J 几万都不提了，最过分的是睡完给人女生搞出了巨大的心理阴影）\n\n还有什么类型，欢迎补充",
+              "shareCount": 6,
+              "repostCount": 2,
+              "createdAt": "2024-09-21T06:36:17.505Z",
+              "collected": false,
+              "pictures": [],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 41,
+              "commentCount": 12,
+              "topic": {
+                "id": "5699f451d3e8351200bffdc8",
+                "content": "你不知道的行业内幕",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "PICTURE",
+                "recallPolicy": "post_hot",
+                "recallScore": 501.36545,
+                "rankScore": 0.49566078,
+                "reRankScore": 846
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FghmkRLzsFJtwQNPEjrV9zn0gcO7v3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FghmkRLzsFJtwQNPEjrV9zn0gcO7v3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FghmkRLzsFJtwQNPEjrV9zn0gcO7v3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": true,
+                "username": "sylviatiana",
+                "screenName": "Aretha.",
+                "briefIntro": "Creativity is intelligence having fun\n在修平和耐心\nTwitter@Aretha612",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "6700d3977883641164197e34",
+              "type": "ORIGINAL_POST",
+              "content": "在看李笑来的《通往财富自由之路》\n这课程其实“名不副实”\n\n比如开始讲的一点是\n注意力>时间>金钱\n\n在很多纬度来说有足够道理\n\n结合《10x is easier than 2x》\n可知聚焦，注意力聚焦\n对个人成长会有很大的帮助\n\n但是同时也有一个奇特的发现\n就是每节课程下面会有很多用户评论\n\n其中很大一类内容是发言人说自己的情况\n绝大部分是2017年左右发布的内容\n\n到现在过去了7年时间\n基本是发言人不在更新了\n\n高赞发言下面往往会有人这么回复\n比如：\n\n“现在是20年的8月6号，不知道同学你的问题解决了吗？或者有什么进步与变化！想听听你的经验！”\n\n截止目前\n我还没有看到过有任何原发言人的回复\n\n更有意思的是，上面这个回复下面还有人评论：\n\n今天是2021年7月5号；我估计楼主还是木有解决到问题，因为感觉她太困惑了导致于发了篇长长的吐槽留言，还有买了一堆课程，买时是最有动力的，然后后面呢？呵呵~~\n\n这其实反应了大部分人的现状\n我身边也有好友是这样的\n\n道理都懂，然后就没有然后了\n直到真的裁员，年龄大了\n一时又脑血冲上来\n继续努力了一周\n又凉凉了\n\n不知道大家身边有这样的人么？",
+              "shareCount": 4,
+              "repostCount": 2,
+              "createdAt": "2024-10-05T05:50:15.226Z",
+              "collected": false,
+              "pictures": [],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 23,
+              "commentCount": 8,
+              "topic": {
+                "id": "5aa21c7ae54af10017dc93f8",
+                "content": "一个想法不一定对",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_hot",
+                "recallScore": 501.40854,
+                "rankScore": 0.48119881,
+                "reRankScore": 613
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/Fjn0NZ-I1JAYJtPXARLkeNPGii37?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/120x120%3E",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/Fjn0NZ-I1JAYJtPXARLkeNPGii37?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/300x300%3E",
+                  "picUrl": "https://cdnv2.ruguoapp.com/Fjn0NZ-I1JAYJtPXARLkeNPGii37?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/1000x1000%3E",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": true,
+                "username": "E272054E-D904-4F13-A7EC-9ABD2CBF209E",
+                "screenName": "AI产品黄叔",
+                "briefIntro": "研究AI产品的",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "6718db3732f03efa77e6f661",
+              "type": "ORIGINAL_POST",
+              "content": "求教各位即友🙏\n\n遇到了一件超级离谱的事情——\n\n面试过去快1个月了，HR打电话让我去入职。（可能是被放鸽子，我捡漏了）\n\n现在的问题是，我已经入职A公司了，但对A公司不满意。\n\n打电话邀请入职的是B，一家外企，环境、综合福利、资金情况好于A。\n\nA工作劣势主要包括：（在职公司）\n\n1⃣️公司穷，连保洁阿姨都没有\n2⃣️管理混乱，职责不清晰（好处是好摸鱼）\n3⃣️领导奇葩，但人本身不错（前几天已发帖吐槽）\n4⃣️没有台式机，都是笔记本，做设计眼睛快瞎了\n5⃣️感觉没有任何福利，包括下午茶，生日礼物等，太穷了\n\nA工作优势：\n1⃣️同事和领导人都不错，氛围还行\n2⃣️虽然穷，但没刻意压工资，我说多少就是多少，不过前3个月80%\n3⃣️个人觉得行业很好，妥妥的朝阳行业，穷是因为前期投入额巨大\n4⃣️领导出差多，忙的没机会找我麻烦\n\nB工作优势：\n1⃣️外企，感觉比A有钱很多，公司环境好，公司虽然小，但有茶水间，零食等等（A感觉就是给人打工的）\n2⃣️假期多，年假10天，还包括国外的假，周五下午还有体育活动\n3⃣️试用期工资不打折，但有6个月试用期\n\nB工作劣势：\n1⃣️感觉领导很难搞，严肃，面试问了很多奇葩的问题（A的领导是做事中烦人，但人很和蔼，而且会帮忙搞定工作）\n2⃣️刻意压了工资（我没同意）\n3⃣️HR有特意提到：要和领导一起好好工作🤣\n\nAB工作的共同劣势：\n1⃣️领导可能都各有各的难搞\n2⃣️两份工作都涉及到设计工作，我是完全不会的",
+              "shareCount": 0,
+              "repostCount": 0,
+              "createdAt": "2024-10-23T11:17:11.138Z",
+              "collected": false,
+              "pictures": [
+                {
+                  "format": "jpeg",
+                  "watermarkPicUrl": "https://cdnv2.ruguoapp.com/FumtzlNKeQTS8oe7Mbk4ZTPsMz-Jv3.jpg?imageMogr2/auto-orient%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsucnVndW9hcHAuY29tLz90ZXh0PSVFNSU4RCVCMyVFNSU4OCVCQiUyMCU0MCVFNiVCMyVBMiVFNSVCRSVCNyVFOCU4RSVCMSVFNiU5OCU4RSZoZWlnaHQ9Mjc=/gravity/SouthEast/dx/10/dy/10",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FumtzlNKeQTS8oe7Mbk4ZTPsMz-Jv3.jpg",
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FumtzlNKeQTS8oe7Mbk4ZTPsMz-Jv3.jpg?imageMogr2/auto-orient/thumbnail/300x2000%3E/quality/70/interlace/1",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FumtzlNKeQTS8oe7Mbk4ZTPsMz-Jv3.jpg?imageMogr2/auto-orient/thumbnail/400x2000%3E/quality/70/interlace/1",
+                  "width": 555,
+                  "height": 837,
+                  "__typename": "PictureInfo"
+                },
+                {
+                  "format": "jpeg",
+                  "watermarkPicUrl": "https://cdnv2.ruguoapp.com/FuAZkU44UXD8d7JKFZ-5PKt2MH0ov3.jpg?imageMogr2/auto-orient%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsucnVndW9hcHAuY29tLz90ZXh0PSVFNSU4RCVCMyVFNSU4OCVCQiUyMCU0MCVFNiVCMyVBMiVFNSVCRSVCNyVFOCU4RSVCMSVFNiU5OCU4RSZoZWlnaHQ9NTM=/gravity/SouthEast/dx/10/dy/10",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FuAZkU44UXD8d7JKFZ-5PKt2MH0ov3.jpg",
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FuAZkU44UXD8d7JKFZ-5PKt2MH0ov3.jpg?imageMogr2/auto-orient/thumbnail/300x2000%3E/quality/70/interlace/1",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FuAZkU44UXD8d7JKFZ-5PKt2MH0ov3.jpg?imageMogr2/auto-orient/thumbnail/400x2000%3E/quality/70/interlace/1",
+                  "width": 1079,
+                  "height": 1439,
+                  "__typename": "PictureInfo"
+                }
+              ],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 7,
+              "commentCount": 35,
+              "topic": {
+                "id": "55b30e4c00b0bb80c43bf532",
+                "content": "职场那些事儿",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_hot",
+                "recallScore": 501.57703,
+                "rankScore": 0.48052397,
+                "reRankScore": 557
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/Fp_WYBGzJEBPMSbZ8blZsb8j-4Ylv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/Fp_WYBGzJEBPMSbZ8blZsb8j-4Ylv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/Fp_WYBGzJEBPMSbZ8blZsb8j-4Ylv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": false,
+                "username": "d8c7bd10-d78f-4aff-a0b2-7a7a696f8ad2",
+                "screenName": "波德莱明",
+                "briefIntro": "光风霁月地活着，\n得意洋洋地死去！",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "66e8fa5a1bdec5e1e7b8bd67",
+              "type": "ORIGINAL_POST",
+              "content": "我对中信的印象是非常好的，中信的大部分书确实也很有质量保证。\n\n但是我实在忍不住要吐槽《思考，快与慢》的翻译。这都是什么烂翻译？\n\n原文说start with an estimate of average GPA，翻译：先估测出平均绩点的平均值。你跟我说说啥是「平均绩点的平均值」？\n\n原文说希特勒爱dogs and little children会让人感到很惊讶，翻译说希特勒爱「狗和小鸡」。你跟我说说为啥little children是小鸡？\n\n原文说在相关系数为0.3的情况下，一位优秀的CEO领导公司成功的概率，也不过是比五五开的随机瞎猜多了10%，很难支持我们常见到的对CEO的英雄崇拜：an improvement of a mere 10 percentage points over random guessing, hardly grist for the hero worship of CEOs we so often witness. 翻译：这比随意猜想提高了10个百分点，这个结果充分印证了我们常常见到的对首席执行官英雄崇拜的现象。请问hardly这个词去哪儿了？\n\n《思考，快与慢》是一部我觉得人人都应该读一读的巨著，是几十年来最🐂🍺的行为经济学和心理学的理论突破，许多科学，包括谈判学、决策学、消费者心理学，都因为Daniel Kahnerman在这本书中论述的原理，受到了很大的影响，甚至有些可以说是彻底改变了这个学科。这些理论跟我们的日常生活休戚相关，对于我们做出好的人生决策特别关键。\n\n这么重要的一本书，中文版翻译错误百出，甚至把意思给翻反了，这让人怎么读？大家都读不下去，读不懂，不明白这书好在哪里，这么重要的理论无法从原作者那里做一手了解，多让人痛心。\n\n求中信重新翻译一下这本书吧，原作者的文笔明明非常好的啊。在此之前，非常不推荐大家去读中文版。建议能读原版的读原版，或者在🍑上找代购，买港台版吧（虽然是繁体字但是横版，不是竖版，还蛮好读的）。",
+              "shareCount": 7,
+              "repostCount": 0,
+              "createdAt": "2024-09-17T03:41:14.175Z",
+              "collected": false,
+              "pictures": [],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 73,
+              "commentCount": 20,
+              "topic": {
+                "id": "5a158e62a0ef4f00117ab145",
+                "content": "读书会",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_hot",
+                "recallScore": 501.49023,
+                "rankScore": 0.46862453,
+                "reRankScore": 1495
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FvU01ZMR9WSdMWeIjQLxzz70ew4iv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FvU01ZMR9WSdMWeIjQLxzz70ew4iv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FvU01ZMR9WSdMWeIjQLxzz70ew4iv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": false,
+                "username": "08727b5c-5155-4447-ab01-a612bd3efe22",
+                "screenName": "携隐Melody",
+                "briefIntro": "",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "672080f4edb465edbd6ee8ee",
+              "type": "ORIGINAL_POST",
+              "content": "今年的万圣节为啥不能再“大办特办”？\n\n去年火爆出圈的上海万圣节，我很幸运就在现场，是真的感觉到大家非常开心，每个人释放的狂欢的氛围互相感染，正面影响到了每一个人\n\n那为啥可能成为一个城市的标志性节日，今年却不许大办特办了呢？大概分享以下几点\n\n首先，肯定是有安全考量。去年火爆的万圣节是真的“火爆”，到了人群聚集那一带，已经不仅仅是人挤人，而是共享单车挤共享单车，停在人流管控线外面的单车都能排出几百米，甚至凌晨一两点核心区的都有很多秩序维持人员在疏散人群\n\n其次，最近网线上的氛围也很明显不太待见过洋节。很多人对于过洋节的行为是会直接diss的\n\n所以考虑到整体影响，最好是越低调越好，枪打出头鸟\n\n最后，你会发现一个越来越明显的现象，就是传统节日日渐式微，连春节大家都年年在吐槽“年味”越来越淡\n\n如果一个外来的洋节变成头部城市最受欢迎的节日，这面子上也很难挂住\n\n万圣节的火爆并不是偶然，其实是一个天时地利人和各种因素促成的共同结果，大家心里有太多郁结需要合理释放出来，而万圣节又正好是个对年轻人释放的“表现形式”很包容的节日\n\n这其实是挺好的一件事",
+              "shareCount": 5,
+              "repostCount": 0,
+              "createdAt": "2024-10-29T06:30:12.663Z",
+              "collected": false,
+              "pictures": [
+                {
+                  "format": "jpeg",
+                  "watermarkPicUrl": "https://cdnv2.ruguoapp.com/FqCZZsRGSXz0DL-ngjZ6HwfZ35AZv3.jpg?imageMogr2/auto-orient%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsucnVndW9hcHAuY29tLz90ZXh0PSVFNSU4RCVCMyVFNSU4OCVCQiUyMCU0MCVFNSVCOSVCRiVFNSVCMSVCRk9jZWFuJUU3JTlBJTg0JUU3JUFDJTk0JUU4JUFFJUIwJUU2JTlDJUFDJmhlaWdodD0yNw==/gravity/SouthEast/dx/10/dy/10",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FqCZZsRGSXz0DL-ngjZ6HwfZ35AZv3.jpg",
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FqCZZsRGSXz0DL-ngjZ6HwfZ35AZv3.jpg?imageMogr2/auto-orient/thumbnail/300x2000%3E/quality/70/interlace/1",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FqCZZsRGSXz0DL-ngjZ6HwfZ35AZv3.jpg?imageMogr2/auto-orient/thumbnail/400x2000%3E/quality/70/interlace/1",
+                  "width": 556,
+                  "height": 868,
+                  "__typename": "PictureInfo"
+                }
+              ],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 26,
+              "commentCount": 6,
+              "topic": {
+                "id": "5618c159add4471100150637",
+                "content": "浴室沉思",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_hot",
+                "recallScore": 501.55893,
+                "rankScore": 0.46405696,
+                "reRankScore": 445
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/Fuw0diTrlsjpjhcDVMdz9LIMv6WAv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/Fuw0diTrlsjpjhcDVMdz9LIMv6WAv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/Fuw0diTrlsjpjhcDVMdz9LIMv6WAv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": true,
+                "username": "0c005933-bc8a-4772-99f0-395a8c454553",
+                "screenName": "广屿Ocean的笔记本",
+                "briefIntro": "🍐独立执业咨询师｜职业经理人｜科普 & 摄影\n🍐前字节跳动生服CKA｜美团到店华南大区负责人｜《心理与职场》主理\n🍐11月咨询已满",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "6729d66bf73045a8787a2ca0",
+              "type": "ORIGINAL_POST",
+              "content": "我一个小米黑，看了小米15真机之后还想入手了。\n\n大学时的小米1代用户，拿到后手机没几天就发烫，走售后没人鸟，我就天天去军军微博下吐槽被他拉黑了。",
+              "shareCount": 0,
+              "repostCount": 0,
+              "createdAt": "2024-11-05T08:25:15.371Z",
+              "collected": false,
+              "pictures": [],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 9,
+              "commentCount": 20,
+              "topic": {
+                "id": "5be6bf2f98ea6c0018a20747",
+                "content": "小米机友俱乐部",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_hot",
+                "recallScore": 501.5454,
+                "rankScore": 0.4558666,
+                "reRankScore": 350
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FihG7fSdtj3CgHBand5mr-kofxbl?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FihG7fSdtj3CgHBand5mr-kofxbl?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FihG7fSdtj3CgHBand5mr-kofxbl?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": true,
+                "username": "2686940A-D450-49DA-942B-B98B0ACA0E3A",
+                "screenName": "遇爷",
+                "briefIntro": "🧗🏼‍♂️曾是大厂投资的新消费品牌运营负责人\n⛳️开过单季度销售额千万级 GMV 的品\n🔆现小生意人，专注川渝美食\nWX：xiaolongchawu",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "66fea88de4725597424e819e",
+              "type": "ORIGINAL_POST",
+              "content": "小红书偶然刷到一个帖子\n\n一位客人在实体店试了衣服但最后没有买，被店员骂「没钱就别试衣服」\n\n客人气不过，在小红书发长文吐槽，现在有近五千点赞，两千五左右的评论，可谓群情激愤了\n\n客人发帖时艾特了店铺的小红书，我点进主页一看，评论区也都是在吐槽这件事，也算是一个小小的舆情了\n\n感悟是在现在这样一个传播速度飞快的时代，任何人都更应该谨言慎行，更有「风险管理」的意识\n互联网没那么发达的时候，遇到这种事客人最多和家人朋友吐槽一下就算了\n但现在有了抖音有了小红书，舆论一发酵对店铺口碑的打击是巨大的\n店员应提高自身素质，店铺应加强对员工的培训和筛选",
+              "shareCount": 0,
+              "repostCount": 2,
+              "createdAt": "2024-10-03T14:22:05.558Z",
+              "collected": false,
+              "pictures": [],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 47,
+              "commentCount": 3,
+              "topic": {
+                "id": "5aa21c7ae54af10017dc93f8",
+                "content": "一个想法不一定对",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_hot",
+                "recallScore": 501.38608,
+                "rankScore": 0.4478518,
+                "reRankScore": 603
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FggDh_n14bAFVI7jeryPPxvX-ivsv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FggDh_n14bAFVI7jeryPPxvX-ivsv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FggDh_n14bAFVI7jeryPPxvX-ivsv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": false,
+                "username": "faa32edc-10e2-44ce-ab87-77430b11e718",
+                "screenName": "简冬阳dayup",
+                "briefIntro": "哦我原来是待在水中的呀，现在我知道外面还有一个世界了\nv: dayup2233",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "6729ffcfa8855e724bdd10d5",
+              "type": "ORIGINAL_POST",
+              "content": "虽然前段时间还和朋友八卦说 Tim 小鱼好不配，但看到他们离婚了后，还是觉得有些别扭。\n\nTim 去意大利前女友餐厅那期视频的表现，真的太典太典了。他的局促、紧张、汗流浃背，配合周围人的起哄和后期剪辑，完美制造出了一种暧昧不清的磁场；女生反而落落大方、坦坦荡荡，一点扭捏都没有，衬的这出内心独角戏更加可笑。\n\n我发现很多男的都喜欢给自己搞个「白月光」。年轻时谈过的，分了的，爱而不得的，只要现在过得还不错，都能在中年时变成白月光。但这种白月光更多是一种工具属性，只是满足他们对无可挽回的青春的追忆 —— 人到中年，事业缠身，老婆看腻了，家庭也一地鸡毛，在死气沉沉的心境里通过白月光再爱一遍过去的自己，去想象一个“如果当初和她在一起”的另一种人生可能性。它的本质只是顾影自怜，再带上一些意淫，除此以外，毫无意义。\n\n讨厌白月光这种形容，也讨厌被别人当作白月光。就像男作家在小说里对女性的描写一样，无法忽视那种穿越过层层时光还在被凝视的客体感。我的心里也没有什么白月光。固然想起 puppy love 时有一些单纯美好的瞬间，也许这就是被赞颂为爱情的东西。但那有时候和具体的「人」没有关系，只是一种特定阶段散发的荷尔蒙物质。那种年纪，年轻的人儿，换个谁都可以成为月光照亮心房。但问题是，我不再需要他人成为月亮，我心里有我自己的小太阳。\n\n前段时间还在吐槽是不是只有男的心里才有这玩意儿，毕竟我（作为女的）回忆自己谈过的男人，都不存在什么白月光，只有黑大便。",
+              "shareCount": 2,
+              "repostCount": 1,
+              "createdAt": "2024-11-05T11:21:51.068Z",
+              "collected": false,
+              "pictures": [],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 48,
+              "commentCount": 2,
+              "topic": {
+                "id": "5aeaa84029e4000011ac3768",
+                "content": "即友日记本",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_hot",
+                "recallScore": 501.76727,
+                "rankScore": 0.43635353,
+                "reRankScore": 599
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/Fn42Ng8HrCFVtMwSNF83VzsKaVZP.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/Fn42Ng8HrCFVtMwSNF83VzsKaVZP.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/Fn42Ng8HrCFVtMwSNF83VzsKaVZP.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": false,
+                "username": "38C4098D-4659-47F5-9623-E7B441A76799",
+                "screenName": "早见Hayami",
+                "briefIntro": "数字游民/世界公民\nex bytedancer 再也不上班啦\nhayami’s blog独立撰稿｜独立播客：鱼生皆假期｜公众号：Hayami",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "671617869d53db7b440573bf",
+              "type": "ORIGINAL_POST",
+              "content": "很早以前见过留几手（刘爽），但真的不认识。\n\n手哥是初代顶流网红，当年可毒舌了，作为“微博第一鉴美师”，爆火名言是“负分滚粗”，每天无数人求着他恶评照片，俊男美女争着被他骂，给骂火了好多顶级美女帅哥，也有一些网红从中小火被他骂成现象级大火，譬如南笙、张辛宛等等。\n\n手哥基本上按着反方向疯狂吐槽，那个语言丰富度，我一辈子没见过第二个，也有一些被评者是真的丑，其中不乏抽象大宗师，当年留几手的微博属于人类奇物美器鉴别大赏。\n\n王思聪等名人特别爱看，明星被骂也不生气。\n很明显，留几手的玩法和运营能力在当年是超群的。\n\n留几手从2013年1月底开始玩，3个月攒粉近200万（现在1300多万），2014年就跟莫力洋、周丽峰（峰哥亡命天涯）等人创立了蜂群MCN，网罗了各种微博顶级账号。\n\n留几手说自己是L型人生，那是真的，出道既巅峰。\n\n如今的舆论环境跟当年不一样，人人都有强自尊+高敏感，辣评玩法很容易被封号，留几手选择接受平坦生活，一方面是心态，一方面是时代不一样了，还有一方面是爱好没支撑起第二春。\n\n但我觉得杨子，就是他跟葛夕的第二春…\n\n留几手这毒嘴，这接话敏捷度，太适合综艺节目了，现场怼怼机，特级观察员，这得多少节目邀约啊。\n\n话说没见到他本人以前，曾以为是那种奇葩怪男子，搞不好有点丑，所以才爱辣评别人照片，结果手哥挺高挺清秀的，是当年的我肤浅了…\n\n也完全没想到他会从离婚赛道复火…",
+              "shareCount": 12,
+              "repostCount": 5,
+              "createdAt": "2024-10-21T08:57:42.166Z",
+              "collected": false,
+              "pictures": [
+                {
+                  "format": "jpeg",
+                  "watermarkPicUrl": "https://cdnv2.ruguoapp.com/Flz7ST3Y_sxjUMRwEo8jC449Mdddv3.jpg?imageMogr2/auto-orient%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsucnVndW9hcHAuY29tLz90ZXh0PSVFNSU4RCVCMyVFNSU4OCVCQiUyMCU0MCVFNSU4NSU5NCVFNiU5MiU5NSVFOSVCOCVBMSVFNSVBNCVBNyVFOCU4MCU4MSVFNyU4OCVCNyZoZWlnaHQ9NTQ=/gravity/SouthEast/dx/10/dy/10",
+                  "picUrl": "https://cdnv2.ruguoapp.com/Flz7ST3Y_sxjUMRwEo8jC449Mdddv3.jpg",
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/Flz7ST3Y_sxjUMRwEo8jC449Mdddv3.jpg?imageMogr2/auto-orient/thumbnail/300x2000%3E/quality/70/interlace/1",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/Flz7ST3Y_sxjUMRwEo8jC449Mdddv3.jpg?imageMogr2/auto-orient/thumbnail/400x2000%3E/quality/70/interlace/1",
+                  "width": 1080,
+                  "height": 1299,
+                  "__typename": "PictureInfo"
+                }
+              ],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 58,
+              "commentCount": 27,
+              "topic": {
+                "id": "5ab89ff5892a1a0011d1ba87",
+                "content": "记一件小事",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_hot",
+                "recallScore": 501.86887,
+                "rankScore": 0.42554289,
+                "reRankScore": 1298
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FmPjhcqeJP1m-vRdL3rDW1t3mA5Iv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FmPjhcqeJP1m-vRdL3rDW1t3mA5Iv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FmPjhcqeJP1m-vRdL3rDW1t3mA5Iv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": true,
+                "username": "82bb78f9-1f0c-4f06-b743-2010a3701fa1",
+                "screenName": "兔撕鸡大老爷",
+                "briefIntro": "🅹人生体验家.宇宙自在心 Ultra",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "67087d5632f03efa77bbcdee",
+              "type": "ORIGINAL_POST",
+              "content": "得物这个平台挺狠的，连续买两双都是次品，写了吐槽帖子都是0展现。",
+              "shareCount": 0,
+              "repostCount": 1,
+              "createdAt": "2024-10-11T01:20:22.982Z",
+              "collected": false,
+              "pictures": [
+                {
+                  "format": "jpeg",
+                  "watermarkPicUrl": "https://cdnv2.ruguoapp.com/FnIlUP9PE6nrtU_K7u_Yte6Pebxkv3.jpg?imageMogr2/auto-orient%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsucnVndW9hcHAuY29tLz90ZXh0PSVFNSU4RCVCMyVFNSU4OCVCQiUyMCU0MCVFNSVBNCVBNyVFNiU5QyU5QiVFOSVCOSVCRiZoZWlnaHQ9NTc=/gravity/SouthEast/dx/10/dy/10",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FnIlUP9PE6nrtU_K7u_Yte6Pebxkv3.jpg",
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FnIlUP9PE6nrtU_K7u_Yte6Pebxkv3.jpg?imageMogr2/auto-orient/thumbnail/300x2000%3E/quality/70/interlace/1",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FnIlUP9PE6nrtU_K7u_Yte6Pebxkv3.jpg?imageMogr2/auto-orient/thumbnail/400x2000%3E/quality/70/interlace/1",
+                  "width": 1152,
+                  "height": 2492,
+                  "__typename": "PictureInfo"
+                }
+              ],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 16,
+              "commentCount": 16,
+              "topic": {
+                "id": "57a04c270be75f12007634e6",
+                "content": "球鞋玩家俱乐部",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_hot",
+                "recallScore": 501.31067,
+                "rankScore": 0.41649419,
+                "reRankScore": 383
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/Fg-E7WWWRERv4LW0DQTL1XtLhxQ8v3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/Fg-E7WWWRERv4LW0DQTL1XtLhxQ8v3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/Fg-E7WWWRERv4LW0DQTL1XtLhxQ8v3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": false,
+                "username": "4181BC8B-327A-4136-B3CB-17A441EACE2F",
+                "screenName": "大望鹿",
+                "briefIntro": "✅ 保险买手、跑步博主\n✅ 播客《跑了再说》主播",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "671485b5a8855e724b5eac0b",
+              "type": "ORIGINAL_POST",
+              "content": "挑战被gpt吐槽，嘴太毒了。哈哈哈，觉得自己心态好的可以试试，我这个是加强版的prompt。\n看到一句有趣的prompt，让gpt吐槽自己，我稍微加工了一下，已经变成极度恶毒的坏人，心理承受能力强的可以试试。我已经受伤，受伤证据在图二图三。\n在gpt里输入，roast me based on all the interactions we had，100% no mercy，in chinese(请根据我们过往的所有交流，100%火力全开的吐槽我吧，用中文)\n\t\n这个出来结果以后，我建议再补一个: more and mean(再来点更刻薄恶毒的！)\n\n(皮痒的可以再继续追加，次数不限，多角度挖掘，我一共追加了五个prompt，哈哈哈嫌它不够狠 )\n\t\n哈哈哈哈哈，我觉得这个是很好的练习。生活工作里面对的否定质疑难免，我感觉可以用gpt排练一下增加心理承受力。看得出来ai在心理疗愈领域潜力很大哈哈。\n\t\n心态差的就算了别试了，会崩，会受伤，会自我怀疑(不是我)",
+              "shareCount": 1,
+              "repostCount": 4,
+              "createdAt": "2024-10-20T04:23:17.205Z",
+              "collected": false,
+              "pictures": [
+                {
+                  "format": "png",
+                  "watermarkPicUrl": "https://cdnv2.ruguoapp.com/Fh37H2vKTgEKWMubTu9yT-t1hemXv3.png?imageMogr2/auto-orient/thumbnail/1239462@%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsucnVndW9hcHAuY29tLz90ZXh0PSVFNSU4RCVCMyVFNSU4OCVCQiUyMCU0MExpbnVzLmFpJmhlaWdodD01NA==/gravity/SouthEast/dx/10/dy/10",
+                  "picUrl": "https://cdnv2.ruguoapp.com/Fh37H2vKTgEKWMubTu9yT-t1hemXv3.png?imageMogr2/auto-orient/thumbnail/1239462@",
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/Fh37H2vKTgEKWMubTu9yT-t1hemXv3.png?imageMogr2/auto-orient/thumbnail/300x2000%3E",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/Fh37H2vKTgEKWMubTu9yT-t1hemXv3.png?imageMogr2/auto-orient/thumbnail/400x2000%3E",
+                  "width": 1134,
+                  "height": 1093,
+                  "__typename": "PictureInfo"
+                },
+                {
+                  "format": "png",
+                  "watermarkPicUrl": "https://cdnv2.ruguoapp.com/Fhm2NgTNz9pbHMymsKgVbsxOw6T3v3.png?imageMogr2/auto-orient/thumbnail/741000@%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsucnVndW9hcHAuY29tLz90ZXh0PSVFNSU4RCVCMyVFNSU4OCVCQiUyMCU0MExpbnVzLmFpJmhlaWdodD0zNw==/gravity/SouthEast/dx/10/dy/10",
+                  "picUrl": "https://cdnv2.ruguoapp.com/Fhm2NgTNz9pbHMymsKgVbsxOw6T3v3.png?imageMogr2/auto-orient/thumbnail/741000@",
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/Fhm2NgTNz9pbHMymsKgVbsxOw6T3v3.png?imageMogr2/auto-orient/thumbnail/300x2000%3E",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/Fhm2NgTNz9pbHMymsKgVbsxOw6T3v3.png?imageMogr2/auto-orient/thumbnail/400x2000%3E",
+                  "width": 741,
+                  "height": 1000,
+                  "__typename": "PictureInfo"
+                },
+                {
+                  "format": "png",
+                  "watermarkPicUrl": "https://cdnv2.ruguoapp.com/FpL4Hokbv6g1iJBn9GUuxqQLpObPv3.png?imageMogr2/auto-orient/thumbnail/1447919@%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsucnVndW9hcHAuY29tLz90ZXh0PSVFNSU4RCVCMyVFNSU4OCVCQiUyMCU0MExpbnVzLmFpJmhlaWdodD01Mw==/gravity/SouthEast/dx/10/dy/10",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FpL4Hokbv6g1iJBn9GUuxqQLpObPv3.png?imageMogr2/auto-orient/thumbnail/1447919@",
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FpL4Hokbv6g1iJBn9GUuxqQLpObPv3.png?imageMogr2/auto-orient/thumbnail/300x2000%3E",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FpL4Hokbv6g1iJBn9GUuxqQLpObPv3.png?imageMogr2/auto-orient/thumbnail/400x2000%3E",
+                  "width": 1067,
+                  "height": 1357,
+                  "__typename": "PictureInfo"
+                },
+                {
+                  "format": "png",
+                  "watermarkPicUrl": "https://cdnv2.ruguoapp.com/FgRoIatcWo2zBiafMdgy4TOuheGMv3.png?imageMogr2/auto-orient/thumbnail/788832@%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsucnVndW9hcHAuY29tLz90ZXh0PSVFNSU4RCVCMyVFNSU4OCVCQiUyMCU0MExpbnVzLmFpJmhlaWdodD0zOQ==/gravity/SouthEast/dx/10/dy/10",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FgRoIatcWo2zBiafMdgy4TOuheGMv3.png?imageMogr2/auto-orient/thumbnail/788832@",
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FgRoIatcWo2zBiafMdgy4TOuheGMv3.png?imageMogr2/auto-orient/thumbnail/300x2000%3E",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FgRoIatcWo2zBiafMdgy4TOuheGMv3.png?imageMogr2/auto-orient/thumbnail/400x2000%3E",
+                  "width": 792,
+                  "height": 996,
+                  "__typename": "PictureInfo"
+                },
+                {
+                  "format": "png",
+                  "watermarkPicUrl": "https://cdnv2.ruguoapp.com/FofWnUYZkPYJvhv51LppvULQR_pSv3.png?imageMogr2/auto-orient/thumbnail/685965@%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsucnVndW9hcHAuY29tLz90ZXh0PSVFNSU4RCVCMyVFNSU4OCVCQiUyMCU0MExpbnVzLmFpJmhlaWdodD0zNQ==/gravity/SouthEast/dx/10/dy/10",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FofWnUYZkPYJvhv51LppvULQR_pSv3.png?imageMogr2/auto-orient/thumbnail/685965@",
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FofWnUYZkPYJvhv51LppvULQR_pSv3.png?imageMogr2/auto-orient/thumbnail/300x2000%3E",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FofWnUYZkPYJvhv51LppvULQR_pSv3.png?imageMogr2/auto-orient/thumbnail/400x2000%3E",
+                  "width": 705,
+                  "height": 973,
+                  "__typename": "PictureInfo"
+                }
+              ],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 9,
+              "commentCount": 6,
+              "topic": {
+                "id": "63579abb6724cc583b9bba9a",
+                "content": "AI探索站",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_hot",
+                "recallScore": 501.32343,
+                "rankScore": 0.41632592,
+                "reRankScore": 307
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FoxsVAS6Xp-pVWcwcKX_kTSjTfNJv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FoxsVAS6Xp-pVWcwcKX_kTSjTfNJv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FoxsVAS6Xp-pVWcwcKX_kTSjTfNJv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": true,
+                "username": "f34743d1-1004-4c67-97f8-c9b06b063578",
+                "screenName": "Linus.ai",
+                "briefIntro": "人生三件事:  AI，梦，金刚经。或许是这三个交叉领域里做过最多研究实践的人。",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            },
+            {
+              "id": "67016494db9952ae51a364a9",
+              "type": "ORIGINAL_POST",
+              "content": "前几天看到老同事抱怨，说是听闻股票市场大涨，所以打开了自己尘封已久的基金账户，发现还是浮亏-20%。骂骂咧咧的吐槽，说自己当初可是从收益排行榜前列选的基金啊，那这一切是怎么发生的呢？\n基金的代销渠道依靠佣金获取利益，渠道发现投资者依赖历史收益作为投资决策的锚点，于是将历史收益排行怼到了投资者的产品页面上，还增加了直播、金选标签等方便甚至是刺激投资者作决策的设定；而投资这件事情里，收益、风险和流动性是个不可能三角，于基金经理来说，绝对收益和波动回撤之间往往不能既要还要，所以投资策略偏向降低波动控制回撤的基金经理，往往收益就很难名列前茅，另外基金的收益跟规模相关，所以在基金经理这儿就出现了劣币驱逐良币的情况，他们更有动力选择集中筹码赌题材的策略来获取站在收益排行榜榜单上的可能性，那些赌中的基金就会发现它们因为上涨300%而进入了榜单，然后增加了十倍的人买入，最后又大概率因为这种激进的策略出现了回撤，回撤后虽然账面可能依然赚了100%，但是90%的人是亏损了。\n在这个故事里，基金赚着管理费，渠道赚着佣金，但投资者输了，这个行业的激励模型客观上存在着这样的问题，而代销渠道扮演的角色，也的确是不光彩，你猜这是蠢还是坏？\n\n好在行业里总会有星星之火，无论是E大还是孟岩的有知有行团队，他们都在尝试用更合理的资产组合，让好资产和好价格保护好自己的资金，哪怕跟不上牛市的涨幅，也不必承担大幅回撤的焦虑，投资是为了更好的生活，持有体验往往是最被忽视的部分。",
+              "shareCount": 1,
+              "repostCount": 2,
+              "createdAt": "2024-10-05T16:08:52.348Z",
+              "collected": false,
+              "pictures": [
+                {
+                  "format": "png",
+                  "watermarkPicUrl": "https://cdnv2.ruguoapp.com/FnrjOl9j9bS0BhRgkbZwokF0OJAJv3.png?imageMogr2/auto-orient/thumbnail/470880@%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsucnVndW9hcHAuY29tLz90ZXh0PSVFNSU4RCVCMyVFNSU4OCVCQiUyMCU0MCVFNiU4OCVCNCVFNiU5RiU5MERFTU8maGVpZ2h0PTMy/gravity/SouthEast/dx/10/dy/10",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FnrjOl9j9bS0BhRgkbZwokF0OJAJv3.png?imageMogr2/auto-orient/thumbnail/470880@",
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FnrjOl9j9bS0BhRgkbZwokF0OJAJv3.png?imageMogr2/auto-orient/thumbnail/300x2000%3E",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FnrjOl9j9bS0BhRgkbZwokF0OJAJv3.png?imageMogr2/auto-orient/thumbnail/400x2000%3E",
+                  "width": 720,
+                  "height": 654,
+                  "__typename": "PictureInfo"
+                }
+              ],
+              "urlsInText": [],
+              "__typename": "OriginalPost",
+              "liked": false,
+              "likeCount": 17,
+              "commentCount": 3,
+              "topic": {
+                "id": "58412cc399a0b50010877f8e",
+                "content": "一起做投资人",
+                "__typename": "TopicInfo"
+              },
+              "readTrackInfo": {
+                "storyStatus": "NONE",
+                "recallPolicy": "post_ctr",
+                "recallScore": 501.48965,
+                "rankScore": 0.4112634,
+                "reRankScore": 350
+              },
+              "user": {
+                "avatarImage": {
+                  "thumbnailUrl": "https://cdnv2.ruguoapp.com/FsUUZs-2CuIiISgDRJ7sFtgG4ZScv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!120x120r/gravity/Center/crop/!120x120a0a0",
+                  "smallPicUrl": "https://cdnv2.ruguoapp.com/FsUUZs-2CuIiISgDRJ7sFtgG4ZScv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!300x300r/gravity/Center/crop/!300x300a0a0",
+                  "picUrl": "https://cdnv2.ruguoapp.com/FsUUZs-2CuIiISgDRJ7sFtgG4ZScv3.jpg?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/!1000x1000r/gravity/Center/crop/!1000x1000a0a0",
+                  "__typename": "AvatarImage"
+                },
+                "isSponsor": false,
+                "username": "1c582789-2b28-4fc2-9712-ab3032e3dabe",
+                "screenName": "戴某DEMO",
+                "briefIntro": "- 分享美景、美色、美食\n- 喜欢做饭、商业研究和写作\nEx-大厂里的扁担\nNow-小私募的合伙人",
+                "__typename": "User"
+              },
+              "video": null,
+              "linkInfo": null,
+              "isPrivate": null,
+              "pinned": null
+            }
+          ],
+          "__typename": "SearchIntegrateConnection"
+        },
+        "__typename": "Search"
+      }
+    }
+  }
+]

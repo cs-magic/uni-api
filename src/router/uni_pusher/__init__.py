@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from .jike_post_content import router as jike_post_content_router
-from .jike_get_profile import router as jike_get_profile_router
+from .jike_read_profile import router as jike_get_profile_router
 from .jike_search import router as jike_search_router
 from .jike_search_quanzi import router as jike_search_quanzi_router
 

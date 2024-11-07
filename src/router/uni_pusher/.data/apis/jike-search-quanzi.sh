@@ -1,0 +1,16 @@
+curl 'https://web-api.okjike.com/api/graphql' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/json' \
+  -H 'cookie: _ga=GA1.2.1329611284.1728629767; _gid=GA1.2.1224935922.1730736532; _ga_LQ23DKJDEL=GS1.2.1730958475.15.1.1730958580.49.0.0; x-apis-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiSmVEU21jcnRIeGhtOVphQW1OYTRcL1ZleWZyTlZ5N1VcL1JCSlRSWENIcFNCXC9Md2g1Ukt1d3NpZUtPSkFqTmhEcDV0K2g5cHVLMGczOE5KdjdXNGFWc0VSTG1PQjMxYWp2N3F1N1F4MlBYSTY5NHJcL0FBVFhMbEJ2eDdHVU1La1VWXC9tdXRtZDdtUklaV1JQdVFYMDNhRkUxZnl5djhtbEhPWFRpMnI5SVlDNHo2eE5NM0ZhYlRYbm9EekhrbmtlbUcxdTdiZ0hvVVFrY0RWa0dTWEMwQVZ4Y2t1ZGZaMTNGRkxlMmNcLzFKNW4xXC9rdUdYQ28xM0FxNnU1dUNiUkJcL0NJa1k5MStMaUpuOGhZV0N2Z2VaeWZKZDVlOW9NNW9lXC84S3dLV0JEMUFlcjJVSVJKUGdDdVNBc2NrcVRkRUNnUjB0bzB0NldYVXR3MkdRYVJyS1ljSngzUGxMQXM2SXZzTUhreGlwMnUydHI0PSIsInYiOjMsIml2IjoiOVNJUkl0S0d5RW16MXhOdzFoamdNUT09IiwiaWF0IjoxNzMwOTY0OTE2LjU3N30.SL2GMJq1TCWRJ9xvyltSG6ueJLzAGYhdY8VWXbhttoI; x-apis-refresh-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiSnJYTUY4amE2bzllZEhzQ1d4NHAzc210NW1hc3pYZHdKWTV2M0JSV3haR05FSm5ub1NVQjZqY2tsSjI0eFBSdGdudEdNeHhoRjZMQmYwWTVmaWRXVzFZRHpwYkV0bUN5TUZtbGY5UDZISGJUYlROb1lLTU56QUVOQkdZa1MxOEJcL1dcL0JieEFwMytJNjhrWG9KUzBVd2JVME9XN21RMXBwUE9CRVZ6K3JIV3M9IiwidiI6MywiaXYiOiJORXpuTDlSYkNsdWFEbm1ucERmeVBRPT0iLCJpYXQiOjE3MzA5NjQ5MTYuNTc3fQ.NOIEl6cb77hc1agFClQVjmf3GSyu_NXKQrFHObmBiRQ; fetchRankedUpdate=1730965348254' \
+  -H 'dnt: 1' \
+  -H 'origin: https://web.okjike.com' \
+  -H 'priority: u=1, i' \
+  -H 'sec-ch-ua: "Not?A_Brand";v="99", "Chromium";v="130"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-site' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36' \
+  --data-raw $'{"operationName":"SearchTopics","variables":{"keywords":"吐槽"},"query":"query SearchTopics($keywords: String\u0021) {\\n  search {\\n    topics(keywords: $keywords, onlyUserPostEnabled: true) {\\n      highlightWord {\\n        words\\n        singleMaxHighlightTime\\n        totalMaxHighlightTime\\n        __typename\\n      }\\n      nodes {\\n        id\\n        content\\n        briefIntro\\n        squarePicture {\\n          thumbnailUrl\\n          __typename\\n        }\\n        __typename\\n      }\\n      __typename\\n    }\\n    __typename\\n  }\\n}\\n"}'

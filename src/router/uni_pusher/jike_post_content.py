@@ -5,7 +5,7 @@ import requests
 import json
 from .types import PusherContent
 
-router = APIRouter(prefix='/jike')
+router = APIRouter(prefix='/apis')
 
 BASE_URL = "https://web-api.okjike.com/api/graphql"
 
