@@ -41,16 +41,14 @@ def parse_curl_command(curl_command: str) -> Tuple[Dict, str, str, str, Optional
     url = url.replace('\\"', '"').replace('\\\\', '\\')
 
     # Extract method
-    method = "POST" if any(x in curl_command for x in ["--data-binary", "-d", "--data-raw"]) else "GET"
+    method = "POST" if any(x in curl_command for x in ["--data-binary", " -d ", "--data-raw"]) else "GET"
 
     # Extract request body data
     data = None
     # Add support for --data-raw
-    data_patterns = [
-        r'--data-binary\s*[\'"](\{.*?\})[\'"](?:\s+--compressed|\s|$)',
-        r'--data-raw\s*\$?[\'"](\{.*?\})[\'"](?:\s+--compressed|\s|$)'
-    ]
-    
+    data_patterns = [r'--data-binary\s*[\'"](\{.*?\})[\'"](?:\s+--compressed|\s|$)',
+        r'--data-raw\s*\$?[\'"](\{.*?\})[\'"](?:\s+--compressed|\s|$)']
+
     for pattern in data_patterns:
         data_match = re.search(pattern, curl_command, re.DOTALL)
         if data_match:
@@ -75,26 +73,27 @@ def parse_curl_command(curl_command: str) -> Tuple[Dict, str, str, str, Optional
     return headers, method, url, path, data
 
 
-def generate_fastapi_route(curl_command: str, path_name: str) -> str:
+def generate_fastapi_route(curl_command: str, path_name: str, route_variable_name: str) -> str:
     """Convert curl command to FastAPI route code"""
     headers, method, url, path, data = parse_curl_command(curl_command)
 
     # Generate imports
-    code = '''from fastapi import APIRouter, Header
+    code = f'''from fastapi import APIRouter, Header
 from typing import Optional, Dict, Any
 import requests
 import json
 
-router = APIRouter()
+{route_variable_name} = APIRouter()
 
 '''
 
     # Add URL constant
     code += f'BASE_URL = "{url}"\n\n'
+    code += f'method = "{method}"\n\n'
 
     # Generate route function
-    code += f'@router.{method.lower()}("{path_name}")\n'
-    code += f'async def {path_name.strip("/").replace("/", "_")}(\n'
+    code += f'@{route_variable_name}.{method.lower()}("{path_name}")\n'
+    code += f'async def {re.sub(r"[-/.]", "_", path_name.strip("/"))}(\n'
 
     # Add parameters
     params = []
@@ -145,14 +144,26 @@ router = APIRouter()
             "Cache-Control": "no-cache"
         })
 
-        # Send POST request with request_data directly
-        response = requests.post(
+
+'''
+    if data:
+        code += '''        # Send POST request with request_data directly
+        response = requests.request(
+            method,
             BASE_URL,
             headers=headers,
             json=request_data,
             verify=True
-        )
-'''
+        )'''
+    else:
+        # body is not allowed in GET/HEAD
+        code += '''        # Send POST request with request_data directly
+        response = requests.request(
+            method,
+            BASE_URL,
+            headers=headers,
+            verify=True
+        )'''
 
     # Add response handling
     code += '''        # Check response status
@@ -174,13 +185,16 @@ router = APIRouter()
 
     return code
 
+
 # Example usage
 if __name__ == "__main__":
-    # api = 'jike-search-quanzi'
-    api = 'jike-read-profile'
+    api = ('jike_upload-image.sh'
+           .replace('.sh', ''))
+    route_path = '/' + api.replace('_', '/')
+    route_variable_name = api.replace('-', '_') + "_route"
 
     with open(f'./.data/apis/{api}.sh') as f:
-        res = generate_fastapi_route(f.read(), "/" + api.replace('-', '/'))
+        res = generate_fastapi_route(f.read(), route_path, route_variable_name)
     with open(f'{api.replace("-", "_")}.py', 'w') as f:
         f.write(res)
     print(res)
