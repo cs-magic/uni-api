@@ -23,7 +23,7 @@ async def jike_upload_image_access_token(
     sec_fetch_mode: Optional[str] = Header("cors"),
     sec_fetch_site: Optional[str] = Header("cross-site"),
     user_agent: Optional[str] = Header("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"),
-    x_jike_access_token: Optional[str] = Header("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiWXprUDdTSmdhK3phaXhsSVErWUhwa0F5elRXRFQwOVlseUVhNGdyeTROSldmSmVTUFlLMnlJRjJPaTQzbldacUtNU3BFbFYxczFaU1dMZmJnbFNTTFhiNkNvbndkZXc2XC81cVY2SGI4M2VhajN5bUpGTWhnN05XMkpaZTd5RUFyamY1SnNFd3g5MjI3SlwvWkdxREhaTXA3T0ROSmxQb3BBdXhcLzZDb0J3RkF4RWR3TFwvVSs2ek1jbVROUXdmU1J0NUpMS3VBajNQN0lFVlg0RjRtWHJLZG9aeFYzbk1UWEtLY2huMWJDRVRWVHB1S0VnXC95K2J5T3JhZlRJcTZhemdPQ2ZXTHlkWlpQdDUrSVQ2Rm11cW1yOTBGbXZxRGV4T0VBK1BUb2FWVDFXNG9VakhscGR6UmlqYkJyUXZSWFVpVEZGSEpUME12ZkN5MWVGNVV0Y0NrQVIxVURzUUdLdFhZS0x1SU9NZWFTWGM9IiwidiI6MywiaXYiOiJwTHhyZXc0VjNLK1pkc2djME9ZV05nPT0iLCJpYXQiOjE3MzEwMTYwNTYuMjk4fQ.ba-Xtu8eVFvt5JRcD2TkPrNbS7Vhy-BAcaYuebAT5Qc")
+    x_jike_access_token: Optional[str] = Header("")
 ):
     """
     Route generated from curl command

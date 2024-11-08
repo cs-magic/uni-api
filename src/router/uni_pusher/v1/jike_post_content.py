@@ -3,11 +3,16 @@ from fastapi import APIRouter, Header, Body
 from typing import Optional, Dict, Any
 import requests
 import json
-from .types import PushContent, JikePushContent
+from src.router.uni_pusher.types import TwitterBase
 
 router = APIRouter(prefix='/jike')
 
 BASE_URL = "https://web-api.okjike.com/api/graphql"
+
+
+class JikePushContent(TwitterBase):
+    submitToTopic: Optional[str] = None
+    syncToPersonalUpdate: bool = True
 
 
 @router.post("/content")

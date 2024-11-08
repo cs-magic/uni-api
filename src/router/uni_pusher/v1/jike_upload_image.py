@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Header
+from fastapi import APIRouter, Header, File, UploadFile, Form
 from typing import Optional, Dict, Any
 import requests
 import json
@@ -6,11 +6,13 @@ import json
 jike_upload_image_route = APIRouter()
 
 BASE_URL = "https://upload.qiniup.com/"
-
 method = "POST"
 
 @jike_upload_image_route.post("/jike/upload-image")
 async def jike_upload_image(
+    file: UploadFile = File(...),
+    token: str = Form(...),
+    fname: str = Form(...),
     accept: Optional[str] = Header("*/*"),
     accept_language: Optional[str] = Header("en-US,en;q=0.9"),
     content_type: Optional[str] = Header("multipart/form-data; boundary=----WebKitFormBoundarycvrUxfzOXJe7uWSq"),
@@ -23,7 +25,7 @@ async def jike_upload_image(
     sec_fetch_dest: Optional[str] = Header("empty"),
     sec_fetch_mode: Optional[str] = Header("cors"),
     sec_fetch_site: Optional[str] = Header("cross-site"),
-    user_agent: Optional[str] = Header("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36")
+    user_agent: Optional[str] = Header("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"),
 ):
     """
     Route generated from curl command
@@ -34,7 +36,6 @@ async def jike_upload_image(
     headers = {
         "accept": accept,
         "accept-language": accept_language,
-        "content-type": content_type,
         "dnt": dnt,
         "origin": origin,
         "priority": priority,
@@ -58,14 +59,31 @@ async def jike_upload_image(
             "Cache-Control": "no-cache"
         })
 
-
-        # Send POST request with request_data directly
+        # Prepare multipart form data
+        files = {}
+        data = {}
+        # Handle file upload for file
+        files["file"] = (
+            file.filename,
+            await file.read(),
+            file.content_type or "image/jpeg"
+        )
+        # Handle form field token
+        data["token"] = token
+        # Handle form field fname
+        data["fname"] = fname
+        
+        # Send multipart request
         response = requests.request(
             method,
             BASE_URL,
             headers=headers,
+            files=files,
+            data=data,
             verify=True
-        )        # Check response status
+        )
+
+        # Check response status
         response.raise_for_status()
         
         # Try to parse JSON response
@@ -79,4 +97,4 @@ async def jike_upload_image(
             "error": str(e),
             "status_code": getattr(e.response, "status_code", None),
             "response_text": getattr(e.response, "text", None)
-        }
+        } 

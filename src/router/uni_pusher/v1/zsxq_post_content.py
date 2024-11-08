@@ -4,7 +4,7 @@ from typing import Optional, Dict, Any
 import requests
 import json
 
-from src.router.uni_pusher.types import PushContent
+from src.router.uni_pusher.types import Twitter
 
 router = APIRouter(prefix='/zsxq')
 
@@ -13,7 +13,7 @@ BASE_URL = "https://api.zsxq.com/v2/groups/51111828288514/topics"
 
 @router.post("/content")
 async def groups_51111828288514_topics(
-    content: PushContent,
+    content: Twitter,
 
     custom_cookie: Optional[str] = Header(""),
     x_request_id: Optional[str] = Header("239dc4d1c-0679-f2cc-d21c-d3dcd822013"),

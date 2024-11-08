@@ -1,0 +1,120 @@
+from fastapi import APIRouter, Header, {% if is_file_upload %}File, UploadFile, Form{% endif %}
+from typing import Optional, Dict, Any
+import requests
+import json
+
+{{ route_variable_name }} = APIRouter()
+
+BASE_URL = "{{ url }}"
+method = "{{ method }}"
+
+@{{ route_variable_name }}.{{ method.lower() }}("{{ path_name }}")
+async def {{ route_function_name }}(
+    {%- if data %}
+        {%- if is_file_upload or 'multipart/form-data' in headers.get('Content-Type', '') %}
+            {%- for field_name, field_info in data.items() %}
+                {%- if field_info.type == 'file' %}
+    {{ field_name }}: UploadFile = File(...),
+                {%- else %}
+    {{ field_name }}: str = Form(...),
+                {%- endif %}
+            {%- endfor %}
+        {%- else %}
+    request_data: Dict[str, Any] = {{ data }},
+        {%- endif %}
+    {%- endif %}
+
+    {%- for header, value in headers.items() %}
+    {{ header.lower().replace('-', '_') }}: Optional[str] = Header("{{ value or '' }}"),
+    {%- endfor %}
+):
+    """
+    Route generated from curl command
+    Original URL: {{ url }}
+    Method: {{ method }}
+    """
+    # Construct headers
+    headers = {
+    {%- for header, _ in headers.items() %}
+        {%- if 'content-type' not in header.lower() %}
+        "{{ header }}": {{ header.lower().replace('-', '_') }},
+        {%- endif %}
+    {%- endfor %}
+    }
+    
+    # Remove None values from headers
+    headers = {k: v for k, v in headers.items() if v is not None}
+    
+    try:
+        # Add common headers
+        headers.update({
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+            "Cache-Control": "no-cache"
+        })
+
+        {%- if data and (is_file_upload or 'multipart/form-data' in headers.get('Content-Type', '')) %}
+
+        # Prepare multipart form data
+        files = {}
+        data = {}
+
+        {%- for field_name, field_info in data.items() %}
+            {%- if field_info.type == 'file' %}
+        # Handle file upload for {{ field_name }}
+        files["{{ field_name }}"] = (
+            {{ field_name }}.filename,
+            await {{ field_name }}.read(),
+            {{ field_name }}.content_type or "{{ field_info.content_type }}"
+        )
+            {%- else %}
+        # Handle form field {{ field_name }}
+        data["{{ field_name }}"] = {{ field_name }}
+            {%- endif %}
+        {%- endfor %}
+        
+        # Send multipart request
+        response = requests.request(
+            method,
+            BASE_URL,
+            headers=headers,
+            files=files,
+            data=data,
+            verify=True
+        )
+        {%- elif data %}
+
+        # Send request with JSON data
+        response = requests.request(
+            method,
+            BASE_URL,
+            headers=headers,
+            json=request_data,
+            verify=True
+        )
+        {%- else %}
+
+        # Send request without body
+        response = requests.request(
+            method,
+            BASE_URL,
+            headers=headers,
+            verify=True
+        )
+        {%- endif %}
+
+        # Check response status
+        response.raise_for_status()
+        
+        # Try to parse JSON response
+        try:
+            return response.json()
+        except json.JSONDecodeError:
+            return {"response": response.text}
+            
+    except requests.exceptions.RequestException as e:
+        return {
+            "error": str(e),
+            "status_code": getattr(e.response, "status_code", None),
+            "response_text": getattr(e.response, "text", None)
+        } 
