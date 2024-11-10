@@ -10,6 +10,8 @@ from src.router.uni_pusher import uni_pusher_router
 
 from src.router.map import map_router
 from src.router.sport import sport_router
+from src.router.wechat import wechat_route
+
 root_router = APIRouter()
 
 root_router.include_router(account_router)
@@ -21,3 +23,4 @@ root_router.include_router(cases_router)
 root_router.include_router(sport_router)
 root_router.include_router(map_router)
 root_router.include_router(uni_pusher_router)
+root_router.include_router(wechat_route)
