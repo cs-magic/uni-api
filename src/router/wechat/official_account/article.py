@@ -6,11 +6,20 @@ from fastapi.params import Query
 
 from packages.common_common.parse_nested_json import parse_nested_json
 
-wechat_official_account_article_route = APIRouter()
+wechat_official_account_route = APIRouter(prefix='/official-account')
 
 
-@wechat_official_account_article_route.get('/search-wechat-account')
-async def search_wechat_account(keyword: str):
+async def ensure_wechat_account(keywords: str):
+    res = await search_wechat_official_account(keywords)
+    account_list = res['list']
+    assert len(account_list) > 0
+    account_id = account_list[0]['fakeid']
+    assert type(account_id) is str
+    return account_id
+
+
+@wechat_official_account_route.get('/search')
+async def search_wechat_official_account(keyword: str):
     import requests
 
     cookies = {
@@ -78,17 +87,11 @@ async def search_wechat_account(keyword: str):
     return response.json()
 
 
-async def ensure_wechat_account(keywords: str):
-    res = await search_wechat_account(keywords)
-    account_list = res['list']
-    assert len(account_list) > 0
-    account_id = account_list[0]['fakeid']
-    assert type(account_id) is str
-    return account_id
+wechat_official_account_article_route = APIRouter(prefix='/article')
 
 
-@wechat_official_account_article_route.get('/article-list')
-async def article_list(
+@wechat_official_account_article_route.get('/list')
+async def list_wechat_official_account_articles(
     wechat_account_name: Optional[str] = Query(None, description="当指定 name 的时候，id 无效"),
     wechat_account_id: Optional[str] = None,
     begin=0,
@@ -175,8 +178,8 @@ async def article_list(
     return parse_nested_json(data, ['publish_page', 'publish_page.publish_list.publish_info'])
 
 
-@wechat_official_account_article_route.get('/parse-article')
-async def parse_article_route(
+@wechat_official_account_article_route.get('/detail')
+async def parse_wechat_official_account_article(
     article_id: str, with_article_html=False, with_content_html=True, with_content_md=False, ):
     import requests
 
@@ -236,9 +239,7 @@ async def parse_article_route(
     soup = BeautifulSoup(article_html, 'html.parser')
     content_html = soup.select_one('#page-content')
 
-    data = {
-        "article_url": article_url,
-    }
+    data = {"article_url": article_url, }
     if with_article_html:
         data['article_html'] = str(article_html)
     if with_content_html:
@@ -249,3 +250,65 @@ async def parse_article_route(
     data['is_paid'] = bool(content_html.select_one('.js_pay_preview_filter'))
 
     return data
+
+
+arthur_route = APIRouter(prefix='/arthur')
+
+
+
+def extract_arthur_code(html_content):
+    """
+    Extract code content containing '李继刚' and replace <br> with \n.
+
+    Args:
+        html_content (str): Input HTML string containing code
+
+    Returns:
+        str: Processed code content
+    """
+    # Check if the content contains the required name
+    if "李继刚" not in html_content:
+        return ""
+
+    # Extract content between <code> tags
+    start_idx = html_content.find("<code")
+    end_idx = html_content.find("</code>")
+
+    if start_idx == -1 or end_idx == -1:
+        return ""
+
+    # Find the actual content start after the first >
+    content_start = html_content.find(">", start_idx) + 1
+    code_content = html_content[content_start:end_idx]
+
+    # Replace <br> with \n
+    code_content = code_content.replace("<br/>", "\n")
+
+    return code_content
+
+
+@arthur_route.get('/detail')
+async def parse_arthur_article(
+    article_id: str = 'EV2gRTeD_6NtDaaANTT7TQ'
+):
+    data = await parse_wechat_official_account_article(article_id, with_content_html=True)
+
+    content_str = data['content_html']
+    content_html = BeautifulSoup(content_str, 'html.parser')
+
+    # prmpt_html = content_html.select_one('#page-content')
+    prompt_str = extract_arthur_code(content_str)
+
+    images = content_html.select('img')
+
+    def parse_image(image):
+        return {  # "width": image.get("data-w"),
+            "ratio": image.get("data-ratio"), "src": image.get("data-src"), }
+
+    del data['content_html']
+    data['prompt'] = prompt_str
+    data["images"] = [parse_image(image) for image in images]
+    return data
+
+wechat_official_account_article_route.include_router(arthur_route)
+wechat_official_account_route.include_router(wechat_official_account_article_route)
