@@ -21,11 +21,7 @@ class JikeSession(PlatformSession):
     fetch_ranked_update: Optional[str] = Field(None, alias="fetchRankedUpdate")
 
 
-class JikeSDK(PlatformBase):
-
-    def __init__(self, session: JikeSession = None):
-        if session:
-            self._cookie = session._cookie
+class JikeAuth(BaseModel):
 
     def get_verify_code(self, phone_number: str, phone_area="+86") -> str:
         import requests
@@ -102,8 +98,53 @@ class JikeSDK(PlatformBase):
         print("response headers: ", response.headers)
         return {"result": response.json(), "headers": response.headers.get("set-cookie")}
 
-    def log_in(self):
-        pass
+    def refresh_token(self, refresh_token: str):
+        import requests
+
+        cookies = {
+            '_gid': 'GA1.2.499475221.1731253561',
+            '_ga': 'GA1.2.1329611284.1728629767',
+            '_ga_5ES45LSTYC': 'GS1.1.1731328711.2.1.1731328726.45.0.0',
+            'fetchRankedUpdate': get_fetchRankedUpdate(),
+            'x-jike-refresh-token': refresh_token,
+            '_ga_LQ23DKJDEL': 'GS1.2.1731334435.26.1.1731337496.60.0.0', }
+
+        headers = {
+            'accept': '*/*',
+            'accept-language': 'en-US,en;q=0.9',
+            'content-type': 'application/json',
+            'dnt': '1',
+            'origin': 'https://web.okjike.com',
+            'priority': 'u=1, i',
+            'sec-ch-ua': '"Not?A_Brand";v="99", "Chromium";v="130"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"macOS"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-site',
+            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', }
+
+        json_data = {
+            'operationName': 'refreshToken',
+            'variables': {},
+            'query': 'mutation refreshToken {\n  refreshToken {\n    accessToken\n    refreshToken\n  }\n}\n', }
+
+        response = requests.post('https://web-api.okjike.com/api/graphql',
+                                 cookies=cookies,
+                                 headers=headers,
+                                 json=json_data)
+
+        # Note: json_data will not be serialized by requests
+        # exactly as it was in the original request.
+        # data = '{"operationName":"refreshToken","variables":{},"query":"mutation refreshToken {\\n  refreshToken {\\n    accessToken\\n    refreshToken\\n  }\\n}\\n"}'
+        # response = requests.post('https://web-api.okjike.com/api/graphql', cookies=cookies, headers=headers, data=data)
+        return response.json()
+
+
+class JikeSDK(PlatformBase):
+
+    def __init__(self, session: JikeSession):
+        self._cookie = session._cookie
 
     def read_profile(self) -> User:
         import requests
@@ -128,7 +169,7 @@ class JikeSDK(PlatformBase):
         response = requests.get('https://api.ruguoapp.com/1.0/users/profile', headers=headers)
         return response.json()
 
-    def push_twitter(self, twitter: Twitter):
+    def post_twitter(self, twitter: Twitter):
         import requests
 
         cookies = {
@@ -273,7 +314,7 @@ class JikeSDK(PlatformBase):
         response = requests.get('https://upload.ruguoapp.com/1.0/misc/qiniu_uptoken', headers=headers)
         return response.json()['uptoken']
 
-    def check_notifications(self):
+    def check_rss(self):
         import requests
 
         cookies = {
@@ -305,48 +346,6 @@ class JikeSDK(PlatformBase):
                                  cookies=cookies,
                                  headers=headers,
                                  json=json_data)
-        return response.json()
-
-    def refresh_token(self, refresh_token: str):
-        import requests
-
-        cookies = {
-            '_gid': 'GA1.2.499475221.1731253561',
-            '_ga': 'GA1.2.1329611284.1728629767',
-            '_ga_5ES45LSTYC': 'GS1.1.1731328711.2.1.1731328726.45.0.0',
-            'fetchRankedUpdate': get_fetchRankedUpdate(),
-            'x-jike-refresh-token': refresh_token,
-            '_ga_LQ23DKJDEL': 'GS1.2.1731334435.26.1.1731337496.60.0.0', }
-
-        headers = {
-            'accept': '*/*',
-            'accept-language': 'en-US,en;q=0.9',
-            'content-type': 'application/json',
-            'dnt': '1',
-            'origin': 'https://web.okjike.com',
-            'priority': 'u=1, i',
-            'sec-ch-ua': '"Not?A_Brand";v="99", "Chromium";v="130"',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"macOS"',
-            'sec-fetch-dest': 'empty',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-site': 'same-site',
-            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', }
-
-        json_data = {
-            'operationName': 'refreshToken',
-            'variables': {},
-            'query': 'mutation refreshToken {\n  refreshToken {\n    accessToken\n    refreshToken\n  }\n}\n', }
-
-        response = requests.post('https://web-api.okjike.com/api/graphql',
-                                 cookies=cookies,
-                                 headers=headers,
-                                 json=json_data)
-
-        # Note: json_data will not be serialized by requests
-        # exactly as it was in the original request.
-        # data = '{"operationName":"refreshToken","variables":{},"query":"mutation refreshToken {\\n  refreshToken {\\n    accessToken\\n    refreshToken\\n  }\\n}\\n"}'
-        # response = requests.post('https://web-api.okjike.com/api/graphql', cookies=cookies, headers=headers, data=data)
         return response.json()
 
 

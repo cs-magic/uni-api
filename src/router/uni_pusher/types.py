@@ -26,13 +26,19 @@ class Twitter(BaseModel):
 
 class PlatformBase:
 
-    def log_in(self):
+    def get_verify_code(self, *args, **kwargs):
+        raise NotImplementedError()
+
+    def verify_code(self, *args, **kwargs):
         raise NotImplementedError()
 
     def read_profile(self) -> User:
         raise NotImplementedError()
 
-    def push_twitter(self, twitter: Twitter):
+    def post_twitter(self, twitter: Twitter):
+        raise NotImplementedError()
+
+    def check_rss(self):
         raise NotImplementedError()
 
 
