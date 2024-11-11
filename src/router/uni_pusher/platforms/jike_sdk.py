@@ -2,6 +2,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
+from packages.common_common import DEFAULT_AREA_CODE
 from packages.common_fastapi.upload_file import UploadFileInfo
 from src.router.uni_pusher.types import PlatformBase, User, PlatformSession, Twitter, Topic
 
@@ -23,7 +24,7 @@ class JikeSession(PlatformSession):
 
 class JikeAuth(BaseModel):
 
-    def get_verification_code(self, phone_number: str, phone_area="+86") -> str:
+    def get_verification_code(self, phone_number: str, area_code=DEFAULT_AREA_CODE) -> str:
         import requests
 
         cookies = {
@@ -51,7 +52,7 @@ class JikeAuth(BaseModel):
 
         json_data = {
             'operationName': 'GetSmsCode',
-            'variables': {'mobilePhoneNumber': phone_number, 'areaCode': phone_area, },
+            'variables': {'mobilePhoneNumber': phone_number, 'areaCode': area_code, },
             'query': 'mutation GetSmsCode($mobilePhoneNumber: String!, $areaCode: String!) {\n  getSmsCode(action: PHONE_MIX_LOGIN, mobilePhoneNumber: $mobilePhoneNumber, areaCode: $areaCode) {\n    action\n    __typename\n  }\n}\n', }
 
         response = requests.post('https://web-api.okjike.com/api/graphql',
@@ -61,7 +62,7 @@ class JikeAuth(BaseModel):
 
         return response.json()
 
-    def verify_code(self, phone_number: str, phone_area: str, code: str) -> JikeSession:
+    def verify_code(self, phone_number: str, area_code =DEFAULT_AREA_CODE, *, code: str) -> JikeSession:
         import requests
 
         cookies = {
@@ -88,7 +89,7 @@ class JikeAuth(BaseModel):
 
         json_data = {
             'operationName': 'MixLoginWithPhone',
-            'variables': {'smsCode': code, 'mobilePhoneNumber': phone_number, 'areaCode': phone_area, },
+            'variables': {'smsCode': code, 'mobilePhoneNumber': phone_number, 'areaCode': area_code, },
             'query': 'mutation MixLoginWithPhone($smsCode: String!, $mobilePhoneNumber: String!, $areaCode: String!) {\n  mixLoginWithPhone(smsCode: $smsCode, mobilePhoneNumber: $mobilePhoneNumber, areaCode: $areaCode) {\n    isRegister\n    user {\n      distinctId: id\n      ...TinyUserFragment\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment TinyUserFragment on UserInfo {\n  avatarImage {\n    thumbnailUrl\n    smallPicUrl\n    picUrl\n    __typename\n  }\n  isSponsor\n  username\n  screenName\n  briefIntro\n  __typename\n}\n', }
 
         response = requests.post('https://web-api.okjike.com/api/graphql',

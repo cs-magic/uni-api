@@ -25,8 +25,8 @@ async def get_verification_code(phone_number: str, phone_area="+86"):
 
 @jike_auth_router.post('/verify-code')
 @standard_error_handler()
-async def verify_code(phone_number: str, phone_area="+86", *, code: str):
-    return JikeAuth().verify_code(phone_number, phone_area, code)
+async def verify_code(phone_number: str, area_code="+86", *, code: str):
+    return JikeAuth().verify_code(phone_number, area_code, code)
 
 
 @jike_auth_router.post('/refresh-token')
