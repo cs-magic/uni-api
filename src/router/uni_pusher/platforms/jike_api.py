@@ -17,10 +17,10 @@ jike_router = APIRouter(prefix='/jike', tags=['即刻'])
 jike_auth_router = APIRouter(prefix='/auth')
 
 
-@jike_auth_router.post('/get-verify-code')
+@jike_auth_router.post('/get-verification-code')
 @standard_error_handler()
-async def get_verify_code(phone_number: str, phone_area="+86"):
-    return JikeAuth().get_verify_code(phone_number, phone_area)
+async def get_verification_code(phone_number: str, phone_area="+86"):
+    return JikeAuth().get_verification_code(phone_number, phone_area)
 
 
 @jike_auth_router.post('/verify-code')

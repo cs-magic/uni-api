@@ -23,7 +23,7 @@ class JikeSession(PlatformSession):
 
 class JikeAuth(BaseModel):
 
-    def get_verify_code(self, phone_number: str, phone_area="+86") -> str:
+    def get_verification_code(self, phone_number: str, phone_area="+86") -> str:
         import requests
 
         cookies = {
