@@ -1,6 +1,6 @@
 from typing import Optional, List
 
-from fastapi import UploadFile, Form
+from fastapi import UploadFile
 from pydantic import BaseModel, Field
 
 
@@ -9,6 +9,12 @@ class User(BaseModel):
     name: str
     avatar: str
 
+
+class Topic(BaseModel):
+    id: str
+    title: str
+    avatar: Optional[str] = None
+    description: Optional[str] = None
 
 
 class Twitter(BaseModel):
@@ -20,6 +26,9 @@ class Twitter(BaseModel):
 
 class PlatformBase:
 
+    def log_in(self):
+        raise NotImplementedError()
+
     def read_profile(self) -> User:
         raise NotImplementedError()
 
@@ -27,7 +36,7 @@ class PlatformBase:
         raise NotImplementedError()
 
 
-class PlatfromSession(BaseModel):
+class PlatformSession(BaseModel):
     custom_cookie: Optional[str] = Field(None)
 
     def __init__(self, **kwargs):
