@@ -37,6 +37,7 @@ class Settings(BaseSettings):
     DOUBAO_AK: str
     DOUBAO_SK: str
     DOUBAO_API_KEY: str
+    ANTHROPIC_API_KEY: str
 
     # APP
     FRONTEND_BASEURL: str

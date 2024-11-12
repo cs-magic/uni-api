@@ -45,6 +45,8 @@ pythonmonkey = "^1.0.0"
 websockets = "^13.1"
 apitally = {extras = ["fastapi"], version = "^0.13.0"}
 uncurl = "^0.0.11"
+anthropic = "^0.39.0"
+sse-starlette = "^2.1.3"
 
 
 [build-system]
