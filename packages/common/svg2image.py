@@ -72,26 +72,39 @@ def svg_to_image(
     svg_content: str,
     output_path: str,
     ppi: int = 300,
-    format: str = 'png'
+    format: str = 'png',
+    width: int = None
 ) -> Path:
-    """将 SVG 转换为图像文件"""
+    """将 SVG 转换为图像文件
+    
+    Args:
+        svg_content: SVG 内容
+        output_path: 输出文件路径
+        ppi: 图像分辨率
+        format: 输出格式 ('png', 'pdf', 'ps')
+        width: 输出图像宽度(像素)，为 None 时保持原始大小
+    """
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     
-    # 预处理SVG确保中文字体支持
     processed_svg = ensure_chinese_fonts(svg_content)
-    
     scale = ppi / 96.0
     
-    # 使用 UTF-8 编码
-    svg_bytes = processed_svg.encode('utf-8')
-    
+    # 添加宽度参数
+    kwargs = {
+        'bytestring': processed_svg.encode('utf-8'),
+        'scale': scale,
+        'dpi': ppi
+    }
+    if width:
+        kwargs['output_width'] = width
+
     # PDF 格式需要特殊处理以避免内存问题
     if format.lower() == 'pdf':
         temp_png = output_path + '.temp.png'
         try:
             cairosvg.svg2png(
-                bytestring=svg_bytes,
                 write_to=temp_png,
+                **kwargs,
                 scale=scale * 2,
                 dpi=ppi * 2
             )
@@ -107,10 +120,8 @@ def svg_to_image(
             raise ValueError(f"Unsupported format: {format}")
         
         convert_method(
-            bytestring=svg_bytes,
             write_to=output_path,
-            scale=scale,
-            dpi=ppi
+            **kwargs
         )
     
     return Path(output_path)
@@ -118,7 +129,8 @@ def svg_to_image(
 def svg_to_bytes(
     svg_content: str,
     ppi: int = 300,
-    format: str = 'png'
+    format: str = 'png',
+    width: int = None
 ) -> BytesIO:
     """将 SVG 转换为字节流，用于 FastAPI 响应
     
@@ -126,23 +138,31 @@ def svg_to_bytes(
         svg_content: SVG 内容
         ppi: 图像分辨率
         format: 输出格式 ('png', 'pdf', 'ps')
+        width: 输出图像宽度(像素)，为 None 时保持原始大小
     
     Returns:
         BytesIO: 包含图像数据的字节流
     """
-    # 预处理SVG确保中文字体支持
     processed_svg = ensure_chinese_fonts(svg_content)
-    
     scale = ppi / 96.0
     output = BytesIO()
+
+    # 添加宽度参数
+    kwargs = {
+        'bytestring': processed_svg.encode('utf-8'),
+        'scale': scale,
+        'dpi': ppi
+    }
+    if width:
+        kwargs['output_width'] = width
     
     # PDF 格式需要特殊处理以避免内存问题
     if format.lower() == 'pdf':
         temp_buffer = BytesIO()
         try:
             cairosvg.svg2png(
-                bytestring=processed_svg.encode('utf-8'),
                 write_to=temp_buffer,
+                **kwargs,
                 scale=scale * 2,
                 dpi=ppi * 2
             )
@@ -156,10 +176,8 @@ def svg_to_bytes(
             raise ValueError(f"Unsupported format: {format}")
         
         convert_method(
-            bytestring=processed_svg.encode('utf-8'),
             write_to=output,
-            scale=scale,
-            dpi=ppi
+            **kwargs
         )
     
     output.seek(0)
