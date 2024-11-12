@@ -32,7 +32,23 @@ def ensure_chinese_fonts(svg_content: str) -> str:
     elif system == "Windows":
         chinese_fonts = ['Microsoft YaHei', 'SimSun', 'NSimSun', 'SimHei', 'KaiTi']
     else:  # Linux 和其他系统
-        chinese_fonts = ['WenQuanYi Micro Hei', 'Noto Sans CJK SC', 'Noto Sans SC', 'Droid Sans Fallback']
+        # # 安装文泉驿字体
+        # sudo apt-get install ttf-wqy-microhei ttf-wqy-zenhei
+        # 安装思源字体
+        # sudo apt-get install fonts-noto-cjk fonts-noto-cjk-extra
+        # 安装其他中文字体
+        # sudo apt-get install fonts-arphic-uming fonts-arphic-ukai
+        chinese_fonts = [
+            # 思源字体
+            'Noto Sans CJK SC', 'Noto Sans SC', 'Noto Serif CJK SC', 'Noto Serif SC',
+            # 文泉驿字体
+            'WenQuanYi Micro Hei', 'WenQuanYi Zen Hei', 'WenQuanYi Zen Hei Sharp',
+            # 其他常用中文字体
+            'Source Han Sans CN', 'Source Han Serif CN',
+            'AR PL UMing CN', 'AR PL KaitiM GB', 'DroidSansFallback',
+            # Ubuntu 自带中文字体
+            'Ubuntu', 'Liberation Sans'
+        ]
     
     # 添加通用后备字体
     chinese_fonts.extend(['sans-serif', 'serif'])
