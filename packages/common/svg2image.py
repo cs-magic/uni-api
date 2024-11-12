@@ -40,7 +40,8 @@ def ensure_chinese_fonts(svg_content: str) -> str:
         # sudo apt-get install fonts-arphic-uming fonts-arphic-ukai
         chinese_fonts = [
             # [Ubuntu 安装本地字体](https://claude.ai/chat/4930a125-0cdd-403e-8985-19561086cb99)
-            "FZZJ-XTCSFW",
+            "Source Han Serif CN", "思源宋体 CN",
+            "FZZJ-XTCSFW", "方正字迹-邢体草书繁体",
             # 思源字体
             'Noto Sans CJK SC', 'Noto Sans SC', 'Noto Serif CJK SC', 'Noto Serif SC',
             # 文泉驿字体
