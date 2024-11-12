@@ -4,8 +4,8 @@ dotenv.load_dotenv()
 
 from loguru import logger
 
-from packages.common_llm.schema import ModelType, OpenAIMessages
-from packages.common_llm.utils.get_provider import get_provider
+from packages.llm.schema import ModelType, OpenAIMessages
+from packages.llm.utils.get_provider import get_provider
 
 from typing import Iterable, Union, Literal, Optional, Dict, List
 
@@ -46,7 +46,7 @@ def call_llm(
     extra_body: Body | None = None,
     timeout: float | httpx.Timeout | None | NotGiven = None, ):
 
-    logger.info(f">> calling LLM: Model={model}, Messages={messages}")
+    # logger.info(f">> calling LLM: Model={model}, Messages={messages}")
 
     res = get_provider(model).call(messages=messages,
         model=model,

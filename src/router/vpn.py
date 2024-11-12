@@ -1,15 +1,15 @@
 import io
 import time
 from enum import Enum
-from typing import Literal
 
 from fastapi import APIRouter, Request
 from starlette.responses import StreamingResponse
 
-from packages.common_api.index import api
-from packages.common_fastapi.error_handler import error_handler
+from packages.api.index import api
+from packages.fastapi.standard_error import standard_error_handler
 
 vpn_router = APIRouter(prefix='/vpn', tags=["VPN"])
+
 
 class Provider(str, Enum):
     foosber = "foosber"
@@ -17,9 +17,10 @@ class Provider(str, Enum):
 
 
 @vpn_router.get('/config')
-@error_handler
+@standard_error_handler()
 async def get_vpn_config(  # user: Annotated[User, Security(get_current_active_user, scopes=["items"])],
-        request: Request, provider: Provider = "foosber"):
+    request: Request, provider: Provider = "foosber"
+):
     if provider == "foosber":
         content_raw = api.get('https://xn--eckvarq8ld5k.xn--zckq7gxe.xn--tckwe/link/4lHIflFQQsH1S8qM?clash=1').text
 

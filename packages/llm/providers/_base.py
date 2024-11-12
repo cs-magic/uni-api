@@ -1,31 +1,27 @@
-from typing import List, Optional, Iterable, Dict, Union, Literal
+from typing import Iterable, Union, Literal, Optional, Dict, List, TypeVar, Generic
 
-import anthropic
 import httpx
-from anthropic.types import MessageParam
 from openai import Client, NotGiven, NOT_GIVEN
 from openai._types import Headers, Query, Body
-from openai.types.chat import completion_create_params, ChatCompletionToolChoiceOptionParam, ChatCompletionToolParam
+from openai._utils import required_args
+from openai.types.chat import ChatCompletionToolChoiceOptionParam, ChatCompletionToolParam, \
+    completion_create_params
 
-from packages.common_llm.providers._base import LLMProviderBase, M
-from packages.common_llm.schema import AnthropicModels, IMessage, OpenAIMessageParam
-from packages.common_llm.utils.openai2anthropic import openai2anthropic
-from settings import settings
+from packages.llm.schema import IMessage
+
+M = TypeVar("M")
 
 
-class AnthropicProvider(LLMProviderBase[AnthropicModels]):
-    """
-    todo: claude api
-    """
-    name = "anthropic"
-    base_url = None
-    api_key = settings.ANTHROPIC_API_KEY
-
-    client = anthropic.Anthropic(
-        # defaults to os.environ.get("ANTHROPIC_API_KEY")
-        api_key=api_key,
-    )
-
+class LLMProviderBase(Generic[M]):
+    name: str
+    api_key: str | None
+    base_url: str | None
+    client: Client
+    
+    def __init__(self):
+        super().__init__()
+    
+    @required_args(["messages", "model"], ["messages", "model", "stream"])
     def call(self,
              *,
              messages: List[IMessage],
@@ -55,22 +51,18 @@ class AnthropicProvider(LLMProviderBase[AnthropicModels]):
              extra_body: Body | None = None,
              timeout: float | httpx.Timeout | None | NotGiven = None,
              ):
-
-        # anthropic's system message should be in the param: {'type': 'invalid_request_error', 'message': 'messages: Unexpected role "system". The Messages API accepts a top-level `system` parameter, not "system" as an input message role.'}
-        system = None
-        if len(messages) > 0 and messages[0].get("role") == "system":
-            system = messages[0].get("content")
-            messages = messages[1:]
-
-        messages = openai2anthropic(messages)
-        print(f"[anthropic]: ", {"system": system, "messages": messages, "stream": stream})
-
-        message = self.client.messages.create(
+        # Convert messages to dict format if needed
+        messages_dict = [
+            {
+                "role": msg["role"],
+                "content": msg["content"]
+            } for msg in messages
+        ]
+        
+        return self.client.chat.completions.create(
+            messages=messages_dict,
             model=model,
-            max_tokens=max_tokens,
-            system=system,
-            messages=messages,
-            stream=stream,
+            top_p=top_p,
+            timeout=timeout,
+            # max_tokens=max_tokens, seed=seed, stop=stop, stream=stream, temperature=temperature, tool_choice=tool_choice, tools=tools,
         )
-        return message
-

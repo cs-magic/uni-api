@@ -2,8 +2,8 @@ from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
-from packages.common_common import DEFAULT_AREA_CODE
-from packages.common_fastapi.upload_file import UploadFileInfo
+from packages.common import DEFAULT_AREA_CODE
+from packages.common.upload_file import UploadFileInfo
 from src.router.uni_pusher.types import PlatformBase, User, PlatformSession, Twitter, Topic
 
 

@@ -11,7 +11,7 @@ from openai.types.chat import completion_create_params, \
 from pydantic import Field
 from typing_extensions import TypedDict
 
-from packages.common_common.pydantic import BaseModel
+from packages.common.pydantic import BaseModel
 
 ProviderType = Literal["openai", "moonshot", "doubao", "baichuan", "zhipu", "dashscope", "anthropic"]
 

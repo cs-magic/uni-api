@@ -1,15 +1,6 @@
-from typing import Optional
-
 from fastapi import UploadFile
 
-
-class UploadFileInfo:
-    """Generic file upload container that doesn't depend on any web framework"""
-
-    def __init__(self, filename: str, content: bytes, content_type: Optional[str] = None):
-        self.filename = filename
-        self.content = content
-        self.content_type = content_type or "application/octet-stream"
+from packages.common.upload_file import UploadFileInfo
 
 
 async def convert_to_upload_file_info(upload_file: UploadFile) -> UploadFileInfo:

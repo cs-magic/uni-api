@@ -1,9 +1,9 @@
 from typing import Optional, Literal, List
 
 
-from packages.common_common.pydantic import BaseModel
-from packages.common_llm.providers._base import M
-from packages.common_llm.schema import OpenAIMessages
+from packages.common.pydantic import BaseModel
+from packages.llm.providers._base import M
+from packages.llm.schema import OpenAIMessages
 
 
 class AgentConfig(BaseModel):

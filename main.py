@@ -8,7 +8,7 @@ from fastapi.responses import FileResponse
 
 from apitally.fastapi import ApitallyMiddleware
 
-from packages.common_fastapi.dum_openapi import dump_openapi
+from packages.fastapi.dump_openapi import dump_openapi
 from settings import settings
 from src.router import root_router
 

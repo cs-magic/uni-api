@@ -2,8 +2,8 @@ from typing import List, Optional
 
 from fastapi import Depends, APIRouter, Form, UploadFile, File
 
-from packages.common_fastapi.standard_error import standard_error_handler
-from packages.common_fastapi.upload_file import convert_to_upload_file_info
+from packages.fastapi.standard_error import standard_error_handler
+from packages.fastapi.upload_file import convert_to_upload_file_info
 from src.router.uni_pusher.platforms.jike_sdk import JikeSession, JikeSDK, JikeAuth
 from src.router.uni_pusher.types import Twitter, Topic
 

@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from fastapi import APIRouter
 from fastapi.params import Query
 
-from packages.common_common.parse_nested_json import parse_nested_json
+from packages.common.parse_nested_json import parse_nested_json
 
 wechat_official_account_route = APIRouter(prefix='/official-account')
 

@@ -2,7 +2,7 @@ import re
 from pprint import pprint
 from typing import List
 
-from packages.common_common.pydantic import BaseModel
+from packages.common.pydantic import BaseModel
 
 
 class ArticleSummaryModel(BaseModel):

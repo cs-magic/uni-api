@@ -1,6 +1,6 @@
 import json
 
-from packages.common_spider.schema import ISummary
+from packages.spider.schema import ISummary
 from src.path import GENERATED_PATH
 
 if __name__ == '__main__':

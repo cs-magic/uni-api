@@ -1,10 +1,10 @@
-from packages.common_llm.providers.ali import DashscopeProvider
-from packages.common_llm.providers.anthropic import AnthropicProvider
-from packages.common_llm.providers.minimax import MinimaxProvider
-from packages.common_llm.providers.moonshot import MoonshotProvider
-from packages.common_llm.providers.openai import OpenAIProvider
-from packages.common_llm.providers.zhipu import ZhipuProvider
-from packages.common_llm.schema import ModelType, BaichuanModel
+from packages.llm.providers.ali import DashscopeProvider
+from packages.llm.providers.anthropic import AnthropicProvider
+from packages.llm.providers.minimax import MinimaxProvider
+from packages.llm.providers.moonshot import MoonshotProvider
+from packages.llm.providers.openai import OpenAIProvider
+from packages.llm.providers.zhipu import ZhipuProvider
+from packages.llm.schema import ModelType, BaichuanModel
 
 
 def get_provider(model: ModelType):

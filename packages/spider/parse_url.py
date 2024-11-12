@@ -6,12 +6,12 @@ from typing import Optional, Literal
 from bs4 import BeautifulSoup
 from loguru import logger
 
-from packages.common_api.index import api
-from packages.common_llm.agent.call_agent import call_agent
-from packages.common_markdown.html2md import html2md
-from packages.common_spider.schema import ICard, ISummary, PlatformType, IUserBasic, IImage
+from packages.api.index import api
+from packages.llm.agent.call_agent import call_agent
+from packages.markdown.html2md import html2md
+from packages.spider.schema import ICard, ISummary, PlatformType, IUserBasic, IImage
 from src.path import GENERATED_PATH
-from packages.common_llm.schema import ModelType
+from packages.llm.schema import ModelType
 from src.utils import check_platform_type
 
 

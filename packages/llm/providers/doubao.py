@@ -1,7 +1,7 @@
 from volcenginesdkarkruntime import Ark
 
-from packages.common_llm.providers._base import LLMProviderBase
-from packages.common_llm.schema import DoubaoModel
+from packages.llm.providers._base import LLMProviderBase
+from packages.llm.schema import DoubaoModel
 from settings import settings
 
 

@@ -1,8 +1,8 @@
 from zhipuai import ZhipuAI
 
 from settings import settings
-from packages.common_llm.providers._base import LLMProviderBase
-from packages.common_llm.schema import ZhipuModel
+from packages.llm.providers._base import LLMProviderBase
+from packages.llm.schema import ZhipuModel
 
 
 class ZhipuProvider(LLMProviderBase[ZhipuModel]):

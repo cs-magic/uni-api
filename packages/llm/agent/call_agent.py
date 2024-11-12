@@ -3,10 +3,10 @@ from typing import Optional
 
 import yaml
 
-from packages.common_common.compress_content import compress_content
-from packages.common_llm.agent.call_llm import call_llm
-from packages.common_llm.agent.schema import AgentType, AgentConfig
-from packages.common_llm.schema import ModelType
+from packages.common.compress_content import compress_content
+from packages.llm.agent.call_llm import call_llm
+from packages.llm.agent.schema import AgentType, AgentConfig
+from packages.llm.schema import ModelType
 
 
 def call_agent(input: str, agent_type: AgentType, llm_model_type: Optional[ModelType] = None, stream=False):
