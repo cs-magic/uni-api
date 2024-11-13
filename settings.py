@@ -27,6 +27,8 @@ class Settings(BaseSettings):
     tags: Any = [{"name": "Account", }, {"name": "LLM", }, {"name": "Spider", }, {"name": "OSS", "description": "todo"},
                  {"name": "Cases", }, {"name": "Rama", }, {"name": "default", }, ]
 
+    DATABASE_URL: str
+
     # LLM
     MOONSHOT_API_KEY: str
     OPENAI_API_KEY: str
@@ -39,7 +41,22 @@ class Settings(BaseSettings):
     DOUBAO_API_KEY: str
     ANTHROPIC_API_KEY: str
 
-    # APP
+    # auth
+    SECRET_KEY: str
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    wechat_app_id: str = ""
+    wechat_app_secret: str = ""
+    google_client_id: str = ""
+    google_client_secret: str = ""
+    github_client_id: str = ""
+    github_client_secret: str = ""
+
+    # payment
+    STRIPE_SECRET_KEY: str
+    STRIPE_WEBHOOK_SECRET: str
+
+    # others
     FRONTEND_BASEURL: str
 
     model_config = SettingsConfigDict(env_file=PROJECT_PATH.joinpath(".env"), extra="ignore")

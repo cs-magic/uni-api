@@ -2,7 +2,7 @@ import asyncio
 from typing import Annotated, List, Literal
 from typing import Optional
 
-from fastapi import APIRouter, Security, Form, Query, Response
+from fastapi import APIRouter, Form, Query, Response
 from sse_starlette.sse import EventSourceResponse
 
 from packages.common.pydantic import BaseModel
@@ -13,7 +13,6 @@ from packages.llm.agent.call_llm import call_llm
 from packages.llm.agent.schema import AgentType
 from packages.llm.providers.openai import OpenAIProvider
 from packages.llm.schema import ModelType, IMessage
-from src.router.account import User, get_current_active_user
 
 llm_router = APIRouter(prefix='/llm', tags=['LLM'])
 
@@ -111,17 +110,3 @@ async def list_models(  # user: Annotated[User, Security(get_current_active_user
 
 class QueryPromptModel(BaseModel):
     query: str
-
-
-@llm_router.get('/{provider}/stat', description='todo')
-@standard_error_handler()
-async def check_llm_provider_stat(
-    user: Annotated[User, Security(get_current_active_user, scopes=["items"])], ):
-    return 'chatgpt'
-
-
-@llm_router.get('/{provider}/balance', description='todo')
-@standard_error_handler()
-async def check_llm_provider_balance(
-    user: Annotated[User, Security(get_current_active_user, scopes=["items"])], ):
-    return 'chatgpt'

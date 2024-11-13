@@ -1,171 +1,197 @@
-from fastapi import APIRouter
-from loguru import logger
-
-from packages.common.pydantic import BaseModel
-
-account_router = APIRouter(prefix='/account', tags=['Account'], )
-
-from datetime import datetime, timedelta, timezone
+from fastapi import APIRouter, Depends, HTTPException, status, Request
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from sqlalchemy.orm import Session
+from datetime import datetime, timedelta
 from typing import Annotated
+import stripe
 
-from fastapi import Depends, HTTPException, Security, status
-from fastapi.security import (
-    OAuth2PasswordBearer,
-    OAuth2PasswordRequestForm,
-    SecurityScopes,
+from src.models.user import User, Transaction
+from src.schemas.user import UserCreate, UserResponse, Token, CreditsCheck
+from src.database import get_db
+from src.core.security import (
+    create_access_token,
+    get_password_hash,
+    verify_password,
+    get_current_user,
 )
-from jose import JWTError, jwt
-from passlib.context import CryptContext
-from pydantic import ValidationError
+from settings import settings
+from src.dependencies.credits import verify_credits
+from src.core.oauth import OAuthHandler
 
-# to get a string like this run:
-# openssl rand -hex 32
-SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+account_router = APIRouter(prefix='/account', tags=['Account'])
 
-fake_users_db = {
-    "johndoe": {
-        "username": "johndoe",
-        "full_name": "John Doe",
-        "email": "johndoe@example.com",
-        "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-        "disabled": False,
-    },
-    "alice": {
-        "username": "alice",
-        "full_name": "Alice Chains",
-        "email": "alicechains@example.com",
-        "hashed_password": "$2b$12$gSvqqUPvlXP2tfVFaWK1Be7DlH.PKZbv5H8KnzzVgXXbVxpva.pFm",
-        "disabled": True,
-    },
-}
+# Initialize Stripe
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
-
-class TokenData(BaseModel):
-    username: str | None = None
-    scopes: list[str] = []
-
-
-class User(BaseModel):
-    username: str
-    email: str | None = None
-    full_name: str | None = None
-    disabled: bool | None = None
-
-
-class UserInDB(User):
-    hashed_password: str
-
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl="/account/token",
-    scopes={"me": "Read information about the current user.", "items": "Read items."},
-)
-
-
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
-
-
-def get_password_hash(password):
-    return pwd_context.hash(password)
-
-
-def get_user(db, username: str):
-    if username in db:
-        user_dict = db[username]
-        return UserInDB(**user_dict)
-
-
-def authenticate_user(fake_db, username: str, password: str):
-    user = get_user(fake_db, username)
-    if not user:
-        return False
-    if not verify_password(password, user.hashed_password):
-        return False
-    return user
-
-
-def create_access_token(data: dict, expires_delta: timedelta | None = None):
-    to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.now(timezone.utc) + expires_delta
-    else:
-        expire = datetime.now(timezone.utc) + timedelta(minutes=15)
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-    return encoded_jwt
-
-
-async def get_current_user(
-    security_scopes: SecurityScopes, token: Annotated[str, Depends(oauth2_scheme)]
-):
-    if security_scopes.scopes:
-        authenticate_value = f'Bearer scope="{security_scopes.scope_str}"'
-    else:
-        authenticate_value = "Bearer"
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": authenticate_value},
+@account_router.post('/register', response_model=UserResponse)
+async def register_user(user_data: UserCreate, db: Session = Depends(get_db)):
+    # Check if user exists
+    existing_user = db.query(User).filter(
+        (User.username == user_data.username) |
+        (User.email == user_data.email) |
+        (User.phone == user_data.phone)
+    ).first()
+    if existing_user:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Username/email/phone already registered"
+        )
+    
+    # Create new user
+    db_user = User(
+        **user_data.dict(exclude={'password'}),
+        hashed_password=get_password_hash(user_data.password) if user_data.password else None
     )
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
-        if username is None:
-            raise credentials_exception
-        token_scopes = payload.get("scopes", [])
-        token_data = TokenData(scopes=token_scopes, username=username)
-    except (JWTError, ValidationError):
-        raise credentials_exception
-    user = get_user(fake_users_db, username=token_data.username)
-    if user is None:
-        raise credentials_exception
-    for scope in security_scopes.scopes:
-        if scope not in token_data.scopes:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Not enough permissions",
-                headers={"WWW-Authenticate": authenticate_value},
-            )
-    return user
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
 
-
-async def get_current_active_user(
-    current_user: Annotated[User, Security(get_current_user, scopes=["me"])],
-):
-    if current_user.disabled:
-        raise HTTPException(status_code=400, detail="Inactive user")
-    return current_user
-
-
-@account_router.post("/token")
+@account_router.post("/token", response_model=Token)
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-) -> Token:
-    user = authenticate_user(fake_users_db, form_data.username, form_data.password)
-    logger.info("user: ", user)
-    if not user:
-        raise HTTPException(status_code=400, detail="Incorrect username or password")
+    db: Session = Depends(get_db)
+):
+    user = db.query(User).filter(User.username == form_data.username).first()
+    if not user or not verify_password(form_data.password, user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password"
+        )
     
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": user.username, "scopes": form_data.scopes},
-        expires_delta=access_token_expires,
+        data={"sub": user.username}
     )
     return Token(access_token=access_token, token_type="bearer")
 
-
-@account_router.get("/user/me/", response_model=User)
-async def read_me(
-    user: Annotated[User, Depends(get_current_active_user)],
+@account_router.post("/deposit")
+async def create_deposit(
+    amount: float,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
 ):
-    return user
+    try:
+        # Create Stripe payment intent
+        payment_intent = stripe.PaymentIntent.create(
+            amount=int(amount * 100),  # Convert to cents
+            currency="usd",
+            metadata={"user_id": current_user.id}
+        )
+        
+        # Create transaction record
+        transaction = Transaction(
+            user_id=current_user.id,
+            amount=amount,
+            type="deposit",
+            stripe_payment_id=payment_intent.id,
+            status="pending"
+        )
+        db.add(transaction)
+        db.commit()
+        
+        return {"client_secret": payment_intent.client_secret}
+    
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+
+@account_router.post("/webhook/stripe")
+async def stripe_webhook(
+    request: Request,
+    db: Session = Depends(get_db)
+):
+    payload = await request.body()
+    sig_header = request.headers.get("stripe-signature")
+    
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
+        )
+        
+        if event.type == "payment_intent.succeeded":
+            payment_intent = event.data.object
+            user_id = payment_intent.metadata.get("user_id")
+            amount = payment_intent.amount / 100  # Convert from cents
+            
+            # Update transaction and user credits
+            transaction = db.query(Transaction).filter(
+                Transaction.stripe_payment_id == payment_intent.id
+            ).first()
+            
+            if transaction:
+                transaction.status = "completed"
+                user = db.query(User).filter(User.id == user_id).first()
+                user.credits += amount
+                db.commit()
+                
+        return {"status": "success"}
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+
+@account_router.get("/me", response_model=UserResponse)
+async def read_users_me(current_user: User = Depends(get_current_user)):
+    return current_user
+
+# Example of using credits verification
+@account_router.post("/consume-credits")
+async def consume_credits(
+    credits_check: CreditsCheck,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+    has_credits: bool = Depends(verify_credits)
+):
+    # Deduct credits
+    current_user.credits -= credits_check.required_credits
+    
+    # Record transaction
+    transaction = Transaction(
+        user_id=current_user.id,
+        amount=-credits_check.required_credits,
+        type="consumption",
+        status="completed"
+    )
+    db.add(transaction)
+    db.commit()
+    
+    return {"message": "Credits consumed successfully"}
+
+@account_router.post("/oauth/login/{provider}", response_model=Token)
+async def oauth_login(
+    provider: str,
+    token: str,
+    db: Session = Depends(get_db)
+):
+    oauth_handler = OAuthHandler()
+    try:
+        user_data = await oauth_handler.verify_oauth_token(token, provider)
+        
+        # Check if user exists
+        user = db.query(User).filter(
+            (User.oauth_provider == provider) & 
+            (User.oauth_id == user_data.oauth_id)
+        ).first()
+        
+        if not user:
+            # Create new user if doesn't exist
+            user = User(**user_data.dict())
+            db.add(user)
+            db.commit()
+            db.refresh(user)
+        
+        # Create access token
+        access_token = create_access_token(
+            data={"sub": user.username}
+        )
+        return Token(access_token=access_token, token_type="bearer")
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
