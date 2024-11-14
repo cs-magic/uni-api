@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional, Dict
 from pathlib import Path
 
@@ -37,9 +37,9 @@ class LogConfig:
 @dataclass
 class Config:
     pdf: PDFProcessingConfig
-    model: ModelConfig = ModelConfig()
-    target: TargetConfig = TargetConfig()
-    log: LogConfig = LogConfig()
+    model: ModelConfig = field(default_factory=ModelConfig)
+    target: TargetConfig = field(default_factory=TargetConfig)
+    log: LogConfig = field(default_factory=LogConfig)
 
     def __str__(self) -> str:
         """返回格式化的配置信息"""

@@ -180,7 +180,7 @@ def process_pdf_files(folder_path, max_workers=None):
     """并发处理文件夹中的所有PDF文件并返回结果列表"""
     pdf_files = list(Path(folder_path).glob('**/*.pdf'))
     pdf_files.sort(key=lambda x: extract_number(x.name))
-    pdf_files = pdf_files[:]
+    pdf_files = pdf_files[:20]
     total_files = len(pdf_files)
     
     logger.info(f"找到 {total_files} 个PDF文件待处理")
