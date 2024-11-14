@@ -1,0 +1,289 @@
+2024-11-14 15:55:33.668 | INFO     | __main__:find_summary_table:23 - 开始处理PDF文件: /Users/mark/Documents/Terminal evaluation report/1.10321_2024_ValTR_unep_gef_msp.pdf
+2024-11-14 15:55:33.668 | INFO     | __main__:find_summary_table:29 - 加载语义相似度模型...
+2024-11-14 15:55:38.381 | DEBUG    | __main__:find_summary_table:32 - 目标文本编码完成
+2024-11-14 15:55:38.382 | INFO     | __main__:find_summary_table:36 - 打开PDF文档...
+2024-11-14 15:55:38.385 | INFO     | __main__:find_summary_table:38 - PDF总页数: 143
+2024-11-14 15:55:38.385 | DEBUG    | __main__:find_summary_table:41 - 处理第 1 页
+2024-11-14 15:55:38.403 | ERROR    | __main__:find_summary_table:101 - 处理PDF时发生错误: object of type 'TableFinder' has no len()
+2024-11-14 15:55:38.404 | DEBUG    | __main__:find_summary_table:107 - PDF文档已关闭
+2024-11-14 15:55:38.404 | WARNING  | __main__:<module>:120 - 未找到目标表格
+2024-11-14 15:56:38.903 | INFO     | __main__:find_summary_table:23 - 开始处理PDF文件: /Users/mark/Documents/Terminal evaluation report/1.10321_2024_ValTR_unep_gef_msp.pdf
+2024-11-14 15:56:38.903 | INFO     | __main__:find_summary_table:29 - 加载语义相似度模型...
+2024-11-14 15:56:43.849 | DEBUG    | __main__:find_summary_table:32 - 目标文本编码完成
+2024-11-14 15:56:43.849 | INFO     | __main__:find_summary_table:36 - 打开PDF文档...
+2024-11-14 15:56:43.901 | INFO     | __main__:find_summary_table:38 - PDF总页数: 143
+2024-11-14 15:56:43.901 | DEBUG    | __main__:find_summary_table:41 - 处理第 1 页
+2024-11-14 15:56:43.920 | ERROR    | __main__:find_summary_table:101 - 处理PDF时发生错误: object of type 'TableFinder' has no len()
+2024-11-14 15:56:43.921 | DEBUG    | __main__:find_summary_table:107 - PDF文档已关闭
+2024-11-14 15:56:43.921 | WARNING  | __main__:<module>:120 - 未找到目标表格
+2024-11-14 15:57:58.084 | INFO     | __main__:find_summary_table:23 - 开始处理PDF文件: /path/to/your/pdf
+2024-11-14 15:57:58.084 | INFO     | __main__:find_summary_table:29 - 加载语义相似度模型...
+2024-11-14 15:58:03.700 | DEBUG    | __main__:find_summary_table:32 - 目标文本编码完成
+2024-11-14 15:58:03.701 | INFO     | __main__:find_summary_table:36 - 打开PDF文档...
+2024-11-14 15:58:03.701 | ERROR    | __main__:find_summary_table:102 - 处理PDF时发生错误: no such file: '/path/to/your/pdf'
+2024-11-14 15:58:03.701 | WARNING  | __main__:<module>:121 - 未找到目标表格
+2024-11-14 15:58:19.119 | INFO     | __main__:find_summary_table:23 - 开始处理PDF文件: /Users/mark/Documents/Terminal evaluation report/1.10321_2024_ValTR_unep_gef_msp.pdf
+2024-11-14 15:58:19.119 | INFO     | __main__:find_summary_table:29 - 加载语义相似度模型...
+2024-11-14 15:58:24.714 | DEBUG    | __main__:find_summary_table:32 - 目标文本编码完成
+2024-11-14 15:58:24.714 | INFO     | __main__:find_summary_table:36 - 打开PDF文档...
+2024-11-14 15:58:24.717 | INFO     | __main__:find_summary_table:38 - PDF总页数: 143
+2024-11-14 15:58:24.717 | DEBUG    | __main__:find_summary_table:41 - 处理第 1 页
+2024-11-14 15:58:24.736 | DEBUG    | __main__:find_summary_table:47 - 在第 1 页找到 0 个表格
+2024-11-14 15:58:24.736 | DEBUG    | __main__:find_summary_table:41 - 处理第 2 页
+2024-11-14 15:58:24.788 | DEBUG    | __main__:find_summary_table:47 - 在第 2 页找到 1 个表格
+2024-11-14 15:58:24.788 | DEBUG    | __main__:find_summary_table:53 - 分析第 2 页的第 1 个表格
+2024-11-14 15:58:24.789 | DEBUG    | __main__:find_summary_table:67 - 未找到表格标题，跳过
+2024-11-14 15:58:24.789 | DEBUG    | __main__:find_summary_table:41 - 处理第 3 页
+2024-11-14 15:58:24.814 | DEBUG    | __main__:find_summary_table:47 - 在第 3 页找到 0 个表格
+2024-11-14 15:58:24.814 | DEBUG    | __main__:find_summary_table:41 - 处理第 4 页
+2024-11-14 15:58:24.842 | DEBUG    | __main__:find_summary_table:47 - 在第 4 页找到 0 个表格
+2024-11-14 15:58:24.842 | DEBUG    | __main__:find_summary_table:41 - 处理第 5 页
+2024-11-14 15:58:24.939 | DEBUG    | __main__:find_summary_table:47 - 在第 5 页找到 0 个表格
+2024-11-14 15:58:24.940 | DEBUG    | __main__:find_summary_table:41 - 处理第 6 页
+2024-11-14 15:58:24.955 | DEBUG    | __main__:find_summary_table:47 - 在第 6 页找到 0 个表格
+2024-11-14 15:58:24.955 | DEBUG    | __main__:find_summary_table:41 - 处理第 7 页
+2024-11-14 15:58:25.042 | DEBUG    | __main__:find_summary_table:47 - 在第 7 页找到 1 个表格
+2024-11-14 15:58:25.042 | DEBUG    | __main__:find_summary_table:53 - 分析第 7 页的第 1 个表格
+2024-11-14 15:58:25.043 | DEBUG    | __main__:find_summary_table:70 - 找到表格标题: PROJECT IDENTIFICATION TABLE 
+Table 1 Project Identification Table
+2024-11-14 15:58:25.112 | DEBUG    | __main__:find_summary_table:79 - 标题相似度: 0.5150104761123657
+2024-11-14 15:58:25.112 | DEBUG    | __main__:find_summary_table:41 - 处理第 8 页
+2024-11-14 15:58:25.168 | DEBUG    | __main__:find_summary_table:47 - 在第 8 页找到 1 个表格
+2024-11-14 15:58:25.168 | DEBUG    | __main__:find_summary_table:53 - 分析第 8 页的第 1 个表格
+2024-11-14 15:58:25.170 | DEBUG    | __main__:find_summary_table:67 - 未找到表格标题，跳过
+2024-11-14 15:58:25.170 | DEBUG    | __main__:find_summary_table:41 - 处理第 9 页
+2024-11-14 15:58:25.232 | DEBUG    | __main__:find_summary_table:47 - 在第 9 页找到 0 个表格
+2024-11-14 15:58:25.233 | DEBUG    | __main__:find_summary_table:41 - 处理第 10 页
+2024-11-14 15:58:25.337 | DEBUG    | __main__:find_summary_table:47 - 在第 10 页找到 0 个表格
+2024-11-14 15:58:25.337 | DEBUG    | __main__:find_summary_table:41 - 处理第 11 页
+2024-11-14 15:58:25.454 | DEBUG    | __main__:find_summary_table:47 - 在第 11 页找到 0 个表格
+2024-11-14 15:58:25.454 | DEBUG    | __main__:find_summary_table:41 - 处理第 12 页
+2024-11-14 15:58:25.548 | DEBUG    | __main__:find_summary_table:47 - 在第 12 页找到 0 个表格
+2024-11-14 15:58:25.548 | DEBUG    | __main__:find_summary_table:41 - 处理第 13 页
+2024-11-14 15:58:25.669 | DEBUG    | __main__:find_summary_table:47 - 在第 13 页找到 0 个表格
+2024-11-14 15:58:25.670 | DEBUG    | __main__:find_summary_table:41 - 处理第 14 页
+2024-11-14 15:58:25.742 | DEBUG    | __main__:find_summary_table:47 - 在第 14 页找到 1 个表格
+2024-11-14 15:58:25.742 | DEBUG    | __main__:find_summary_table:53 - 分析第 14 页的第 1 个表格
+2024-11-14 15:58:25.744 | DEBUG    | __main__:find_summary_table:70 - 找到表格标题: y
+g
+p
+j
+p
+commitment. (Table 2) 
+Table 2 In-kind contributions of project partners (* indicates members of Steering Committee)
+2024-11-14 15:58:25.811 | DEBUG    | __main__:find_summary_table:79 - 标题相似度: 0.39915740489959717
+2024-11-14 15:58:25.812 | DEBUG    | __main__:find_summary_table:41 - 处理第 15 页
+2024-11-14 15:58:25.829 | DEBUG    | __main__:find_summary_table:47 - 在第 15 页找到 0 个表格
+2024-11-14 15:58:25.829 | DEBUG    | __main__:find_summary_table:41 - 处理第 16 页
+2024-11-14 15:58:25.943 | DEBUG    | __main__:find_summary_table:47 - 在第 16 页找到 0 个表格
+2024-11-14 15:58:25.943 | DEBUG    | __main__:find_summary_table:41 - 处理第 17 页
+2024-11-14 15:58:25.984 | DEBUG    | __main__:find_summary_table:47 - 在第 17 页找到 0 个表格
+2024-11-14 15:58:25.984 | DEBUG    | __main__:find_summary_table:41 - 处理第 18 页
+2024-11-14 15:58:26.028 | DEBUG    | __main__:find_summary_table:47 - 在第 18 页找到 0 个表格
+2024-11-14 15:58:26.029 | DEBUG    | __main__:find_summary_table:41 - 处理第 19 页
+2024-11-14 15:58:26.115 | DEBUG    | __main__:find_summary_table:47 - 在第 19 页找到 1 个表格
+2024-11-14 15:58:26.115 | DEBUG    | __main__:find_summary_table:53 - 分析第 19 页的第 1 个表格
+2024-11-14 15:58:26.116 | DEBUG    | __main__:find_summary_table:70 - 找到表格标题: y
+y
+p
+g
+characterizes the respondents. 
+le 3 Interview invitees and respondents, by affiliation
+2024-11-14 15:58:26.183 | DEBUG    | __main__:find_summary_table:79 - 标题相似度: 0.2862086892127991
+2024-11-14 15:58:26.183 | DEBUG    | __main__:find_summary_table:41 - 处理第 20 页
+2024-11-14 15:58:26.388 | DEBUG    | __main__:find_summary_table:47 - 在第 20 页找到 0 个表格
+2024-11-14 15:58:26.388 | DEBUG    | __main__:find_summary_table:41 - 处理第 21 页
+2024-11-14 15:58:26.496 | DEBUG    | __main__:find_summary_table:47 - 在第 21 页找到 0 个表格
+2024-11-14 15:58:26.496 | DEBUG    | __main__:find_summary_table:41 - 处理第 22 页
+2024-11-14 15:58:26.555 | DEBUG    | __main__:find_summary_table:47 - 在第 22 页找到 0 个表格
+2024-11-14 15:58:26.555 | DEBUG    | __main__:find_summary_table:41 - 处理第 23 页
+2024-11-14 15:58:26.599 | DEBUG    | __main__:find_summary_table:47 - 在第 23 页找到 0 个表格
+2024-11-14 15:58:26.599 | DEBUG    | __main__:find_summary_table:41 - 处理第 24 页
+2024-11-14 15:58:26.697 | DEBUG    | __main__:find_summary_table:47 - 在第 24 页找到 1 个表格
+2024-11-14 15:58:26.697 | DEBUG    | __main__:find_summary_table:53 - 分析第 24 页的第 1 个表格
+2024-11-14 15:58:26.699 | DEBUG    | __main__:find_summary_table:70 - 找到表格标题: le 4 ZCB project outputs and outcomes, at project launch.
+2024-11-14 15:58:26.767 | DEBUG    | __main__:find_summary_table:79 - 标题相似度: 0.47843849658966064
+2024-11-14 15:58:26.767 | DEBUG    | __main__:find_summary_table:41 - 处理第 25 页
+2024-11-14 15:58:26.873 | DEBUG    | __main__:find_summary_table:47 - 在第 25 页找到 1 个表格
+2024-11-14 15:58:26.874 | DEBUG    | __main__:find_summary_table:53 - 分析第 25 页的第 1 个表格
+2024-11-14 15:58:26.875 | DEBUG    | __main__:find_summary_table:70 - 找到表格标题: g
+p
+p
+p
+p
+p
+p
+city action plans also addressed these issues.  
+Table 5 Stakeholder roles, responsibilities and anticipated behaviour changes
+2024-11-14 15:58:26.939 | DEBUG    | __main__:find_summary_table:79 - 标题相似度: 0.3429669141769409
+2024-11-14 15:58:26.940 | DEBUG    | __main__:find_summary_table:41 - 处理第 26 页
+2024-11-14 15:58:27.021 | DEBUG    | __main__:find_summary_table:47 - 在第 26 页找到 1 个表格
+2024-11-14 15:58:27.021 | DEBUG    | __main__:find_summary_table:53 - 分析第 26 页的第 1 个表格
+2024-11-14 15:58:27.022 | DEBUG    | __main__:find_summary_table:67 - 未找到表格标题，跳过
+2024-11-14 15:58:27.022 | DEBUG    | __main__:find_summary_table:41 - 处理第 27 页
+2024-11-14 15:58:27.090 | DEBUG    | __main__:find_summary_table:47 - 在第 27 页找到 1 个表格
+2024-11-14 15:58:27.090 | DEBUG    | __main__:find_summary_table:53 - 分析第 27 页的第 1 个表格
+2024-11-14 15:58:27.091 | DEBUG    | __main__:find_summary_table:67 - 未找到表格标题，跳过
+2024-11-14 15:58:27.091 | DEBUG    | __main__:find_summary_table:41 - 处理第 28 页
+2024-11-14 15:58:27.130 | DEBUG    | __main__:find_summary_table:47 - 在第 28 页找到 0 个表格
+2024-11-14 15:58:27.130 | DEBUG    | __main__:find_summary_table:41 - 处理第 29 页
+2024-11-14 15:58:27.240 | DEBUG    | __main__:find_summary_table:47 - 在第 29 页找到 2 个表格
+2024-11-14 15:58:27.240 | DEBUG    | __main__:find_summary_table:53 - 分析第 29 页的第 1 个表格
+2024-11-14 15:58:27.242 | DEBUG    | __main__:find_summary_table:70 - 找到表格标题: y
+(
+j
+p
+Agreement, signed 18 March 2021).  
+Table 6 Total cost of the ZCB project
+2024-11-14 15:58:27.311 | DEBUG    | __main__:find_summary_table:79 - 标题相似度: 0.32965338230133057
+2024-11-14 15:58:27.311 | DEBUG    | __main__:find_summary_table:53 - 分析第 29 页的第 2 个表格
+2024-11-14 15:58:27.312 | DEBUG    | __main__:find_summary_table:70 - 找到表格标题: j
+(
+) y
+is shown in Table 7.  
+le 7 Project cost at design versus actual cost
+2024-11-14 15:58:27.323 | DEBUG    | __main__:find_summary_table:79 - 标题相似度: 0.32078057527542114
+2024-11-14 15:58:27.324 | DEBUG    | __main__:find_summary_table:41 - 处理第 30 页
+2024-11-14 15:58:27.359 | DEBUG    | __main__:find_summary_table:47 - 在第 30 页找到 1 个表格
+2024-11-14 15:58:27.359 | DEBUG    | __main__:find_summary_table:53 - 分析第 30 页的第 1 个表格
+2024-11-14 15:58:27.360 | DEBUG    | __main__:find_summary_table:67 - 未找到表格标题，跳过
+2024-11-14 15:58:27.360 | DEBUG    | __main__:find_summary_table:41 - 处理第 31 页
+2024-11-14 15:58:27.440 | DEBUG    | __main__:find_summary_table:47 - 在第 31 页找到 1 个表格
+2024-11-14 15:58:27.441 | DEBUG    | __main__:find_summary_table:53 - 分析第 31 页的第 1 个表格
+2024-11-14 15:58:27.442 | DEBUG    | __main__:find_summary_table:70 - 找到表格标题: g
+g
+p
+p
+were included in Annex G of the Inception Report.  
+Table 8 Elements of Theory of Change, from Terminal Review TOR
+2024-11-14 15:58:27.454 | DEBUG    | __main__:find_summary_table:79 - 标题相似度: 0.20692089200019836
+2024-11-14 15:58:27.454 | DEBUG    | __main__:find_summary_table:41 - 处理第 32 页
+2024-11-14 15:58:27.493 | DEBUG    | __main__:find_summary_table:47 - 在第 32 页找到 0 个表格
+2024-11-14 15:58:27.493 | DEBUG    | __main__:find_summary_table:41 - 处理第 33 页
+2024-11-14 15:58:27.565 | DEBUG    | __main__:find_summary_table:47 - 在第 33 页找到 1 个表格
+2024-11-14 15:58:27.565 | DEBUG    | __main__:find_summary_table:53 - 分析第 33 页的第 1 个表格
+2024-11-14 15:58:27.566 | DEBUG    | __main__:find_summary_table:70 - 找到表格标题: le 9 Justification for Reformulation of Results Statements
+2024-11-14 15:58:27.641 | DEBUG    | __main__:find_summary_table:79 - 标题相似度: 0.21030886471271515
+2024-11-14 15:58:27.641 | DEBUG    | __main__:find_summary_table:41 - 处理第 34 页
+2024-11-14 15:58:27.695 | DEBUG    | __main__:find_summary_table:47 - 在第 34 页找到 1 个表格
+2024-11-14 15:58:27.695 | DEBUG    | __main__:find_summary_table:53 - 分析第 34 页的第 1 个表格
+2024-11-14 15:58:27.696 | DEBUG    | __main__:find_summary_table:67 - 未找到表格标题，跳过
+2024-11-14 15:58:27.696 | DEBUG    | __main__:find_summary_table:41 - 处理第 35 页
+2024-11-14 15:58:27.762 | DEBUG    | __main__:find_summary_table:47 - 在第 35 页找到 1 个表格
+2024-11-14 15:58:27.762 | DEBUG    | __main__:find_summary_table:53 - 分析第 35 页的第 1 个表格
+2024-11-14 15:58:27.763 | DEBUG    | __main__:find_summary_table:67 - 未找到表格标题，跳过
+2024-11-14 15:58:27.763 | DEBUG    | __main__:find_summary_table:41 - 处理第 36 页
+2024-11-14 15:58:27.766 | DEBUG    | __main__:find_summary_table:47 - 在第 36 页找到 0 个表格
+2024-11-14 15:58:27.766 | DEBUG    | __main__:find_summary_table:41 - 处理第 37 页
+2024-11-14 15:58:27.868 | DEBUG    | __main__:find_summary_table:47 - 在第 37 页找到 0 个表格
+2024-11-14 15:58:27.868 | DEBUG    | __main__:find_summary_table:41 - 处理第 38 页
+2024-11-14 15:58:27.921 | DEBUG    | __main__:find_summary_table:47 - 在第 38 页找到 0 个表格
+2024-11-14 15:58:27.921 | DEBUG    | __main__:find_summary_table:41 - 处理第 39 页
+2024-11-14 15:58:27.939 | DEBUG    | __main__:find_summary_table:47 - 在第 39 页找到 0 个表格
+2024-11-14 15:58:27.939 | DEBUG    | __main__:find_summary_table:41 - 处理第 40 页
+2024-11-14 15:58:27.971 | DEBUG    | __main__:find_summary_table:47 - 在第 40 页找到 0 个表格
+2024-11-14 15:58:27.972 | DEBUG    | __main__:find_summary_table:41 - 处理第 41 页
+2024-11-14 15:58:27.978 | DEBUG    | __main__:find_summary_table:47 - 在第 41 页找到 0 个表格
+2024-11-14 15:58:27.978 | DEBUG    | __main__:find_summary_table:41 - 处理第 42 页
+2024-11-14 15:58:28.052 | DEBUG    | __main__:find_summary_table:47 - 在第 42 页找到 0 个表格
+2024-11-14 15:58:28.052 | DEBUG    | __main__:find_summary_table:41 - 处理第 43 页
+2024-11-14 15:58:28.221 | DEBUG    | __main__:find_summary_table:47 - 在第 43 页找到 2 个表格
+2024-11-14 15:58:28.221 | DEBUG    | __main__:find_summary_table:53 - 分析第 43 页的第 1 个表格
+2024-11-14 15:58:28.223 | DEBUG    | __main__:find_summary_table:70 - 找到表格标题: g
+y
+g
+in developing countries who will directly co-benefit from GEF and other donors’ funding.  
+Table 10 GEF Core Indicator 6: Targets and Achievements
+2024-11-14 15:58:28.302 | DEBUG    | __main__:find_summary_table:79 - 标题相似度: 0.2639917731285095
+2024-11-14 15:58:28.303 | DEBUG    | __main__:find_summary_table:53 - 分析第 43 页的第 2 个表格
+2024-11-14 15:58:28.305 | DEBUG    | __main__:find_summary_table:70 - 找到表格标题: p
+)
+p
+p
+g
+approximately equal. (Table 11) 
+Table 11 GEF Core Indicator 11: Targets and Achievements
+2024-11-14 15:58:28.377 | DEBUG    | __main__:find_summary_table:79 - 标题相似度: 0.30145877599716187
+2024-11-14 15:58:28.377 | DEBUG    | __main__:find_summary_table:41 - 处理第 44 页
+2024-11-14 15:58:28.381 | DEBUG    | __main__:find_summary_table:47 - 在第 44 页找到 0 个表格
+2024-11-14 15:58:28.381 | DEBUG    | __main__:find_summary_table:41 - 处理第 45 页
+2024-11-14 15:58:28.492 | DEBUG    | __main__:find_summary_table:47 - 在第 45 页找到 0 个表格
+2024-11-14 15:58:28.492 | DEBUG    | __main__:find_summary_table:41 - 处理第 46 页
+2024-11-14 15:58:28.574 | DEBUG    | __main__:find_summary_table:47 - 在第 46 页找到 0 个表格
+2024-11-14 15:58:28.574 | DEBUG    | __main__:find_summary_table:41 - 处理第 47 页
+2024-11-14 15:58:28.621 | DEBUG    | __main__:find_summary_table:47 - 在第 47 页找到 0 个表格
+2024-11-14 15:58:28.621 | DEBUG    | __main__:find_summary_table:41 - 处理第 48 页
+2024-11-14 15:58:28.669 | DEBUG    | __main__:find_summary_table:47 - 在第 48 页找到 0 个表格
+2024-11-14 15:58:28.669 | DEBUG    | __main__:find_summary_table:41 - 处理第 49 页
+2024-11-14 15:58:28.715 | DEBUG    | __main__:find_summary_table:47 - 在第 49 页找到 0 个表格
+2024-11-14 15:58:28.716 | DEBUG    | __main__:find_summary_table:41 - 处理第 50 页
+2024-11-14 15:58:28.764 | DEBUG    | __main__:find_summary_table:47 - 在第 50 页找到 0 个表格
+2024-11-14 15:58:28.764 | DEBUG    | __main__:find_summary_table:41 - 处理第 51 页
+2024-11-14 15:58:28.862 | DEBUG    | __main__:find_summary_table:47 - 在第 51 页找到 0 个表格
+2024-11-14 15:58:28.862 | DEBUG    | __main__:find_summary_table:41 - 处理第 52 页
+2024-11-14 15:58:28.940 | DEBUG    | __main__:find_summary_table:47 - 在第 52 页找到 0 个表格
+2024-11-14 15:58:28.940 | DEBUG    | __main__:find_summary_table:41 - 处理第 53 页
+2024-11-14 15:58:29.080 | DEBUG    | __main__:find_summary_table:47 - 在第 53 页找到 0 个表格
+2024-11-14 15:58:29.080 | DEBUG    | __main__:find_summary_table:41 - 处理第 54 页
+2024-11-14 15:58:29.149 | DEBUG    | __main__:find_summary_table:47 - 在第 54 页找到 1 个表格
+2024-11-14 15:58:29.149 | DEBUG    | __main__:find_summary_table:53 - 分析第 54 页的第 1 个表格
+2024-11-14 15:58:29.151 | DEBUG    | __main__:find_summary_table:70 - 找到表格标题: Table 12 Examples of ZCB project outputs, by date, author, title and project component
+2024-11-14 15:58:29.224 | DEBUG    | __main__:find_summary_table:79 - 标题相似度: 0.4374707341194153
+2024-11-14 15:58:29.224 | DEBUG    | __main__:find_summary_table:41 - 处理第 55 页
+2024-11-14 15:58:29.288 | DEBUG    | __main__:find_summary_table:47 - 在第 55 页找到 1 个表格
+2024-11-14 15:58:29.289 | DEBUG    | __main__:find_summary_table:53 - 分析第 55 页的第 1 个表格
+2024-11-14 15:58:29.290 | DEBUG    | __main__:find_summary_table:67 - 未找到表格标题，跳过
+2024-11-14 15:58:29.290 | DEBUG    | __main__:find_summary_table:41 - 处理第 56 页
+2024-11-14 15:58:29.343 | DEBUG    | __main__:find_summary_table:47 - 在第 56 页找到 0 个表格
+2024-11-14 15:58:29.343 | DEBUG    | __main__:find_summary_table:41 - 处理第 57 页
+2024-11-14 15:58:29.495 | DEBUG    | __main__:find_summary_table:47 - 在第 57 页找到 1 个表格
+2024-11-14 15:58:29.495 | DEBUG    | __main__:find_summary_table:53 - 分析第 57 页的第 1 个表格
+2024-11-14 15:58:29.498 | DEBUG    | __main__:find_summary_table:70 - 找到表格标题: p
+y
+p
+g
+assumption holds for Pathway 2.  
+Table 13 Proxy indicators and national data to test validity of Pathway 2 assumption
+2024-11-14 15:58:29.571 | DEBUG    | __main__:find_summary_table:79 - 标题相似度: 0.13231594860553741
+2024-11-14 15:58:29.571 | DEBUG    | __main__:find_summary_table:41 - 处理第 58 页
+2024-11-14 15:58:29.680 | DEBUG    | __main__:find_summary_table:47 - 在第 58 页找到 1 个表格
+2024-11-14 15:58:29.680 | DEBUG    | __main__:find_summary_table:53 - 分析第 58 页的第 1 个表格
+2024-11-14 15:58:29.682 | DEBUG    | __main__:find_summary_table:67 - 未找到表格标题，跳过
+2024-11-14 15:58:29.682 | DEBUG    | __main__:find_summary_table:41 - 处理第 59 页
+2024-11-14 15:58:29.727 | DEBUG    | __main__:find_summary_table:47 - 在第 59 页找到 0 个表格
+2024-11-14 15:58:29.728 | DEBUG    | __main__:find_summary_table:41 - 处理第 60 页
+2024-11-14 15:58:29.785 | DEBUG    | __main__:find_summary_table:47 - 在第 60 页找到 0 个表格
+2024-11-14 15:58:29.785 | DEBUG    | __main__:find_summary_table:41 - 处理第 61 页
+2024-11-14 15:58:29.849 | DEBUG    | __main__:find_summary_table:47 - 在第 61 页找到 0 个表格
+2024-11-14 15:58:29.849 | DEBUG    | __main__:find_summary_table:41 - 处理第 62 页
+2024-11-14 15:58:29.894 | DEBUG    | __main__:find_summary_table:47 - 在第 62 页找到 0 个表格
+2024-11-14 15:58:29.894 | DEBUG    | __main__:find_summary_table:41 - 处理第 63 页
+2024-11-14 15:58:29.996 | DEBUG    | __main__:find_summary_table:47 - 在第 63 页找到 0 个表格
+2024-11-14 15:58:29.996 | DEBUG    | __main__:find_summary_table:41 - 处理第 64 页
+2024-11-14 15:58:30.041 | DEBUG    | __main__:find_summary_table:47 - 在第 64 页找到 0 个表格
+2024-11-14 15:58:30.041 | DEBUG    | __main__:find_summary_table:41 - 处理第 65 页
+2024-11-14 15:58:30.083 | DEBUG    | __main__:find_summary_table:47 - 在第 65 页找到 0 个表格
+2024-11-14 15:58:30.083 | DEBUG    | __main__:find_summary_table:41 - 处理第 66 页
+2024-11-14 15:58:30.094 | DEBUG    | __main__:find_summary_table:47 - 在第 66 页找到 0 个表格
+2024-11-14 15:58:30.094 | DEBUG    | __main__:find_summary_table:41 - 处理第 67 页
+2024-11-14 15:58:30.236 | DEBUG    | __main__:find_summary_table:47 - 在第 67 页找到 0 个表格
+2024-11-14 15:58:30.236 | DEBUG    | __main__:find_summary_table:41 - 处理第 68 页
+2024-11-14 15:58:30.339 | DEBUG    | __main__:find_summary_table:47 - 在第 68 页找到 0 个表格
+2024-11-14 15:58:30.339 | DEBUG    | __main__:find_summary_table:41 - 处理第 69 页
+2024-11-14 15:58:30.401 | DEBUG    | __main__:find_summary_table:47 - 在第 69 页找到 0 个表格
+2024-11-14 15:58:30.401 | DEBUG    | __main__:find_summary_table:41 - 处理第 70 页
+2024-11-14 15:58:30.452 | DEBUG    | __main__:find_summary_table:47 - 在第 70 页找到 0 个表格
+2024-11-14 15:58:30.452 | DEBUG    | __main__:find_summary_table:41 - 处理第 71 页
+2024-11-14 15:58:30.501 | DEBUG    | __main__:find_summary_table:47 - 在第 71 页找到 0 个表格
+2024-11-14 15:58:30.501 | DEBUG    | __main__:find_summary_table:41 - 处理第 72 页
+2024-11-14 15:58:30.575 | DEBUG    | __main__:find_summary_table:47 - 在第 72 页找到 1 个表格
+2024-11-14 15:58:30.575 | DEBUG    | __main__:find_summary_table:53 - 分析第 72 页的第 1 个表格
+2024-11-14 15:58:30.577 | DEBUG    | __main__:find_summary_table:70 - 找到表格标题: Table 14: Summary of project findings and ratings
+2024-11-14 15:58:30.588 | DEBUG    | __main__:find_summary_table:79 - 标题相似度: 0.8447942733764648
+2024-11-14 15:58:30.588 | INFO     | __main__:find_summary_table:83 - 找到目标表格! 页码: 72, 相似度: 0.8447942733764648
+2024-11-14 15:58:30.589 | DEBUG    | __main__:find_summary_table:95 - 返回结果: {'page_num': 71, 'bbox': [55.739999771118164, 96.37076509915866, 528.2200317382812, 661.2271379743304], 'table_name': 'Table 14: Summary of project findings and ratings', 'confidence': 0.8447942733764648}
+2024-11-14 15:58:30.592 | DEBUG    | __main__:find_summary_table:108 - PDF文档已关闭
+2024-11-14 15:58:30.592 | INFO     | __main__:<module>:116 - 找到表格在第 72 页
+2024-11-14 15:58:30.592 | INFO     | __main__:<module>:117 - 表格坐标: [55.739999771118164, 96.37076509915866, 528.2200317382812, 661.2271379743304]
+2024-11-14 15:58:30.592 | INFO     | __main__:<module>:118 - 表格标题: Table 14: Summary of project findings and ratings
+2024-11-14 15:58:30.592 | INFO     | __main__:<module>:119 - 匹配置信度: 0.8447942733764648
