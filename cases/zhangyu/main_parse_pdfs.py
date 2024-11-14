@@ -32,16 +32,24 @@ class ProgressTracker:
         self.lock = Lock()
         self.console = Console()
         
-    def update_progress(self, file_name, status, details=None):
+    def update_progress(self, file_name, status, details=None, best_match=None):
         with self.lock:
-            # 更新状态
-            self.results[file_name] = {
-                'status': status,
-                'details': details
-            }
+            # 如果是第一次更新这个文件的状态
+            if file_name not in self.results:
+                self.results[file_name] = {
+                    'status': status,
+                    'details': details,
+                    'best_match': best_match
+                }
+            else:
+                # 更新状态和详情
+                self.results[file_name]['status'] = status
+                self.results[file_name]['details'] = details
+                # 只有当提供了新的最优匹配时才更新
+                if best_match is not None:
+                    self.results[file_name]['best_match'] = best_match
             
-            # 只记录日志，不打印到控制台
-            logger.debug(f"{file_name}: {status} - {details}")
+            logger.debug(f"{file_name}: {status} - {details} - Best match: {best_match}")
     
     def create_progress_table(self):
         table = Table(box=box.ROUNDED, expand=True, show_edge=True)
@@ -49,17 +57,21 @@ class ProgressTracker:
         table.add_column("状态", width=1)
         table.add_column("文件名", style="blue", width=20, justify="left")
         table.add_column("详情", style="green")
+        table.add_column("最优匹配", style="yellow")  # 新增列
         
         sorted_items = sorted(self.results.items(), key=lambda x: extract_number(x[0]))
         for idx, (filename, info) in enumerate(sorted_items, 1):
             status = info['status']
             emoji = STATUS_EMOJI.get(status, '❓')
             details = info['details'] or ''
+            best_match = info.get('best_match', '')  # 获取最优匹配信息
+            
             table.add_row(
                 str(idx),
                 emoji,
                 filename,
-                str(details)
+                str(details),
+                str(best_match)  # 添加最优匹配列
             )
         
         return table
@@ -75,14 +87,23 @@ def process_single_pdf(pdf_path, progress_tracker: ProgressTracker):
         logger.debug(f"开始处理文件: {pdf_path.name}")
         progress_tracker.update_progress(pdf_path.name, 'opening', "正在打开文件...")
         
-        def page_callback(page_num, total_pages):
+        def page_callback(page_num, total_pages, best_match=None):
             """页面处理进度回调"""
             details = f"正在处理第 {page_num + 1}/{total_pages} 页..."
+            
+            # 如果有最优匹配，格式化显示信息
+            best_match_info = ""
+            if best_match:
+                best_match_info = (f"页码:{best_match['page_num'] + 1} "
+                                 f"相似度:{best_match['confidence']:.2f} "
+                                 f"文本:{best_match['matched_text'][:20]}...")
+            
             logger.debug(f"{pdf_path.name}: {details}")
             progress_tracker.update_progress(
                 pdf_path.name, 
                 'processing_page', 
-                details
+                details,
+                best_match_info
             )
         
         logger.debug(f"{pdf_path.name}: 准备调用 find_summary_text...")

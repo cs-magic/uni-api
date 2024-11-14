@@ -13,7 +13,7 @@ def find_summary_text(pdf_path: str, page_callback=None) -> Optional[Dict]:
 
     Args:
         pdf_path: PDF文件路径
-        page_callback: 页面处理进度回调函数，接收当前页码和总页数作为参数
+        page_callback: 页面处理进度回调函数，接收当前页码、总页数和最优匹配信息作为参数
     Returns:
         dict: 包含匹配结果的字典，如果未找到则返回 None
     """
@@ -41,9 +41,11 @@ def find_summary_text(pdf_path: str, page_callback=None) -> Optional[Dict]:
                 page_start_time = time.time()
                 logger.debug(f"处理第 {page_num + 1} 页")
                 
-                # 调用回调函数报告当前进度
+                # 调用回调函数报告当前进度和最优匹配
                 if page_callback:
-                    page_callback(page_num, total_pages)
+                    # 只有当找到过匹配时才传递best_match
+                    current_best = best_match if best_match['confidence'] > -1 else None
+                    page_callback(page_num, total_pages, current_best)
                 
                 try:
                     page = doc[page_num]
@@ -97,6 +99,10 @@ def find_summary_text(pdf_path: str, page_callback=None) -> Optional[Dict]:
                                 'matched_text': text,
                                 'confidence': float(similarity)
                             }
+                            
+                            # 找到更好的匹配时立即通知回调
+                            if page_callback:
+                                page_callback(page_num, total_pages, best_match)
                             
                 except Exception as e:
                     logger.warning(f"处理第 {page_num + 1} 页时发生错误: {str(e)}")
