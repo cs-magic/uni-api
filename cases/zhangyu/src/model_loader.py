@@ -22,5 +22,5 @@ class ModelLoader:
         start_time = time.time()
         model = cls.get_model()
         embedding = model.encode([text])[0]
-        logger.debug(f"文本编码完成，耗时: {time.time() - start_time:.2f}秒")
+        # logger.debug(f"文本编码完成，耗时: {time.time() - start_time:.2f}秒")
         return embedding 
