@@ -12,6 +12,7 @@ from rich.table import Table
 from rich.console import Console
 from rich import box
 from threading import Lock
+from src.config import DEFAULT_CONFIG
 
 # 添加状态表情映射
 STATUS_EMOJI = {
@@ -53,25 +54,31 @@ class ProgressTracker:
     
     def create_progress_table(self):
         table = Table(box=box.ROUNDED, expand=True, show_edge=True)
-        table.add_column("序号", style="cyan", width=1)
-        table.add_column("状态", width=1)
-        table.add_column("文件名", style="blue", width=20, justify="left")
+        table.add_column("序号", style="cyan", width=4)
+        table.add_column("状态", width=2)
+        table.add_column("文件名", style="blue", width=40, no_wrap=True)
         table.add_column("详情", style="green")
-        table.add_column("最优匹配", style="yellow")  # 新增列
+        table.add_column("最优匹配", style="yellow", width=60, no_wrap=True)
         
         sorted_items = sorted(self.results.items(), key=lambda x: extract_number(x[0]))
         for idx, (filename, info) in enumerate(sorted_items, 1):
             status = info['status']
             emoji = STATUS_EMOJI.get(status, '❓')
             details = info['details'] or ''
-            best_match = info.get('best_match', '')  # 获取最优匹配信息
+            best_match = info.get('best_match', '')
+            
+            # 如果文件名过长，截断并添加省略号
+            if len(filename) > 27:  # 预留3个字符用于省略号
+                truncated_filename = filename[:27] + "..."
+            else:
+                truncated_filename = filename
             
             table.add_row(
                 str(idx),
                 emoji,
-                filename,
+                truncated_filename,
                 str(details),
-                str(best_match)  # 添加最优匹配列
+                str(best_match)
             )
         
         return table
@@ -173,13 +180,13 @@ def process_pdf_files(folder_path, max_workers=None):
     """并发处理文件夹中的所有PDF文件并返回结果列表"""
     pdf_files = list(Path(folder_path).glob('**/*.pdf'))
     pdf_files.sort(key=lambda x: extract_number(x.name))
-    pdf_files = pdf_files[:3]  # 先测试少量文件
+    pdf_files = pdf_files[:]
     total_files = len(pdf_files)
     
     logger.info(f"找到 {total_files} 个PDF文件待处理")
     
-    if max_workers is None:
-        max_workers = 2  # 降低并发数，方便调试
+    # if max_workers is None:
+        # max_workers = 2  # 降低并发数，方便调试
     
     logger.info(f"设置最大并发数为: {max_workers}")
     
@@ -298,40 +305,46 @@ def save_statistics(results, output_path):
     其他错误: {error}""")
 
 def main():
+    # 加载配置
+    config = DEFAULT_CONFIG
+    
     # 移除默认的 stderr 处理器
     logger.remove()
     
-    # 添加控制台处理器，使用简单的格式
+    # 添加控制台处理器
     logger.add(
         sys.stderr,
-        level="INFO",
-        format="<green>{time:HH:mm:ss}</green> | {message}",
+        level=config.log.console_level,
+        format=config.log.console_format,
         colorize=True
     )
     
-    # 添加文件处理器，使用详细的格式
+    # 添加文件处理器
     logger.add(
-        "pdf_parser.log",
-        level="DEBUG",
-        format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}",
-        rotation="500 MB"
+        str(config.log.log_file),
+        level=config.log.file_level,
+        format=config.log.log_format,
+        rotation=config.log.rotation
     )
+    
+    # 打印配置信息
+    logger.info("当前配置:")
+    logger.info(config)
     
     try:
         # 预热模型
         logger.info("预热模型...")
         ModelLoader.get_model()
         
-        # 设置PDF文件夹路径和输出文件路径
-        pdf_folder = '/Users/mark/Documents/Terminal evaluation report'
-        output_file = 'pdf_processing_results.xlsx'
-        
         # 处理所有PDF文件
-        results = process_pdf_files(pdf_folder, max_workers=2)
+        results = process_pdf_files(
+            config.pdf.pdf_folder,
+            max_workers=config.pdf.max_workers
+        )
         
         # 保存统计结果
         if results:
-            save_statistics(results, output_file)
+            save_statistics(results, config.pdf.output_file)
         
     except Exception as e:
         logger.exception("处理过程中发生错误")

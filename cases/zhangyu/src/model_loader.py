@@ -1,6 +1,7 @@
 from sentence_transformers import SentenceTransformer
 from loguru import logger
 import time
+from .config import DEFAULT_CONFIG as config  # 导入配置
 
 class ModelLoader:
     _instance = None
@@ -12,7 +13,10 @@ class ModelLoader:
         if cls._model is None:
             start_time = time.time()
             logger.info("加载语义相似度模型...")
-            cls._model = SentenceTransformer('all-MiniLM-L6-v2')
+            cls._model = SentenceTransformer(
+                config.model.model_name,
+                device=config.model.device
+            )
             logger.info(f"模型加载完成，耗时: {time.time() - start_time:.2f}秒")
         return cls._model
 

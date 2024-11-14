@@ -4,7 +4,7 @@ from typing import Dict, List, Tuple, Optional
 from sklearn.metrics.pairwise import cosine_similarity
 from loguru import logger
 from .model_loader import ModelLoader
-from .config import TARGET_TABLE_CONFIG
+from .config import DEFAULT_CONFIG as config
 
 def find_summary_text(pdf_path: str, page_callback=None) -> Optional[Dict]:
     """
@@ -28,7 +28,7 @@ def find_summary_text(pdf_path: str, page_callback=None) -> Optional[Dict]:
 
     try:
         # 获取目标文本的编码
-        target_text = TARGET_TABLE_CONFIG['name']
+        target_text = config.target.table_name
         target_embedding = ModelLoader.encode_text(target_text)
         
         pdf_start_time = time.time()
@@ -82,9 +82,9 @@ def find_summary_text(pdf_path: str, page_callback=None) -> Optional[Dict]:
                                 for table in table_finder.tables:
                                     # 检查表格是否在文本块下方
                                     if (table.bbox[1] > text_bbox[3] and  # 表格在文本下方
-                                        table.bbox[0] >= text_bbox[0] - 50 and  # 表格与文本水平位置接近
-                                        table.bbox[2] <= text_bbox[2] + 50 and
-                                        table.bbox[1] - text_bbox[3] < 50):  # 表格与文本垂直距离不太远
+                                        table.bbox[0] >= text_bbox[0] - config.target.table_position_tolerance and  # 表格与文本水平位置接近
+                                        table.bbox[2] <= text_bbox[2] + config.target.table_position_tolerance and
+                                        table.bbox[1] - text_bbox[3] < config.target.table_position_tolerance):  # 表格与文本垂直距离不太远
                                         table_bbox = table.bbox
                                         break
                                 del table_finder
