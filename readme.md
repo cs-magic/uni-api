@@ -29,7 +29,7 @@ poetry install
 ## Run
 
 ```shell
-uvicorn core:app --reload
+uvicorn auth:app --reload
 ```
 
 访问 `http://localhost:8000/docs` 查看各 API。
@@ -39,7 +39,7 @@ uvicorn core:app --reload
 ### proxy
 
 ```shell
-pm2 start --name "openapi" 'http_proxy=http://localhost:7890 https_proxy=http://localhost:7890 uvicorn core:app --port 40330'
+pm2 start --name "openapi" 'http_proxy=http://localhost:7890 https_proxy=http://localhost:7890 uvicorn auth:app --port 40330'
 ```
 
 ## Tech

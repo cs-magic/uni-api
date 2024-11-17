@@ -10,7 +10,7 @@ from apitally.fastapi import ApitallyMiddleware
 
 from packages.fastapi.dump_openapi import dump_openapi
 from settings import settings
-from src.router import root_router
+from router import root_router
 
 
 @asynccontextmanager

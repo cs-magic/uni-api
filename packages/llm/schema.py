@@ -79,7 +79,7 @@ class OpenAIBody(LLMBodyBase):
 
 AnthropicModels = Literal['claude-3-5-sonnet-20240620']
 
-MoonshotModel = Literal["moonshot-v1-8k", "moonshot-v1-32k", "moonshot-v1-128k"]
+MoonshotModel = Literal["moonshot-v1_plain-8k", "moonshot-v1_plain-32k", "moonshot-v1_plain-128k"]
 
 BaichuanModel = Literal["Baichuan2-Turbo", "Baichuan2-Turbo-192k",]
 

@@ -3,7 +3,7 @@ from typing import Any
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from src.path import PROJECT_PATH
+from path import PROJECT_PATH
 
 
 class Settings(BaseSettings):

@@ -10,9 +10,9 @@ from packages.api.index import api
 from packages.llm.agent.call_agent import call_agent
 from packages.markdown.html2md import html2md
 from packages.spider.schema import ICard, ISummary, PlatformType, IUserBasic, IImage
-from src.path import GENERATED_PATH
 from packages.llm.schema import ModelType
-from src.utils import check_platform_type
+from path import GENERATED_PATH
+from utils import check_platform_type
 
 
 def parse_url(

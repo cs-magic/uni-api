@@ -237,7 +237,7 @@ if __name__ == "__main__":
 </svg>'''
 
     if svgs := extract_svgs(sample_text):
-        output_dir = ".out"
+        output_dir = ".out_2024-11-14 20:26:38"
         os.makedirs(output_dir, exist_ok=True)
         
         for fmt, ppis in [('png', [72, 300]), ('pdf', [72, 300])]:
