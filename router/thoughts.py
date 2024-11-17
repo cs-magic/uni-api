@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 from database.utils import get_db
 from models.thoughts import Recording
 from packages.fastapi.standard_error import standard_error_handler
-from utils.oss import OSSClient
+from router.oss import oss_upload_file
 
 thoughts_router = APIRouter(prefix='/thoughts', tags=['thoughts'])
 logger = logging.getLogger(__name__)
@@ -21,33 +21,29 @@ MAX_FILE_SIZE = 10 * 1024 * 1024  # N MB in bytes
 @thoughts_router.post("/new")
 @standard_error_handler()
 async def get_record_metadata(
-    record: UploadFile = File(..., description="iOS Shortcuts录音文件"), db: Session = Depends(get_db)
+    upload_file: UploadFile = File(..., description="iOS Shortcuts录音文件"), db: Session = Depends(get_db)
 ) -> Dict[str, Any]:
     """
     获取录音文件的元数据信息，并保存到OSS和数据库
     """
     try:
         # 读取文件内容到内存
-        content = await record.read()
+        content = await upload_file.read()
 
         # 检查文件大小
         if len(content) > MAX_FILE_SIZE:
             raise HTTPException(status_code=400,
-                detail=f"File size exceeds maximum limit of {MAX_FILE_SIZE / 1024 / 1024}MB")
+                                detail=f"File size exceeds maximum limit of {MAX_FILE_SIZE / 1024 / 1024}MB")
 
         # 使用BytesIO创建一个内存文件对象用于mutagen分析
-        audio_file = io.BytesIO(content)
-        audio = MutagenFile(audio_file)
+        file = io.BytesIO(content)
+        audio = MutagenFile(file)
 
         if audio is None:
             raise HTTPException(status_code=400, detail="Unsupported audio format or corrupted file")
 
         # 准备元数据
-        metadata = {
-            "filename": record.filename,
-            "content_type": record.content_type,
-            "file_size": len(content),
-            "tags": {}}
+        metadata = {"filename": file.filename, "content_type": file.content_type, "file_size": len(content), "tags": {}}
 
         # 添加音频特定的元数据
         try:
@@ -65,7 +61,7 @@ async def get_record_metadata(
                 except (AttributeError, IndexError):
                     metadata["audio_format"] = None
             else:
-                metadata["audio_format"] = record.filename.split('.')[-1]
+                metadata["audio_format"] = file.filename.split('.')[-1]
 
             # 获取标签信息
             if hasattr(audio, "tags") and audio.tags:
@@ -79,20 +75,21 @@ async def get_record_metadata(
             metadata["error_details"] = str(e)
 
         # 上传到OSS
-        oss_client = OSSClient()
-        audio_file.seek(0)  # 重置文件指针到开始
-        oss_url = oss_client.upload_file(audio_file, record.filename)
+        file.seek(0)  # 重置文件指针到开始
+
+        # todo: upload_file seek 0 ?
+        oss_url = oss_upload_file(upload_file, file.name)['oss_url']
 
         # 创建数据库记录
         db_recording = Recording(filename=metadata["filename"],
-            content_type=metadata["content_type"],
-            file_size=metadata["file_size"],
-            oss_url=oss_url,
-            duration=metadata.get("duration"),
-            bitrate=metadata.get("bitrate"),
-            sample_rate=metadata.get("sample_rate"),
-            audio_format=metadata.get("audio_format"),
-            metadata=metadata.get("tags", {}))
+                                 content_type=metadata["content_type"],
+                                 file_size=metadata["file_size"],
+                                 oss_url=oss_url,
+                                 duration=metadata.get("duration"),
+                                 bitrate=metadata.get("bitrate"),
+                                 sample_rate=metadata.get("sample_rate"),
+                                 audio_format=metadata.get("audio_format"),
+                                 metadata=metadata.get("tags", {}))
 
         db.add(db_recording)
         db.commit()
