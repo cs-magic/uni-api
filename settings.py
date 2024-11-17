@@ -28,6 +28,7 @@ class Settings(BaseSettings):
                  {"name": "Cases", }, {"name": "Rama", }, {"name": "default", }, ]
 
     DATABASE_URL: str
+    DATABASE_BACKEND_URL: str
 
     # LLM
     MOONSHOT_API_KEY: str

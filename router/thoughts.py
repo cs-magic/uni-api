@@ -4,7 +4,7 @@ from typing import Dict, Any, List
 
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Query
 from mutagen import File as MutagenFile
-from sqlalchemy.orm import Session
+from sqlmodel import Session
 
 from utils.database import get_db
 from models.thoughts import Recording
