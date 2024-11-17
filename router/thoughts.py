@@ -9,7 +9,7 @@ from sqlmodel import Session
 from utils.database import get_db
 from models.thoughts import Recording
 from packages.fastapi.standard_error import standard_error_handler
-from router.oss import oss_upload_file
+from router.oss import upload_file_to_oss
 
 thoughts_router = APIRouter(prefix='/thoughts', tags=['thoughts'])
 logger = logging.getLogger(__name__)
@@ -81,7 +81,7 @@ async def get_record_metadata(
 
         # 上传到OSS - 使用原始的 upload_file
         await upload_file.seek(0)  # 重置文件指针到开始
-        oss_url = (await oss_upload_file(upload_file, upload_file.filename))['oss_url']
+        oss_url = upload_file_to_oss(upload_file, upload_file.filename)
 
         # 创建数据库记录
         db_recording = Recording(filename=metadata["filename"],
