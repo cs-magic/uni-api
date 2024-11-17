@@ -15,6 +15,8 @@ from models.thoughts import Recording # noqa
 # access to the values within the .ini file in use.
 config = context.config
 
+config.set_main_option("sqlalchemy.url", os.environ['DATABASE_BACKEND_URL'])
+
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 if config.config_file_name is not None:
@@ -44,7 +46,7 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = os.environ['DATABASE_BACKEND_URL'] # config.get_main_option("sqlalchemy.url")
+    url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url,
         target_metadata=target_metadata,
