@@ -42,8 +42,13 @@ async def get_record_metadata(
         if audio is None:
             raise HTTPException(status_code=400, detail="Unsupported audio format or corrupted file")
 
-        # 准备元数据
-        metadata = {"filename": file.filename, "content_type": file.content_type, "file_size": len(content), "tags": {}}
+        # 准备元数据 - 使用 upload_file 而不是 file 来获取文件名
+        metadata = {
+            "filename": upload_file.filename,
+            "content_type": upload_file.content_type,
+            "file_size": len(content),
+            "tags": {}
+        }
 
         # 添加音频特定的元数据
         try:
@@ -61,7 +66,7 @@ async def get_record_metadata(
                 except (AttributeError, IndexError):
                     metadata["audio_format"] = None
             else:
-                metadata["audio_format"] = file.filename.split('.')[-1]
+                metadata["audio_format"] = upload_file.filename.split('.')[-1]
 
             # 获取标签信息
             if hasattr(audio, "tags") and audio.tags:
@@ -74,11 +79,9 @@ async def get_record_metadata(
             logger.error(f"Error extracting audio metadata: {str(e)}")
             metadata["error_details"] = str(e)
 
-        # 上传到OSS
-        file.seek(0)  # 重置文件指针到开始
-
-        # todo: upload_file seek 0 ?
-        oss_url = oss_upload_file(upload_file, file.name)['oss_url']
+        # 上传到OSS - 使用原始的 upload_file
+        await upload_file.seek(0)  # 重置文件指针到开始
+        oss_url = oss_upload_file(upload_file, upload_file.filename)['oss_url']
 
         # 创建数据库记录
         db_recording = Recording(filename=metadata["filename"],
