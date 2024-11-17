@@ -1,7 +1,7 @@
 from fastapi import APIRouter, UploadFile, Depends, File
 from sqlmodel import Session
 
-from database.utils import get_db
+from utils.database import get_db
 from packages.fastapi.standard_error import standard_error_handler
 from utils.oss import OSSClient
 

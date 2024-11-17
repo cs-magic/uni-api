@@ -2,8 +2,8 @@ from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from auth.security import get_current_user
-from database.utils import get_db
-from database.models.user import User
+from utils.database import get_db
+from models.user import User
 from schemas.user import CreditsCheck
 
 

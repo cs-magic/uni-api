@@ -7,9 +7,10 @@ import stripe
 from settings import settings
 from auth.oauth import OAuthHandler
 from auth.security import get_password_hash, verify_password, create_access_token, get_current_user
-from database.utils import get_db
+from utils.database import get_db
 from dependencies.credits import verify_credits
-from database.models.user import Transaction, User
+from models.user import User
+from models.transaction import Transaction
 from schemas.user import UserResponse, UserCreate, Token, CreditsCheck
 
 account_router = APIRouter(prefix='/account', tags=['Account'])
@@ -106,7 +107,7 @@ async def stripe_webhook(
         
         if event.type == "payment_intent.succeeded":
             payment_intent = event.data.object
-            user_id = payment_intent.metadata.get("user_id")
+            user_id = payment_intent.meta.get("user_id")
             amount = payment_intent.amount / 100  # Convert from cents
             
             # Update transaction and user credits

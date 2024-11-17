@@ -12,7 +12,7 @@ from packages.markdown.html2md import html2md
 from packages.spider.schema import ICard, ISummary, PlatformType, IUserBasic, IImage
 from packages.llm.schema import ModelType
 from path import GENERATED_PATH
-from utils import check_platform_type
+from utils.platforms import check_platform_type
 
 
 def parse_url(

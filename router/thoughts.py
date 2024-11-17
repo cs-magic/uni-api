@@ -6,7 +6,7 @@ from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Query
 from mutagen import File as MutagenFile
 from sqlalchemy.orm import Session
 
-from database.utils import get_db
+from utils.database import get_db
 from models.thoughts import Recording
 from packages.fastapi.standard_error import standard_error_handler
 from router.oss import oss_upload_file
@@ -127,7 +127,7 @@ async def list_records(
             "created_time": record.created_at.isoformat(),
             "modified_time": record.updated_at.isoformat(),
             "audio_format": record.audio_format,
-            "metadata": record.metadata,
+            "metadata": record.meta,
             "url": record.oss_url} for record in recordings]
 
     except Exception as e:
