@@ -81,7 +81,7 @@ async def get_record_metadata(
 
         # 上传到OSS - 使用原始的 upload_file
         await upload_file.seek(0)  # 重置文件指针到开始
-        oss_url = oss_upload_file(upload_file, upload_file.filename)['oss_url']
+        oss_url = (await oss_upload_file(upload_file, upload_file.filename))['oss_url']
 
         # 创建数据库记录
         db_recording = Recording(filename=metadata["filename"],
