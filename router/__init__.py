@@ -10,7 +10,7 @@ from router.sport import sport_router
 from router.uni_pusher import uni_pusher_router
 from router.vpn import vpn_router
 from router.wechat import wechat_route
-
+from router.thoughts import thoughts_router
 root_router = APIRouter()
 
 root_router.include_router(account_router)
@@ -23,3 +23,4 @@ root_router.include_router(map_router)
 root_router.include_router(uni_pusher_router)
 root_router.include_router(wechat_route)
 root_router.include_router(cases_router)
+root_router.include_router(thoughts_router)
