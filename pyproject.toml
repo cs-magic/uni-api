@@ -72,3 +72,8 @@ scikit-learn = "^1.5.2"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.poetry.group.cpu.dependencies]
+torch = {version = "^2.2.0", source = "pytorch-cpu"}
+
+[tool.poetry.group.gpu.dependencies]
+torch = "^2.2.0"
