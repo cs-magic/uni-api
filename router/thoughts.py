@@ -1,57 +1,54 @@
-from fastapi import APIRouter, UploadFile, File, HTTPException
-from typing import Dict, Any, List
-from mutagen import File as MutagenFile
-import os
-from datetime import datetime
+import io
 import logging
+from typing import Dict, Any, List
 
+from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Query
+from mutagen import File as MutagenFile
+from sqlalchemy.orm import Session
+
+from database.utils import get_db
+from models.thoughts import Recording
 from packages.fastapi.standard_error import standard_error_handler
+from utils.oss import OSSClient
 
 thoughts_router = APIRouter(prefix='/thoughts', tags=['thoughts'])
 logger = logging.getLogger(__name__)
 
-# 添加录音文件存储路径的常量
-RECORDINGS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "recordings")
-os.makedirs(RECORDINGS_DIR, exist_ok=True)
+# 设置最大文件大小
+MAX_FILE_SIZE = 10 * 1024 * 1024  # N MB in bytes
+
 
 @thoughts_router.post("/new")
 @standard_error_handler()
 async def get_record_metadata(
-    record: UploadFile = File(..., description="iOS Shortcuts录音文件")
+    record: UploadFile = File(..., description="iOS Shortcuts录音文件"), db: Session = Depends(get_db)
 ) -> Dict[str, Any]:
     """
-    获取录音文件的元数据信息，并保存文件
-    
-    Args:
-        record (UploadFile): iOS Shortcuts录制的音频文件
-        
-    Returns:
-        Dict[str, Any]: 包含文件元数据的字典
+    获取录音文件的元数据信息，并保存到OSS和数据库
     """
-    temp_path = None
     try:
-        # 保存上传的文件到临时位置
-        temp_path = f"/tmp/{record.filename}"
-        with open(temp_path, "wb") as buffer:
-            content = await record.read()
-            buffer.write(content)
-        
-        # 使用mutagen读取文件元数据
-        audio = MutagenFile(temp_path)
+        # 读取文件内容到内存
+        content = await record.read()
+
+        # 检查文件大小
+        if len(content) > MAX_FILE_SIZE:
+            raise HTTPException(status_code=400,
+                detail=f"File size exceeds maximum limit of {MAX_FILE_SIZE / 1024 / 1024}MB")
+
+        # 使用BytesIO创建一个内存文件对象用于mutagen分析
+        audio_file = io.BytesIO(content)
+        audio = MutagenFile(audio_file)
+
         if audio is None:
             raise HTTPException(status_code=400, detail="Unsupported audio format or corrupted file")
-        
-        # 获取文件基本信息
-        file_stats = os.stat(temp_path)
-        
+
+        # 准备元数据
         metadata = {
             "filename": record.filename,
             "content_type": record.content_type,
-            "file_size": file_stats.st_size,
-            "created_time": datetime.fromtimestamp(file_stats.st_ctime).isoformat(),
-            "modified_time": datetime.fromtimestamp(file_stats.st_mtime).isoformat(),
-        }
-        
+            "file_size": len(content),
+            "tags": {}}
+
         # 添加音频特定的元数据
         try:
             if hasattr(audio.info, "length"):
@@ -60,103 +57,82 @@ async def get_record_metadata(
                 metadata["bitrate"] = audio.info.bitrate
             if hasattr(audio.info, "sample_rate"):
                 metadata["sample_rate"] = audio.info.sample_rate
-            
-            # 安全地获取音频格式
+
+            # 获取音频格式
             if hasattr(audio, 'mime') and audio.mime:
                 try:
                     metadata["audio_format"] = audio.mime[0].split("/")[1]
                 except (AttributeError, IndexError):
                     metadata["audio_format"] = None
             else:
-                # 尝试从文件扩展名获取格式
-                metadata["audio_format"] = os.path.splitext(record.filename)[1].lstrip('.')
-            
-            # 安全地获取标签信息
+                metadata["audio_format"] = record.filename.split('.')[-1]
+
+            # 获取标签信息
             if hasattr(audio, "tags") and audio.tags:
                 try:
                     metadata["tags"] = dict(audio.tags)
                 except Exception as e:
                     logger.warning(f"Failed to extract tags: {str(e)}")
-                    metadata["tags"] = {}
-            
+
         except Exception as e:
             logger.error(f"Error extracting audio metadata: {str(e)}")
             metadata["error_details"] = str(e)
-        
-        # 将文件从临时目录移动到永久存储位置
-        permanent_path = os.path.join(RECORDINGS_DIR, record.filename)
-        try:
-            os.rename(temp_path, permanent_path)
-            temp_path = None  # 防止finally块中删除已移动的文件
-            logger.info(f"Successfully saved recording to {permanent_path}")
-        except Exception as e:
-            logger.error(f"Failed to save recording: {str(e)}")
-            raise HTTPException(
-                status_code=500,
-                detail="Failed to save recording file"
-            )
-        
+
+        # 上传到OSS
+        oss_client = OSSClient()
+        audio_file.seek(0)  # 重置文件指针到开始
+        oss_url = oss_client.upload_file(audio_file, record.filename)
+
+        # 创建数据库记录
+        db_recording = Recording(filename=metadata["filename"],
+            content_type=metadata["content_type"],
+            file_size=metadata["file_size"],
+            oss_url=oss_url,
+            duration=metadata.get("duration"),
+            bitrate=metadata.get("bitrate"),
+            sample_rate=metadata.get("sample_rate"),
+            audio_format=metadata.get("audio_format"),
+            metadata=metadata.get("tags", {}))
+
+        db.add(db_recording)
+        db.commit()
+        db.refresh(db_recording)
+
         return metadata
 
-    except HTTPException as he:
-        raise he
     except Exception as e:
         logger.error(f"Failed to process audio file: {str(e)}")
-        raise HTTPException(
-            status_code=500,
-            detail=f"Failed to process audio file: {str(e)}"
-        )
-    finally:
-        # 确保清理临时文件（如果还存在的话）
-        if temp_path and os.path.exists(temp_path):
-            try:
-                os.remove(temp_path)
-            except Exception as e:
-                logger.error(f"Failed to remove temp file {temp_path}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to process audio file: {str(e)}")
+
 
 @thoughts_router.get("/list", response_model=List[Dict[str, Any]])
 @standard_error_handler()
-async def list_records() -> List[Dict[str, Any]]:
+async def list_records(
+    skip: int = Query(default=0, ge=0), limit: int = Query(default=10, ge=1, le=100), db: Session = Depends(get_db)
+) -> List[Dict[str, Any]]:
     """
-    获取所有已上传的录音文件列表
+    获取已上传的录音文件列表（分页）
     
-    Returns:
-        List[Dict[str, Any]]: 包含所有录音文件信息的列表
+    Args:
+        skip: 跳过的记录数
+        limit: 返回的最大记录数
+        db: 数据库会话
     """
     try:
-        records = []
-        for filename in os.listdir(RECORDINGS_DIR):
-            file_path = os.path.join(RECORDINGS_DIR, filename)
-            if os.path.isfile(file_path):
-                file_stats = os.stat(file_path)
-                
-                # 基本文件信息
-                record_info = {
-                    "filename": filename,
-                    "file_size": file_stats.st_size,
-                    "created_time": datetime.fromtimestamp(file_stats.st_ctime).isoformat(),
-                    "modified_time": datetime.fromtimestamp(file_stats.st_mtime).isoformat(),
-                }
-                
-                # 尝试获取音频文件的元数据
-                try:
-                    audio = MutagenFile(file_path)
-                    if audio and hasattr(audio.info, "length"):
-                        record_info["duration"] = round(audio.info.length, 2)
-                    if audio and hasattr(audio.info, "bitrate"):
-                        record_info["bitrate"] = audio.info.bitrate
-                except Exception as e:
-                    logger.warning(f"Failed to read metadata for {filename}: {str(e)}")
-                
-                records.append(record_info)
-        
-        # 按修改时间降序排序
-        records.sort(key=lambda x: x["modified_time"], reverse=True)
-        return records
-        
+        recordings = db.query(Recording).order_by(Recording.created_at.desc()).offset(skip).limit(limit).all()
+
+        return [{
+            "id": record.id,
+            "filename": record.filename,
+            "file_size": record.file_size,
+            "duration": record.duration,
+            "bitrate": record.bitrate,
+            "created_time": record.created_at.isoformat(),
+            "modified_time": record.updated_at.isoformat(),
+            "audio_format": record.audio_format,
+            "metadata": record.metadata,
+            "url": record.oss_url} for record in recordings]
+
     except Exception as e:
         logger.error(f"Failed to list records: {str(e)}")
-        raise HTTPException(
-            status_code=500,
-            detail=f"Failed to list records: {str(e)}"
-        )
+        raise HTTPException(status_code=500, detail=f"Failed to list records: {str(e)}")
