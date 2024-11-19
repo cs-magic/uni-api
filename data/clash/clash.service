@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/local/bin/clash -d ~/.config/clash/config
+ExecStart=/usr/local/bin/clash -d /etc/clash/config
 Restart=on-failure
 RestartSec=10
 

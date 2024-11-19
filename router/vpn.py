@@ -1,11 +1,10 @@
 import io
-import os
-import time
 import zipfile
 from enum import Enum
 from pathlib import Path
 
 import cachetools
+import requests
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.params import Depends
 from starlette.responses import StreamingResponse, FileResponse
@@ -25,11 +24,12 @@ class Provider(str, Enum):
 
 CONFIG_FILENAME = "config.yaml"
 CLASH_DATA_DIR = DATA_PATH / "clash"
-CONFIG_DIR = CLASH_DATA_DIR / "config"
-CONFIG_FILEPATH = CONFIG_DIR / CONFIG_FILENAME
+CLASH_CONFIG_DIR = CLASH_DATA_DIR / "config"
+CLASH_EXEC_DIR = CLASH_DATA_DIR / "exec"
+CONFIG_FILEPATH = CLASH_CONFIG_DIR / CONFIG_FILENAME
 
 # 确保必要的目录存在
-CONFIG_DIR.mkdir(parents=True, exist_ok=True)
+CLASH_CONFIG_DIR.mkdir(parents=True, exist_ok=True)
 
 
 @cachetools.func.ttl_cache(ttl=60 * 10, maxsize=None)
@@ -77,7 +77,15 @@ async def get_vpn_config(  # user: Annotated[User, Security(get_current_active_u
 
 
 @vpn_router.get('/clash.zip')
-async def install_vpn(update_cache=True, machine='ubuntu', time=time.time()):
+async def install_vpn(
+    clash_version='2.0.24', os="linx_amd64", ):
+    clash_exec_name = f'clash_{clash_version}_{os}.tar.gz'
+    clash_exec_path = CLASH_EXEC_DIR / clash_exec_name
+    if not clash_exec_path.exists():
+        with open(clash_exec_path, 'wb') as f:
+            res = requests.get(f'https://github.com/doreamon-design/clash/releases/download/v{clash_version}/{clash_exec_name}')
+            f.write(res.content)
+
     if not CONFIG_FILEPATH.exists():
         fetch_latest_config()
 
@@ -96,8 +104,8 @@ async def install_vpn(update_cache=True, machine='ubuntu', time=time.time()):
     zip_buffer.seek(0)
 
     return StreamingResponse(zip_buffer,
-        media_type='application/zip',
-        headers={'Content-Disposition': f'attachment; filename="clash.zip"'})
+                             media_type='application/zip',
+                             headers={'Content-Disposition': f'attachment; filename="clash.zip"'})
 
 
 @vpn_router.get('/install-clash.sh')
@@ -106,8 +114,4 @@ async def get_install_clash():
     """返回安装脚本文件"""
     if not (DATA_PATH / "install-clash.sh").exists():
         raise HTTPException(status_code=404, detail="Install script not found")
-    return FileResponse(
-        DATA_PATH / "install-clash.sh",
-        media_type="text/x-sh",
-        filename="install-clash.sh"
-    )
+    return FileResponse(DATA_PATH / "install-clash.sh", media_type="text/x-sh", filename="install-clash.sh")
