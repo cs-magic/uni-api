@@ -1,4 +1,5 @@
 import io
+import os
 import zipfile
 from enum import Enum
 from pathlib import Path
@@ -78,8 +79,8 @@ async def get_vpn_config(  # user: Annotated[User, Security(get_current_active_u
 
 @vpn_router.get('/clash.zip')
 async def install_vpn(
-    clash_version='2.0.24', os="linx_amd64", ):
-    clash_exec_name = f'clash_{clash_version}_{os}.tar.gz'
+    clash_version='2.0.24', clash_platform="linx_amd64", ):
+    clash_exec_name = f'clash_{clash_version}_{clash_platform}.tar.gz'
     clash_exec_path = CLASH_EXEC_DIR / clash_exec_name
     if not clash_exec_path.exists():
         with open(clash_exec_path, 'wb') as f:
