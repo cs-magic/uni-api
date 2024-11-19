@@ -83,11 +83,13 @@ async def install_vpn(
     clash_exec_name = f'clash_{clash_version}_{clash_platform}.tar.gz'
     clash_exec_path = CLASH_EXEC_DIR / clash_exec_name
     if not clash_exec_path.exists():
+        logger.info(f"pulling {clash_exec_name}")
         with open(clash_exec_path, 'wb') as f:
             res = requests.get(f'https://github.com/doreamon-design/clash/releases/download/v{clash_version}/{clash_exec_name}')
             f.write(res.content)
 
     if not CONFIG_FILEPATH.exists():
+        logger.info("pulling config file")
         fetch_latest_config()
 
     # 在内存中创建 zip 文件
