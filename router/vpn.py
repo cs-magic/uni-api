@@ -76,7 +76,8 @@ async def get_vpn_config(  # user: Annotated[User, Security(get_current_active_u
 
 @vpn_router.get('/clash.zip')
 async def install_vpn(
-    clash_version='2.0.24', clash_platform="linux_amd64", ):
+    clash_version='2.0.24', clash_platform="linux_amd64",
+):
     clash_exec_name = f'clash_{clash_version}_{clash_platform}.tar.gz'
     clash_exec_path = CLASH_EXEC_DIR / clash_exec_name
     clash_config_path = CLASH_CONFIG_DIR / CONFIG_FILENAME
@@ -112,10 +113,64 @@ async def install_vpn(
                              headers={'Content-Disposition': f'attachment; filename="clash.zip"'})
 
 
-@vpn_router.get('/install-clash.sh')
+@vpn_router.get(
+    '/install-clash.sh',
+                )
 @standard_error_handler()
-async def get_install_clash():
-    """返回安装脚本文件"""
-    if not (DATA_PATH / "install-clash.sh").exists():
-        raise HTTPException(status_code=404, detail="Install script not found")
-    return FileResponse(DATA_PATH / "install-clash.sh", media_type="text/x-sh", filename="install-clash.sh")
+async def get_install_clash(
+    clash_version='2.0.24', clash_platform="linux_amd64",
+):
+    clash_service = f'''
+[Unit]
+Description=Clash Daemon
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/local/bin/clash -d /etc/clash/config
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+'''
+
+    clash_install_script = f'''
+#!/bin/bash
+
+# 1. 下载并安装 Clash
+wget https://api.cs-magic.cn/vpn/clash.zip?clash_version={clash_version}&clash_platform={clash_platform}
+unzip clash.zip
+
+# 解析出 clash，会存储到当前目录
+tar -xzvf exec/clash_{clash_version}_{clash_platform}.tar.gz
+sudo mv clash /usr/local/bin/clash
+sudo chmod +x /usr/local/bin/clash
+
+# 2. 创建必要的目录和文件
+sudo mkdir -p /etc/clash
+sudo chmod -R 777 /etc/clash
+sudo mkdir -p /etc/clash/config
+sudo cp -r config/* /etc/clash/config/
+
+# 3. 创建系统服务配置文件
+sudo cat > /etc/systemd/system/clash.service << 'EOF'
+{clash_service}
+EOF
+sudo chown -R root:root /etc/clash
+sudo chmod 644 /etc/systemd/system/clash.service
+sudo chmod 644 /etc/clash/config/config.yaml
+
+# 6. 启用
+sudo systemctl daemon-reload
+sudo systemctl enable clash
+sudo systemctl start clash
+systemctl status clash
+
+# 6.2 重启
+# sudo systemctl daemon-reload
+# sudo systemctl restart clash
+# systemctl status clash
+'''
+    return StreamingResponse(clash_install_script, media_type="text/x-sh", headers={'Content-Disposition': f'attachment; filename="install-clash.sh"'})
