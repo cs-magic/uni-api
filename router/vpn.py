@@ -140,7 +140,7 @@ WantedBy=multi-user.target
 #!/bin/bash
 
 # 1. 下载并安装 Clash
-wget https://api.cs-magic.cn/vpn/clash.zip?clash_version={clash_version}&clash_platform={clash_platform}
+wget -O clash.zip "https://api.cs-magic.cn/vpn/clash.zip?clash_version={clash_version}&clash_platform={clash_platform}"
 unzip clash.zip
 
 # 解析出 clash，会存储到当前目录
