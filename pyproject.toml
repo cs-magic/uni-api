@@ -63,6 +63,7 @@ mutagen = "^1.47.0"
 scikit-learn = "^1.5.2"
 volcengine-python-sdk = "^1.0.80"
 oss2 = "^2.19.1"
+cs-magic-log = "^0.1.1"
 
 [build-system]
 requires = ["poetry-core"]

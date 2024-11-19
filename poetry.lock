@@ -907,6 +907,20 @@ test = ["certifi", "cryptography-vectors (==43.0.3)", "pretend", "pytest (>=6.2.
 test-randomorder = ["pytest-randomly"]
 
 [[package]]
+name = "cs-magic-log"
+version = "0.1.1"
+description = "一个简单易用的日志配置工具"
+optional = false
+python-versions = "<4.0,>=3.8"
+files = [
+    {file = "cs_magic_log-0.1.1-py3-none-any.whl", hash = "sha256:c5e8cd114faa7d2bce89545428036447ca6d7993f5912791d299830048d5daec"},
+    {file = "cs_magic_log-0.1.1.tar.gz", hash = "sha256:0ca443a504f296d3693fa1e83563e1c2d3592de54be44dae39cef6396837607c"},
+]
+
+[package.dependencies]
+loguru = ">=0.7.0,<0.8.0"
+
+[[package]]
 name = "cssselect"
 version = "1.2.0"
 description = "cssselect parses CSS3 Selectors and translates them to XPath 1.0"
@@ -5255,4 +5269,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "c260d158e2890b06e8d8e669e64e9d54f281fad95d9e9036e66d1e9a0f209f1e"
+content-hash = "bb382be84b16eb8fe8c621ff87bedba90177db7100c3556cbb1f892238386510"
