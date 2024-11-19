@@ -24,12 +24,12 @@ class Provider(str, Enum):
 
 CONFIG_FILENAME = "config.yaml"
 CLASH_DATA_DIR = DATA_PATH / "clash"
+CLASH_DATA_DIR.mkdir(exist_ok=True)
 CLASH_CONFIG_DIR = CLASH_DATA_DIR / "config"
+CLASH_CONFIG_DIR.mkdir(exist_ok=True)
 CLASH_EXEC_DIR = CLASH_DATA_DIR / "exec"
+CLASH_EXEC_DIR.mkdir(exist_ok=True)
 CONFIG_FILEPATH = CLASH_CONFIG_DIR / CONFIG_FILENAME
-
-# 确保必要的目录存在
-CLASH_CONFIG_DIR.mkdir(parents=True, exist_ok=True)
 
 
 @cachetools.func.ttl_cache(ttl=60 * 10, maxsize=None)
