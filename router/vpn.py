@@ -79,7 +79,7 @@ async def get_vpn_config(  # user: Annotated[User, Security(get_current_active_u
 
 @vpn_router.get('/clash.zip')
 async def install_vpn(
-    clash_version='2.0.24', clash_platform="linx_amd64", ):
+    clash_version='2.0.24', clash_platform="linux_amd64", ):
     clash_exec_name = f'clash_{clash_version}_{clash_platform}.tar.gz'
     clash_exec_path = CLASH_EXEC_DIR / clash_exec_name
     if not clash_exec_path.exists():
@@ -87,6 +87,7 @@ async def install_vpn(
         with open(clash_exec_path, 'wb') as f:
             res = requests.get(f'https://github.com/doreamon-design/clash/releases/download/v{clash_version}/{clash_exec_name}')
             f.write(res.content)
+    # todo: 如果没有正常写入，则应该删除文件
 
     if not CONFIG_FILEPATH.exists():
         logger.info("pulling config file")

@@ -4,8 +4,8 @@
 wget https://api.cs-magic.cn/vpn/clash.zip
 unzip clash.zip
 
-tar -xzvf clash_2.0.24_linux_amd64.tar.gz
-sudo mv clash /usr/local/bin/clash
+tar -xzvf exec/clash_2.0.24_linux_amd64.tar.gz
+sudo mv exec/clash /usr/local/bin/clash
 sudo chmod +x /usr/local/bin/clash
 
 # 2. 创建必要的目录和文件
