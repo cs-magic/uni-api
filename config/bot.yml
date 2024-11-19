@@ -1,0 +1,29 @@
+help: |
+  ----------------
+    AI 助手 {{ version }}
+  ----------------
+  help: 查询帮助
+  ding: 心跳检测
+  status: 助手状态
+  ----------------
+  - A1: 微信文章自动总结 ✅
+  - A2: 微信视频号自动总结 ✈️
+  - ……
+  ----------------
+shelp: |
+  ----------------
+    AI 助手 {{ version }}（S）
+  ----------------
+  shelp: 查询管理员帮助
+  start: 启用助手
+  stop: 停止助手
+  enable-llm: 启用LLM接口
+  disable-llm: 暂停LLM接口
+  ----------------
+  - ……
+  ----------------
+status: |
+  version: {{ version }}
+  features_enabled: {{features_enabled}}
+  summary_model: {{summary_model}}
+  alive_time: {{alive_time}}

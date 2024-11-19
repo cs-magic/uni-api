@@ -2,7 +2,7 @@ from fastapi import HTTPException
 import httpx
 from typing import Optional
 from settings import settings
-from schemas.user import UserCreate
+from schema.user import UserCreate
 
 
 class OAuthHandler:

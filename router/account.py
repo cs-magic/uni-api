@@ -8,10 +8,10 @@ from settings import settings
 from auth.oauth import OAuthHandler
 from auth.security import get_password_hash, verify_password, create_access_token, get_current_user
 from utils.database import get_db
-from dependencies.credits import verify_credits
+from utils.dependencies import verify_credits
 from models.user import User
 from models.transaction import Transaction
-from schemas.user import UserResponse, UserCreate, Token, CreditsCheck
+from schema.user import UserResponse, UserCreate, Token, CreditsCheck
 
 account_router = APIRouter(prefix='/account', tags=['Account'])
 
