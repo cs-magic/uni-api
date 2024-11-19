@@ -3,10 +3,11 @@ import os
 import zipfile
 from enum import Enum
 from pathlib import Path
+from string import ascii_lowercase
 
 import cachetools
 import requests
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, UploadFile
 from fastapi.params import Depends
 from starlette.responses import StreamingResponse, FileResponse
 
@@ -73,6 +74,12 @@ async def get_vpn_config(  # user: Annotated[User, Security(get_current_active_u
     headers = {'Content-Disposition': f'attachment; filename="{CONFIG_FILENAME}"'}
     return StreamingResponse(io.BytesIO(content.encode('utf-8')), media_type='text/plain', headers=headers)
 
+@vpn_router.post('/upload-cache.db', description="需要和 config.yaml 配套")
+async def upload_cache_db(file: UploadFile):
+    file_path = CLASH_CONFIG_DIR / "cache.db"
+    with open(file_path, "wb") as f:
+        f.write(file.file.read())
+    return {"success": "ok", "filepath": file_path}
 
 @vpn_router.get('/clash.zip')
 async def install_vpn(
@@ -111,6 +118,7 @@ async def install_vpn(
     return StreamingResponse(zip_buffer,
                              media_type='application/zip',
                              headers={'Content-Disposition': f'attachment; filename="clash.zip"'})
+
 
 
 @vpn_router.get(
