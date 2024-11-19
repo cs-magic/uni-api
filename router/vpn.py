@@ -30,7 +30,6 @@ CLASH_CONFIG_DIR = CLASH_DATA_DIR / "config"
 CLASH_CONFIG_DIR.mkdir(exist_ok=True)
 CLASH_EXEC_DIR = CLASH_DATA_DIR / "exec"
 CLASH_EXEC_DIR.mkdir(exist_ok=True)
-CONFIG_FILEPATH = CLASH_CONFIG_DIR / CONFIG_FILENAME
 
 
 @cachetools.func.ttl_cache(ttl=60 * 10, maxsize=None)
@@ -63,8 +62,6 @@ def fetch_latest_config(
 
     else:
         raise Exception("not supported provider")
-    with open(CONFIG_FILEPATH, 'w') as f:
-        f.write(content)
     return content
 
 
@@ -82,6 +79,9 @@ async def install_vpn(
     clash_version='2.0.24', clash_platform="linux_amd64", ):
     clash_exec_name = f'clash_{clash_version}_{clash_platform}.tar.gz'
     clash_exec_path = CLASH_EXEC_DIR / clash_exec_name
+    clash_config_path = CLASH_CONFIG_DIR / CONFIG_FILENAME
+
+    # 写入 clash/exec/clash
     if not clash_exec_path.exists():
         logger.info(f"pulling {clash_exec_name}")
         with open(clash_exec_path, 'wb') as f:
@@ -89,9 +89,10 @@ async def install_vpn(
             f.write(res.content)
     # todo: 如果没有正常写入，则应该删除文件
 
-    if not CONFIG_FILEPATH.exists():
-        logger.info("pulling config file")
-        fetch_latest_config()
+    # 写入 clash/config/config.yaml
+    content = fetch_latest_config()
+    with open(clash_config_path, 'wb') as f:
+        f.write(content.encode('utf-8'))
 
     # 在内存中创建 zip 文件
     zip_buffer = io.BytesIO()
@@ -106,7 +107,6 @@ async def install_vpn(
 
     # 将指针移到开始位置
     zip_buffer.seek(0)
-
     return StreamingResponse(zip_buffer,
                              media_type='application/zip',
                              headers={'Content-Disposition': f'attachment; filename="clash.zip"'})
