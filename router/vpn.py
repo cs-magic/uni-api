@@ -3,11 +3,10 @@ import os
 import time
 import zipfile
 from enum import Enum
-from functools import lru_cache
 from pathlib import Path
 
 import cachetools
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.params import Depends
 from starlette.responses import StreamingResponse, FileResponse
 
@@ -22,6 +21,7 @@ vpn_router = APIRouter(prefix='/vpn', tags=["VPN"])
 class Provider(str, Enum):
     foosber = "foosber"
     biznet = "biznet"
+
 
 CONFIG_FILENAME = "config.yaml"
 CLASH_DATA_DIR = DATA_PATH / "clash"
@@ -76,11 +76,11 @@ async def get_vpn_config(  # user: Annotated[User, Security(get_current_active_u
     return StreamingResponse(io.BytesIO(content.encode('utf-8')), media_type='text/plain', headers=headers)
 
 
-@vpn_router.get('/install')
+@vpn_router.get('/clash.zip')
 async def install_vpn(update_cache=True, machine='ubuntu', time=time.time()):
     if not CONFIG_FILEPATH.exists():
         fetch_latest_config()
-    
+
     # 在内存中创建 zip 文件
     zip_buffer = io.BytesIO()
     with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zipf:
@@ -91,12 +91,23 @@ async def install_vpn(update_cache=True, machine='ubuntu', time=time.time()):
                 file_path = Path(root) / file
                 arcname = file_path.relative_to(CLASH_DATA_DIR)
                 zipf.write(file_path, arcname)
-    
+
     # 将指针移到开始位置
     zip_buffer.seek(0)
-    
-    return StreamingResponse(
-        zip_buffer,
+
+    return StreamingResponse(zip_buffer,
         media_type='application/zip',
-        headers={'Content-Disposition': f'attachment; filename="clash.zip"'}
+        headers={'Content-Disposition': f'attachment; filename="clash.zip"'})
+
+
+@vpn_router.get('/install-clash.sh')
+@standard_error_handler()
+async def get_install_clash():
+    """返回安装脚本文件"""
+    if not (DATA_PATH / "install-clash.sh").exists():
+        raise HTTPException(status_code=404, detail="Install script not found")
+    return FileResponse(
+        DATA_PATH / "install-clash.sh",
+        media_type="text/x-sh",
+        filename="install-clash.sh"
     )
