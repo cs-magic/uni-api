@@ -24,15 +24,12 @@ config your `.env` like `.env.sample`
 ```shell
 poetry shell
 poetry install
+poetry run fastapi run --port 41110
 ```
 
 ## Run
 
-```shell
-uvicorn auth:app --reload
-```
-
-访问 `http://localhost:8000/docs` 查看各 API。
+访问 `http://localhost:41110/docs` 查看各 API。
 
 ## Deploy
 

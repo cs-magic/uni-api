@@ -6,13 +6,14 @@ from fastapi import APIRouter, Form, Query, Response
 from sse_starlette.sse import EventSourceResponse
 
 from packages.common.pydantic import BaseModel
-from packages.common.svg2image import extract_svgs, svg_to_bytes
 from packages.fastapi.standard_error import standard_error_handler
 from packages.llm.agent.call_agent import call_agent
 from packages.llm.agent.call_llm import call_llm
 from packages.llm.agent.schema import AgentType
 from packages.llm.providers.openai import OpenAIProvider
 from packages.llm.schema import ModelType, IMessage
+
+from packages.common.svg2image import svg_to_bytes
 
 llm_router = APIRouter(prefix='/llm', tags=['LLM'])
 
